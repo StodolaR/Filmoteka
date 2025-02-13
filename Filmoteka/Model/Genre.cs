@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Filmoteka.Model
 {
-    internal enum GenreType
+    public enum GenreType
     {
         Akční,
         Animovaný,

@@ -8,9 +8,9 @@ namespace Filmoteka.ViewModel
 {
     class PrihlaseniViewModel : AbstractTabViewModel
     {
-        public PrihlaseniViewModel(string header)
+        public PrihlaseniViewModel()
         {
-            Header = header;
+            Header = "Přihlášení";
         }
     }
 }

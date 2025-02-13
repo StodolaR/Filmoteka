@@ -7,6 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock Text="uvodView"/>
+        <Image Source="/Resources/filmy.png"/>
+        <TextBlock Text="Filmotéka" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                   FontFamily="Vladimir Script" Foreground="Black" FontSize="120" FontWeight="Bold"/>
+        <TextBlock Text="Filmotéka" VerticalAlignment="Center" HorizontalAlignment="Center" 
+           FontFamily="Vladimir Script" Foreground="Gold" FontSize="120" />
     </Grid>
 </UserControl>

@@ -8,9 +8,9 @@ namespace Filmoteka.ViewModel
 {
     class UzivatelViewModel : AbstractTabViewModel
     {
-        public UzivatelViewModel(string header)
+        public UzivatelViewModel()
         {
-            Header = header;
+            Header = "Uživatelé";
         }
     }
 }

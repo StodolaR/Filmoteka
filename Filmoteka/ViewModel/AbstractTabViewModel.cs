@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Filmoteka.ViewModel
 {
-    class AbstractTabViewModel
+    public class AbstractTabViewModel
     {
         public string Header { get; set; }
     }

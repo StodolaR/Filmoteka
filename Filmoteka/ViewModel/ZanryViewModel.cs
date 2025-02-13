@@ -8,9 +8,9 @@ namespace Filmoteka.ViewModel
 {
     class ZanryViewModel : AbstractTabViewModel
     {
-        public ZanryViewModel(string header)
+        public ZanryViewModel()
         {
-            Header = header;
+            Header = "Žánry";
         }
     }
 }

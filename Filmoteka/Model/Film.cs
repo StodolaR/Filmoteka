@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Filmoteka.Model
 {
-    internal class Film
+    public class Film
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -9,10 +9,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\bezobrazku.png" />
+    <None Remove="Resources\filmy.png" />
     <None Remove="Resources\search.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\bezobrazku.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\filmy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\search.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

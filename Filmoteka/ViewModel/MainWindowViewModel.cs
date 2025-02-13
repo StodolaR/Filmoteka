@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace Filmoteka.ViewModel
 {
-    class MainWindowViewModel
+    public class MainWindowViewModel
     {
         public ObservableCollection<AbstractTabViewModel> Items { get; set; }
         public MainWindowViewModel()
         {
             Items = new ObservableCollection<AbstractTabViewModel>();
-            Items.Add(new UvodViewModel("Úvod"));
-            Items.Add(new ZebricekViewModel("Žebříček"));
-            Items.Add(new ZanryViewModel("Žánry"));
-            Items.Add(new UzivatelViewModel("Uživatelé"));
-            Items.Add(new PrihlaseniViewModel("Přihlášení"));
+            Items.Add(new UvodViewModel());
+            Items.Add(new ZebricekViewModel());
+            Items.Add(new ZanryViewModel());
+            Items.Add(new UzivatelViewModel());
+            Items.Add(new PrihlaseniViewModel());
         }
     }
 }
