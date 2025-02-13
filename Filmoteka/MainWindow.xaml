@@ -1,0 +1,52 @@
+﻿<Window x:Class="Filmoteka.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Filmoteka"
+        xmlns:view="clr-namespace:Filmoteka.View"
+        xmlns:viewModel="clr-namespace:Filmoteka.ViewModel"
+        mc:Ignorable="d"
+        Title="Filmotéka" Height="450" Width="800">
+    <Window.DataContext>
+        <viewModel:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TabControl ItemsSource="{Binding Items}">
+            <TabControl.Resources>
+                <DataTemplate DataType="{x:Type viewModel:UvodViewModel}">
+                    <view:UvodView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModel:ZebricekViewModel}">
+                    <view:ZebricekView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModel:ZanryViewModel}">
+                    <view:ZanryView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModel:UzivatelViewModel}">
+                    <view:UzivatelView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModel:PrihlaseniViewModel}">
+                    <view:PrihlaseniView/>
+                </DataTemplate>
+            </TabControl.Resources>
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Header}"/>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+        </TabControl>
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Top">
+            <TextBox x:Name="Search" Text="Vyhledávání" Width="200" VerticalAlignment="Center"/>
+            <Button Height="20">
+                <Button.Content>
+                    <Image Source="Resources/search.png"/>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>
