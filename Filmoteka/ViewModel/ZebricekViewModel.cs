@@ -17,10 +17,15 @@ namespace Filmoteka.ViewModel
             Header = "Žebříček";
             Films = new ObservableCollection<Film>()
             {
-                new Film() { Name = "Rambo", Description = "Válečný veterán po návratu domů bojuje s policií", Genre = GenreType.Akční, Year = 1983},
-                new Film() { Name = "Thing", Description = "Vědce za polárním kruhem likviduje neznámý organismus", Genre = GenreType.Horor, Year = 1976},
-                new Film() { Name = "Žhavé výstřely", Description = "Parodie na akční filmy", Genre = GenreType.Komedie, Year = 1993}
+                new Film() { Name = "Rambo", Description = "Válečný veterán po návratu domů bojuje s policií", Genre = GenreType.Akční,
+                    Year = 1983, PicturePath = "/Resources/Posters/Rambo.jpg"},
+                new Film() { Name = "Thing", Description = "Vědce za polárním kruhem likviduje neznámý organismus", Genre = GenreType.Horor,
+                    Year = 1976, PicturePath = "/Resources/Posters/Thing.jpg"},
+                //new Film() { Name = "Žhavé výstřely", Description = "Parodie na Top Gun", Genre = GenreType.Komedie,
+                //    Year = 1991, PicturePath = "/Resources/Posters/ZhaveVystrely.jpg"}
+                
             };
+            
         }
     }
 }

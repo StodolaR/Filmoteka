@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Filmoteka.Model
 {
-    internal class Rating
+    public class Rating
     {
         public int FilmId {  get; set; }
         public int UserId { get; set; }

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Filmoteka.ViewModel
 {
-    class PrihlaseniViewModel : AbstractTabViewModel
+    public class PrihlaseniViewModel : AbstractTabViewModel
     {
+
         public PrihlaseniViewModel()
         {
             Header = "Přihlášení";
