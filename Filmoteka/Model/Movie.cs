@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 
 namespace Filmoteka.Model
 {
-    public class Film
+    public class Movie
     {
         public int Id { get; set; }
         public string Name { get; set; }

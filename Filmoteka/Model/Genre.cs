@@ -10,20 +10,11 @@ namespace Filmoteka.Model
     {
         Akční,
         Animovaný,
-        Dokument,
-        Drama,
         Fantasy,
-        Historický,
         Horor,
-        Katastrofický,
         Komedie,
-        Krimi,
-        Muzikál,
-        Romantický,
         SciFi,
-        Thriller,
         Válečný,
-        Western,
-        Životopisný
+        Western
     }
 }

@@ -10,12 +10,12 @@ namespace Filmoteka.ViewModel
 {
     public class ZebricekViewModel 
     {
-        public ObservableCollection<Film> Films { get; set; } 
+        public ObservableCollection<Movie> Movies { get; set; } 
         
         public ZebricekViewModel()
         {
             Database database = new Database();
-            Films = database.Films;
+            Movies = database.Movies;
             
         }
         

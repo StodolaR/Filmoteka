@@ -8,14 +8,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="FilmSource" Source="{Binding Films}">
+        <CollectionViewSource x:Key="MovieSource" Source="{Binding Movies}">
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription PropertyName="Genre"/>
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
     </UserControl.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding Source={StaticResource FilmSource}}">
+        <ListView ItemsSource="{Binding Source={StaticResource MovieSource}}">
             <ListView.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>

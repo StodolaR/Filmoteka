@@ -11,11 +11,11 @@ namespace Filmoteka.ViewModel
     public class ZanryViewModel 
     {
         ZebricekViewModel zebricekViewModel = new ZebricekViewModel();
-        public ObservableCollection<Film> Films { get; set; } 
+        public ObservableCollection<Movie> Movies { get; set; } 
         public ZanryViewModel()
         {
             Database database = new Database();
-            Films = database.Films;
+            Movies = database.Movies;
 
         }
     }
