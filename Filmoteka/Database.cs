@@ -34,7 +34,7 @@ namespace Filmoteka
             };
             Ratings = new ObservableCollection<UserMovie>()
             {
-
+                
             };
         }
     }
