@@ -12,7 +12,7 @@ namespace Filmoteka
     {
         public ObservableCollection<Movie> Movies { get; set; }
         public ObservableCollection<User> Users { get; set; }
-        public ObservableCollection<Rating> Ratings { get; set; }
+        public ObservableCollection<UserMovie> Ratings { get; set; }
 
         public Database()
         {
@@ -32,7 +32,7 @@ namespace Filmoteka
                 new User { Name = "Uzivatel1", Password = "Uzivatel1ABC"}
 
             };
-            Ratings = new ObservableCollection<Rating>()
+            Ratings = new ObservableCollection<UserMovie>()
             {
 
             };

@@ -9,14 +9,15 @@ namespace Filmoteka.Model
 {
     public class MovieContext : DbContext
     {
-        private string connectionString = "moviesDb";
+        private const string ConnectionString = "Data Source=movies.db";
+
         public DbSet<Movie> Movies { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserMovie> UserMovies { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data source=connectionString");
+            optionsBuilder.UseSqlite(ConnectionString);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
