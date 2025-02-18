@@ -17,7 +17,8 @@
             <TextBox x:Name="tbxJmeno" Width="150"/>
             <Label Content="Heslo"/>
             <TextBox x:Name="tbxHeslo" Width="150"/>
-            <Button x:Name="btnPrihlasit" Content="Přihlásit se" Margin="0,20,0,0" Width="80"/>
+            <Button x:Name="btnPrihlasit" Content="Přihlásit se" Margin="0,20,0,0" Width="80"
+                    Command="{Binding UserLogin}" CommandParameter=""/>
         </StackPanel>
         <StackPanel HorizontalAlignment="Center" Margin="0,100,0,0" Grid.Column="1">
             <TextBlock Text="Registrace nového uživatele" FontSize="15"/>

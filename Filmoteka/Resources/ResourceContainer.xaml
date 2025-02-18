@@ -3,5 +3,4 @@
                     xmlns:viewModel="clr-namespace:Filmoteka.ViewModel">
     <viewModel:ZebricekViewModel x:Key="zebricekViewModel"/>
     <viewModel:UzivatelViewModel x:Key="uzivatelViewModel"/>
-    <viewModel:PrihlaseniViewModel x:Key="prihlaseniViewModel"/>
 </ResourceDictionary>

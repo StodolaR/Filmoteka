@@ -26,7 +26,7 @@
             <TabItem Header="Uživatelé" DataContext="{StaticResource uzivatelViewModel}">
                 <view:UzivatelView/>
             </TabItem>
-            <TabItem Header="Přihlášení" DataContext="{StaticResource prihlaseniViewModel}">
+            <TabItem Header="Přihlášení" DataContext="{StaticResource uzivatelViewModel}">
                 <view:PrihlaseniView/>
             </TabItem>
         </TabControl>
@@ -38,7 +38,7 @@
                 </Button.Content>
             </Button>
             <Label Content="Přihlášen uživatel: "/>
-            <Label Content="{Binding LoggedUser}"/>
+            <Label Content="{Binding LoggedUser.Name}" DataContext="{StaticResource uzivatelViewModel}"/>
         </StackPanel>
     </Grid>
 </Window>
