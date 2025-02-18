@@ -8,37 +8,27 @@
         xmlns:viewModel="clr-namespace:Filmoteka.ViewModel"
         mc:Ignorable="d"
         Title="Filmotéka" Height="650" Width="900">
-    <Window.DataContext>
-        <viewModel:MainWindowViewModel/>
-    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TabControl ItemsSource="{Binding Items}">
-            <TabControl.Resources>
-                <DataTemplate DataType="{x:Type viewModel:UvodViewModel}">
-                    <view:UvodView/>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type viewModel:ZebricekViewModel}">
-                    <view:ZebricekView/>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type viewModel:ZanryViewModel}">
-                    <view:ZanryView/>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type viewModel:UzivatelViewModel}">
-                    <view:UzivatelView/>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type viewModel:PrihlaseniViewModel}">
-                    <view:PrihlaseniView/>
-                </DataTemplate>
-            </TabControl.Resources>
-            <TabControl.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Header}"/>
-                </DataTemplate>
-            </TabControl.ItemTemplate>
+        <TabControl >
+            <TabItem Header="Úvod">
+                <view:UvodView/>
+            </TabItem>
+            <TabItem Header="Žebříček" DataContext="{StaticResource zebricekViewModel}">
+                <view:ZebricekView/>
+            </TabItem>
+            <TabItem Header="Dle žánru" DataContext="{StaticResource zanryViewModel}">
+                <view:ZanryView/>
+            </TabItem>
+            <TabItem Header="Uživatelé" DataContext="{StaticResource uzivatelViewModel}">
+                <view:UzivatelView/>
+            </TabItem>
+            <TabItem Header="Přihlášení" DataContext="{StaticResource prihlaseniViewModel}">
+                <view:PrihlaseniView/>
+            </TabItem>
         </TabControl>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Top">
             <TextBox x:Name="Search" Text="Vyhledávání" Width="200" VerticalAlignment="Center"/>

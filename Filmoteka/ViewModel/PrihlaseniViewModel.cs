@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Filmoteka.ViewModel
 {
-    public class PrihlaseniViewModel : AbstractTabViewModel
+    public class PrihlaseniViewModel 
     {
 
         public PrihlaseniViewModel()
         {
-            Header = "Přihlášení";
+            
         }
     }
 }

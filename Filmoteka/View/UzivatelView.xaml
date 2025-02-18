@@ -7,9 +7,6 @@
              xmlns:viewModel="clr-namespace:Filmoteka.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.DataContext>
-        <viewModel:UzivatelViewModel/>
-    </UserControl.DataContext>
     <Grid>
         <ListView ItemsSource="{Binding Users}">
             <ListView.ItemTemplate>

@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 
 namespace Filmoteka.ViewModel
 {
-    public class ZanryViewModel : AbstractTabViewModel
+    public class ZanryViewModel 
     {
         ZebricekViewModel zebricekViewModel = new ZebricekViewModel();
         public ObservableCollection<Film> Films { get; set; } 
         public ZanryViewModel()
         {
-            Header = "Žánry";
+            Database database = new Database();
+            Films = database.Films;
 
         }
     }

@@ -8,17 +8,15 @@ using System.Threading.Tasks;
 
 namespace Filmoteka.ViewModel
 {
-    public class UzivatelViewModel : AbstractTabViewModel
+    public class UzivatelViewModel 
     {
         public ObservableCollection<User> Users { get; set; }
         public UzivatelViewModel()
         {
-            Header = "Uživatelé";
+            Database database = new Database();
+            Users = database.Users;
 
-            Users = new ObservableCollection<User>()
-            {
-                new User { Name = "Admin", Password = "AdminABC"}
-            };
+
         }
     }
 }

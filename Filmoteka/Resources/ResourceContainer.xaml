@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewModel="clr-namespace:Filmoteka.ViewModel">
+    <viewModel:ZebricekViewModel x:Key="zebricekViewModel"/>
+    <viewModel:ZanryViewModel x:Key="zanryViewModel"/>
+    <viewModel:UzivatelViewModel x:Key="uzivatelViewModel"/>
+    <viewModel:PrihlaseniViewModel x:Key="prihlaseniViewModel"/>
+</ResourceDictionary>

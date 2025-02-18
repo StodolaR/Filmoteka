@@ -18,8 +18,8 @@ namespace Filmoteka
         {
             Films = new ObservableCollection<Film>()
             {
-                //new Film() { Name = "Rambo", Description = "Válečný veterán po návratu domů bojuje s policií", Genre = GenreType.Akční,
-                //    Year = 1983, PicturePath = "/Resources/Posters/Rambo.jpg"},
+                new Film() { Name = "Rambo", Description = "Válečný veterán po návratu domů bojuje s policií", Genre = GenreType.Akční,
+                    Year = 1983, PicturePath = "/Resources/Posters/Rambo.jpg"},
                 new Film() { Name = "Thing", Description = "Vědce za polárním kruhem likviduje neznámý organismus", Genre = GenreType.Horor,
                     Year = 1976, PicturePath = "/Resources/Posters/Thing.jpg"},
                 new Film() { Name = "Žhavé výstřely", Description = "Parodie na Top Gun", Genre = GenreType.Komedie,
@@ -27,6 +27,9 @@ namespace Filmoteka
             };
             Users = new ObservableCollection<User>()
             {
+            
+                new User { Name = "Admin", Password = "AdminABC"},
+                new User { Name = "Uzivatel1", Password = "Uzivatel1ABC"}
 
             };
             Ratings = new ObservableCollection<Rating>()
