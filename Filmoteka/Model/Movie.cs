@@ -16,6 +16,6 @@ namespace Filmoteka.Model
         public int Year { get; set; }
         public string PicturePath { get; set; } = "/Resources/bezobrazku.png";
         public int AvgRating { get; set; }
-        
+        public List<UserMovie> UserMovies { get; set; }
     }
 }

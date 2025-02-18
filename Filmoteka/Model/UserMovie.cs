@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Filmoteka.Model
 {
-    public class Rating
+    public class UserMovie
     {
-        public int FilmId {  get; set; }
+        public int MovieId {  get; set; }
+        public Movie Movie { get; set; }
         public int UserId { get; set; }
-        public int Points { get; set; }
+        public User User { get; set; }
+        public int Rating { get; set; }
         public string? Review { get; set; }
     }
 }
