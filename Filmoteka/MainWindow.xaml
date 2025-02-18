@@ -20,7 +20,7 @@
             <TabItem Header="Žebříček" DataContext="{StaticResource zebricekViewModel}">
                 <view:ZebricekView/>
             </TabItem>
-            <TabItem Header="Dle žánru" DataContext="{StaticResource zanryViewModel}">
+            <TabItem Header="Dle žánru" DataContext="{StaticResource zebricekViewModel}">
                 <view:ZanryView/>
             </TabItem>
             <TabItem Header="Uživatelé" DataContext="{StaticResource uzivatelViewModel}">

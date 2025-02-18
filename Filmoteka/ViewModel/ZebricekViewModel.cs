@@ -14,9 +14,15 @@ namespace Filmoteka.ViewModel
         
         public ZebricekViewModel()
         {
-            Database database = new Database();
-            Movies = database.Movies;
-            
+            Movies = new ObservableCollection<Movie>();
+            using (MovieContext mc = new MovieContext())
+            {
+                foreach (Movie movie in mc.Movies)
+                {
+                    Movies.Add(movie);
+                }
+            }
+
         }
         
     }

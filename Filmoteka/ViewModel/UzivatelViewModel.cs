@@ -13,8 +13,14 @@ namespace Filmoteka.ViewModel
         public ObservableCollection<User> Users { get; set; }
         public UzivatelViewModel()
         {
-            Database database = new Database();
-            Users = database.Users;
+            Users = new ObservableCollection<User>();
+            using(MovieContext mc = new MovieContext())
+            {
+                foreach (User user in mc.Users)
+                {
+                    Users.Add(user);
+                }
+            }
 
 
         }
