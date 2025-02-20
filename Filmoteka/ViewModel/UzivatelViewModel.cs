@@ -16,10 +16,11 @@ namespace Filmoteka.ViewModel
         private User? loggedUser;
         private string loginName = string.Empty;
         private string loginPassword = string.Empty;
-        private string registerName = string.Empty;
-        private string registerPassword = string.Empty;
-        private string registerPasswordVerification = string.Empty;
+        private string registrationName = string.Empty;
+        private string registrationPassword = string.Empty;
+        private string registrationPasswordVerification = string.Empty;
         private string message = string.Empty;
+        private string registrationMessage = string.Empty;
 
         public ObservableCollection<User> Users { get; set; }
         public User? LoggedUser
@@ -49,31 +50,31 @@ namespace Filmoteka.ViewModel
                 OnPropertyChanged(nameof(LoginPassword));
             }
         }
-        public string RegisterName
+        public string RegistrationName
         {
-            get => registerName;
+            get => registrationName;
             set
             {
-                registerName = value;
-                OnPropertyChanged(nameof(RegisterName));
+                registrationName = value;
+                OnPropertyChanged(nameof(RegistrationName));
             }
         }
-        public string RegisterPassword
+        public string RegistrationPassword
         {
-            get => registerPassword;
+            get => registrationPassword;
             set
             {
-                registerPassword = value;
-                OnPropertyChanged(nameof(RegisterPassword));
+                registrationPassword = value;
+                OnPropertyChanged(nameof(RegistrationPassword));
             }
         }
-        public string RegisterPasswordVerification
+        public string RegistrationPasswordVerification
         {
-            get => registerPasswordVerification;
+            get => registrationPasswordVerification;
             set
             {
-                registerPasswordVerification = value;
-                OnPropertyChanged(nameof(RegisterPasswordVerification));
+                registrationPasswordVerification = value;
+                OnPropertyChanged(nameof(RegistrationPasswordVerification));
             }
         }
         public string Message
@@ -85,8 +86,20 @@ namespace Filmoteka.ViewModel
                 OnPropertyChanged(nameof(Message));
             }
         }
+        public string RegistrationMessage
+        {
+            get => registrationMessage;
+            set
+            {
+                registrationMessage = value;
+                OnPropertyChanged(nameof(RegistrationMessage));
+            }
+        }
         public ICommand UserLogin => new RelayCommand(Login, CanLogin);
         public ICommand UserLogout => new RelayCommand(Logout, CanLogout);
+        public ICommand UserRegistration => new RelayCommand(Register, CanRegister);
+
+       
         public UzivatelViewModel()
         {
             Users = new ObservableCollection<User>();
@@ -129,6 +142,46 @@ namespace Filmoteka.ViewModel
         {
             LoggedUser = null;
             Message = string.Empty;
+            RegistrationMessage = string.Empty;
         }
+        private bool CanRegister(object? arg)
+        {
+            return RegistrationName != string.Empty && RegistrationPassword != string.Empty && RegistrationPasswordVerification != string.Empty;
+        }
+
+        private void Register(object? obj)
+        {
+            if (RegistrationPassword != RegistrationPasswordVerification)
+            {
+                RegistrationPassword = string.Empty;
+                RegistrationPasswordVerification = string.Empty;
+                RegistrationMessage = "Ověření hesla se nezdařilo," + Environment.NewLine + "zadejte prosím hesla znova";
+                return;
+            }
+            using (MovieContext mc = new MovieContext())
+            {
+                mc.Users.Add(new User { Name = RegistrationName, Password = RegistrationPassword });
+                mc.SaveChanges();
+                var newUser = mc.Users.OrderBy(x => x.Id).Last();
+                if (newUser.Name != RegistrationName)
+                {
+                    RegistrationName = string.Empty;
+                    RegistrationPassword = string.Empty;
+                    RegistrationPasswordVerification = string.Empty;
+                    RegistrationMessage = "Nelze se připojit k databázi";
+                }
+                else
+                {
+                    LoggedUser = newUser;
+                    Users.Add(newUser);
+                    Message = "Přihlášen: " + RegistrationName;
+                    RegistrationName = string.Empty;
+                    RegistrationPassword = string.Empty;
+                    RegistrationPasswordVerification = string.Empty;
+                    RegistrationMessage = "Registrace úspěšná, jste přihlášen";
+                }
+            }
+        }
+
     }
 }

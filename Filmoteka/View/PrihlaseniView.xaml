@@ -19,7 +19,7 @@
             <local:PasswordUserControl PasswordDP="{Binding LoginPassword,
                         UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             <Button  Content="Přihlásit se" Margin="0,20,0,0" Width="80"
-                    Command="{Binding UserLogin}"/>
+                    Command="{Binding UserLogin}" IsDefault="True"/>
             <TextBlock Text="{Binding Message}"/>
             <Button  Content="Odhlásit se" Margin="0,20,0,0" Width="80"
                     Command="{Binding UserLogout}"/>
@@ -27,12 +27,16 @@
         <StackPanel HorizontalAlignment="Center" Margin="0,100,0,0" Grid.Column="1">
             <TextBlock Text="Registrace nového uživatele" FontSize="15"/>
             <Label Content="Nové uživatelské jméno"/>
-            <TextBox x:Name="tbxJmenoNove" Width="200"/>
+            <TextBox Text="{Binding RegistrationName, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
             <Label Content="Nové Heslo"/>
-            <local:PasswordUserControl/>
+            <local:PasswordUserControl PasswordDP="{Binding RegistrationPassword, 
+                                UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             <Label Content="Znova heslo pro kontrolu"/>
-            <local:PasswordUserControl/>
-            <Button x:Name="btnRegistrovat" Content="Registrovat" Margin="0,20,0,0" Width="80"/>
+            <local:PasswordUserControl PasswordDP="{Binding RegistrationPasswordVerification, 
+                                UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            <Button Command="{Binding UserRegistration}" Content="Registrovat" Margin="0,20,0,0" 
+                    Width="80" IsDefault="True"/>
+            <TextBlock Text="{Binding RegistrationMessage}"/>
         </StackPanel>
     </Grid>
 </UserControl>
