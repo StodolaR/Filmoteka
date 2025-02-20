@@ -20,18 +20,14 @@ namespace Filmoteka.View
     /// </summary>
     public partial class PasswordUserControl : UserControl
     {
-
-
         public string PasswordDP
         {
             get { return (string)GetValue(PasswordDPProperty); }
             set { SetValue(PasswordDPProperty, value); }
         }
-
         // Using a DependencyProperty as the backing store for PasswordDP.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PasswordDPProperty =
             DependencyProperty.Register("PasswordDP", typeof(string), typeof(PasswordUserControl), new PropertyMetadata(OnSourcePropertyChanged));
-
         private static void OnSourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue.ToString() == string.Empty)

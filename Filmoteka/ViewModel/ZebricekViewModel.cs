@@ -10,8 +10,7 @@ namespace Filmoteka.ViewModel
 {
     public class ZebricekViewModel 
     {
-        public ObservableCollection<Movie> Movies { get; set; } 
-        
+        public ObservableCollection<Movie> Movies { get; set; }       
         public ZebricekViewModel()
         {
             Movies = new ObservableCollection<Movie>();
@@ -22,8 +21,6 @@ namespace Filmoteka.ViewModel
                     Movies.Add(movie);
                 }
             }
-
-        }
-        
+        }      
     }
 }
