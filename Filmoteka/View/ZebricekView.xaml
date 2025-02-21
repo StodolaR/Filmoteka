@@ -5,10 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Filmoteka.View"
              xmlns:viewModel="clr-namespace:Filmoteka.ViewModel"
+             xmlns:framework="clr-namespace:Filmoteka.Framework"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ListView ItemsSource="{Binding Movies}">
+        <Grid.Resources>
+            <framework:NullVisibilityConverter x:Key="NullVisibilityConverter"/>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <ListView ItemsSource="{Binding Movies}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
@@ -24,5 +32,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <local:AddMovie HorizontalAlignment="Right" Grid.Column="1" DataContext="{StaticResource uzivatelViewModel}"
+                Visibility="{Binding LoggedUser, Converter={StaticResource NullVisibilityConverter}}"/>
     </Grid>
 </UserControl>
