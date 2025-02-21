@@ -4,21 +4,32 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Filmoteka.View"
+             xmlns:viewModel="clr-namespace:Filmoteka.ViewModel"
+             xmlns:model="clr-namespace:Filmoteka.Model"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="200">
-    <Grid>
+    <Grid DataContext="{StaticResource zebricekViewModel}">
+        <Grid.Resources>
+            <ObjectDataProvider x:Key="GenreEnum" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="model:GenreType"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+        </Grid.Resources>
         <StackPanel Width="200">
             <Label Content="Přidat nový film"/>
             <Label Content="Jméno:"/>
-            <TextBox/>
+            <TextBox Text="{Binding NewMovieName}"/>
             <Label Content="Žánr:"/>
-            <ComboBox/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource GenreEnum}}" Text="{Binding NewMovieGenre}"/>
             <Label Content="Obsah"/>
-            <TextBox/>
+            <TextBox Text="{Binding NewMovieDescription}" TextWrapping="Wrap" AcceptsReturn="True" MinHeight="60"/>
             <Label Content="Rok"/>
-            <Calendar DisplayMode="Decade"/>
-            <Button Content="Přidat obrázek" Width="100"/>
-            <Button Content="Uložit film" Width="100"/>
+            <TextBox x:Name="tbxYear" Text="{Binding NewMovieYear}" PreviewTextInput="tbxYear_PreviewTextInput" MaxLength="4"/>
+            <TextBox Text="{Binding NewMoviePicturePath}" x:Name="tbxPicturePath" TextWrapping="Wrap" MinHeight="40" IsReadOnly="True"/>
+            <Button Content="Zvolit obrázek" Width="100" x:Name="btnPicturePath" Click="btnPicturePath_Click"/>
+            <Button Content="Uložit film" Width="100" Margin="20"/>
         </StackPanel>
         
     </Grid>

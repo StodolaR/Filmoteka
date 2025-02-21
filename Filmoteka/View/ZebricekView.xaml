@@ -33,6 +33,6 @@
             </ListView.ItemTemplate>
         </ListView>
         <local:AddMovie HorizontalAlignment="Right" Grid.Column="1" DataContext="{StaticResource uzivatelViewModel}"
-                Visibility="{Binding LoggedUser, Converter={StaticResource NullVisibilityConverter}}"/>
+                        Visibility="{Binding LoggedUser, Converter={StaticResource NullVisibilityConverter}}"/>
     </Grid>
 </UserControl>

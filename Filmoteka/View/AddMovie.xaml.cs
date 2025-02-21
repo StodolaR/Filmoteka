@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,6 +25,23 @@ namespace Filmoteka.View
         public AddMovie()
         {
             InitializeComponent();
+        }
+
+        private void tbxYear_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^1-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void btnPicturePath_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Obrázky (*.jpg;*.png;*.bmp)|*.jpg;*.png;*.bmp|Všechny soubory|*.*";
+            if (dialog.ShowDialog() == true)
+            {
+                tbxPicturePath.Text = dialog.FileName;
+                //tbxPicturePath.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            }
         }
     }
 }
