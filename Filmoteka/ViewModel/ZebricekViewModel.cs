@@ -19,8 +19,19 @@ namespace Filmoteka.ViewModel
         private string newMovieYear = string.Empty;
         private string newMoviePicturePath = "Cesta k obrázku";
         private string message = string.Empty;
+        private Movie? selectedMovie;
 
         public ObservableCollection<Movie> Movies { get; set; }
+        public Movie? SelectedMovie
+        {
+            get => selectedMovie;
+            set 
+            {
+                selectedMovie = value;
+                OnPropertyChanged(nameof(SelectedMovie));
+            }
+        }
+
         public string NewMovieName
         {
             get => newMovieName;
@@ -29,7 +40,7 @@ namespace Filmoteka.ViewModel
                 newMovieName = value;
                 OnPropertyChanged(nameof(NewMovieName));
             }
-        }
+        }      
         public GenreType NewMovieGenre
         {
             get => newMovieGenre;

@@ -17,7 +17,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <ListView ItemsSource="{Binding Movies}" >
+        <ListView ItemsSource="{Binding Movies}" SelectedItem="{Binding SelectedMovie}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top">

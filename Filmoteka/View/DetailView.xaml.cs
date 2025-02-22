@@ -1,5 +1,4 @@
-﻿using Filmoteka.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,15 +16,13 @@ using System.Windows.Shapes;
 namespace Filmoteka.View
 {
     /// <summary>
-    /// Interaction logic for ZebricekView.xaml
+    /// Interaction logic for DetailView.xaml
     /// </summary>
-    public partial class ZebricekView : UserControl
+    public partial class DetailView : UserControl
     {
-        public ZebricekView()
+        public DetailView()
         {
             InitializeComponent();
         }
-
-        
     }
 }
