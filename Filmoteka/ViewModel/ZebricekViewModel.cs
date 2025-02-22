@@ -183,6 +183,7 @@ namespace Filmoteka.ViewModel
             NewMovieGenre = 0;
             NewMovieDescription = string.Empty;
             NewMovieYear = string.Empty;
+            NewMoviePicturePath = "Cesta k obrázku";
         }
     }
 }

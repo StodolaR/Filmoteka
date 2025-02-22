@@ -11,6 +11,7 @@
     <Grid>
         <Grid.Resources>
             <framework:NullVisibilityConverter x:Key="NullVisibilityConverter"/>
+            <framework:FullPathConverter x:Key="FullPathConverter"/>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -22,7 +23,7 @@
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
                         <Image  Height="60">
                             <Image.Source>
-                                <BitmapImage UriSource="{Binding PicturePath}" />
+                                <BitmapImage UriSource="{Binding PicturePath, Converter={StaticResource FullPathConverter}}" />
                             </Image.Source>
                         </Image>
                         <StackPanel>
