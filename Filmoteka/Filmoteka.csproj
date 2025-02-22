@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="Resources\bezobrazku.png" />
     <None Remove="Resources\filmy.png" />
+    <None Remove="Resources\Posters\human.png" />
     <None Remove="Resources\Posters\Rambo.jpg" />
     <None Remove="Resources\Posters\Thing.jpg" />
     <None Remove="Resources\Posters\ZhaveVystrely.jpg" />
@@ -31,6 +32,9 @@
     </Resource>
     <Resource Include="Resources\filmy.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Posters\human.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Posters\Rambo.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -20,7 +20,11 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-                        <Image Source="{Binding PicturePath}" Height="60"/>
+                        <Image  Height="60">
+                            <Image.Source>
+                                <BitmapImage UriSource="{Binding PicturePath}" />
+                            </Image.Source>
+                        </Image>
                         <StackPanel>
                             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                                 <TextBlock Text="{Binding Name}" FontSize="15"/>

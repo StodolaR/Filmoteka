@@ -40,7 +40,7 @@ namespace Filmoteka.View
             if (dialog.ShowDialog() == true)
             {
                 tbxPicturePath.Text = dialog.FileName;
-                //tbxPicturePath.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                tbxPicturePath.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             }
         }
     }

@@ -3,9 +3,11 @@ using Filmoteka.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Filmoteka.ViewModel
 {
@@ -16,6 +18,7 @@ namespace Filmoteka.ViewModel
         private string newMovieDescription = string.Empty;
         private string newMovieYear = string.Empty;
         private string newMoviePicturePath = "Cesta k obrázku";
+        private string message = string.Empty;
 
         public ObservableCollection<Movie> Movies { get; set; }
         public string NewMovieName
@@ -63,6 +66,16 @@ namespace Filmoteka.ViewModel
                 OnPropertyChanged(nameof(NewMoviePicturePath));
             }
         }
+        public string Message
+        {
+            get => message;
+            set
+            {
+                message = value;
+                OnPropertyChanged(nameof(Message));
+            }
+        }
+        public ICommand AddNewMovie => new RelayCommand(AddMovie, CanAddMovie);
         public ZebricekViewModel()
         {
             Movies = new ObservableCollection<Movie>();
@@ -73,6 +86,103 @@ namespace Filmoteka.ViewModel
                     Movies.Add(movie);
                 }
             }
-        }      
+        }
+        private bool CanAddMovie(object? arg)
+        {
+            return NewMovieName != string.Empty &&  NewMovieDescription != string.Empty && newMovieYear != string.Empty;
+        }
+
+        private void AddMovie(object? obj)
+        {
+            using(MovieContext mc = new MovieContext())
+            {
+                if (NewMoviePicturePath == "Cesta k obrázku")
+                {
+                    mc.Movies.Add(new Movie { Name = NewMovieName, Genre = NewMovieGenre, Description = NewMovieDescription,
+                                                Year = Convert.ToInt32(NewMovieYear)});
+                    mc.SaveChanges();
+                    var newMovie = mc.Movies.OrderBy(x => x.Id).Last();
+                    AddMovieToCollection(newMovie);
+                }
+                else
+                {
+                    string pictureFileName = Path.GetFileName(NewMoviePicturePath);
+                    pictureFileName = CheckFileNameUniqueness(pictureFileName);
+                    if (pictureFileName == string.Empty) return;
+                    string targetPath = Path.Combine("Posters", pictureFileName);
+                    File.Copy(NewMoviePicturePath, targetPath);
+                    mc.Movies.Add(new Movie { Name = NewMovieName, Genre = NewMovieGenre, Description = NewMovieDescription,
+                                                Year = Convert.ToInt32(NewMovieYear), PicturePath = targetPath });
+                    mc.SaveChanges();
+                    var newMovie = mc.Movies.OrderBy(x => x.Id).Last();
+                    AddMovieToCollection(newMovie);
+                }
+            }
+        }
+        private void AddMovieToCollection(Movie newMovie)
+        {
+            if (newMovie.Name != newMovieName)
+            {
+                ResetProperties();
+                Message = "Nelze se připojit k databázi, film nepřidán";
+            }
+            else
+            {
+                Movies.Add(newMovie);
+                ResetProperties();
+                Message = "Film úspěšně přidán";
+            }
+        }
+        private string CheckFileNameUniqueness(string pictureFileName)
+        {
+            if (!Directory.Exists("Posters"))
+            {
+                CreateDirectoryIfNotExist();
+                return pictureFileName;
+            }
+            try
+            {
+                string targetFileName = Path.GetFileName(NewMoviePicturePath);
+                string[] pictureFilePaths = Directory.GetFiles("Posters");
+                List<string> pictureFileNames = new List<string>();
+                foreach (var filePath in pictureFilePaths)
+                {
+                    pictureFileNames.Add(Path.GetFileName(filePath));
+                }
+                while (pictureFileNames.Contains(targetFileName))
+                {
+                    string extension = Path.GetExtension(targetFileName);
+                    string newFileName = Path.GetFileNameWithoutExtension(targetFileName) + "x";
+                    targetFileName = newFileName + extension;
+                }
+                return targetFileName;
+            }
+            catch (Exception ex)
+            {
+                Message = "Nelze vytvořit jedinečný název souboru, nelze přidávat obrázky k filmům"
+                    + Environment.NewLine + ex.Message;
+                return string.Empty;
+            }
+        }
+        private void CreateDirectoryIfNotExist()
+        {
+            try
+            {
+                Directory.CreateDirectory("Posters");
+                return;
+            }
+            catch (Exception ex)
+            {
+                Message = "Nelze vytvořit složku obrázků, nelze přidávat obrázky k filmům"
+                    + Environment.NewLine + ex.Message;
+            }
+        }
+        private void ResetProperties()
+        {
+            NewMovieName = string.Empty;
+            NewMovieGenre = 0;
+            NewMovieDescription = string.Empty;
+            NewMovieYear = string.Empty;
+        }
     }
 }

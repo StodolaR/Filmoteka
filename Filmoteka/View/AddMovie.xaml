@@ -20,16 +20,17 @@
         <StackPanel Width="200">
             <Label Content="Přidat nový film"/>
             <Label Content="Jméno:"/>
-            <TextBox Text="{Binding NewMovieName}"/>
+            <TextBox Text="{Binding NewMovieName, UpdateSourceTrigger=PropertyChanged}"/>
             <Label Content="Žánr:"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource GenreEnum}}" Text="{Binding NewMovieGenre}"/>
             <Label Content="Obsah"/>
-            <TextBox Text="{Binding NewMovieDescription}" TextWrapping="Wrap" AcceptsReturn="True" MinHeight="60"/>
+            <TextBox Text="{Binding NewMovieDescription, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" MinHeight="60"/>
             <Label Content="Rok"/>
-            <TextBox x:Name="tbxYear" Text="{Binding NewMovieYear}" PreviewTextInput="tbxYear_PreviewTextInput" MaxLength="4"/>
+            <TextBox x:Name="tbxYear" Text="{Binding NewMovieYear, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="tbxYear_PreviewTextInput" MaxLength="4"/>
             <TextBox Text="{Binding NewMoviePicturePath}" x:Name="tbxPicturePath" TextWrapping="Wrap" MinHeight="40" IsReadOnly="True"/>
             <Button Content="Zvolit obrázek" Width="100" x:Name="btnPicturePath" Click="btnPicturePath_Click"/>
-            <Button Content="Uložit film" Width="100" Margin="20"/>
+            <Button Content="Uložit film" Width="100" Margin="20" Command="{Binding AddNewMovie}"/>
+            <TextBlock Text="{Binding Message}"/>
         </StackPanel>
         
     </Grid>
