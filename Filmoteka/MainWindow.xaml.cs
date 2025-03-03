@@ -22,13 +22,13 @@ namespace Filmoteka
             InitializeComponent();
             //using (MovieContext mc = new MovieContext())
             //{
-            //   mc.Movies.Add( new Movie()
+            //    mc.Movies.Add(new Movie()
             //    {
             //        Name = "Rambo",
             //        Description = "Válečný veterán po návratu domů bojuje s policií",
             //        Genre = GenreType.Akční,
             //        Year = 1983,
-            //        PicturePath = "/Resources/Posters/Rambo.jpg"
+            //        PicturePath = "Posters/Rambo.jpg"
             //    });
             //    mc.Movies.Add(new Movie()
             //    {
@@ -36,7 +36,7 @@ namespace Filmoteka
             //        Description = "Vědce za polárním kruhem likviduje neznámý organismus",
             //        Genre = GenreType.Horor,
             //        Year = 1976,
-            //        PicturePath = "/Resources/Posters/Thing.jpg"
+            //        PicturePath = "Posters/Thing.jpg"
             //    });
             //    mc.Movies.Add(new Movie()
             //    {
@@ -44,10 +44,11 @@ namespace Filmoteka
             //        Description = "Parodie na Top Gun",
             //        Genre = GenreType.Komedie,
             //        Year = 1991,
-            //        PicturePath = "/Resources/Posters/ZhaveVystrely.jpg"
+            //        PicturePath = "Posters/ZhaveVystrely.jpg"
             //    });
-            //    mc.Users.Add(new User { Name = "Admin", Password = "AdminABC" });
-            //    mc.Users.Add(new User { Name = "Uzivatel1", Password = "Uzivatel1ABC" });
+            //    mc.Users.Add(new User { Name = "Admin", Password = "Admin" });
+            //    mc.Users.Add(new User { Name = "Uzivatel1", Password = "Uzivatel123" });
+            //    mc.Users.Add(new User { Name = "Pepa", Password = "Pepa123" });
             //    mc.SaveChanges();
             //}
         }

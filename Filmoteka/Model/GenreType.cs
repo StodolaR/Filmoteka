@@ -10,6 +10,7 @@ namespace Filmoteka.Model
     {
         Akční,
         Animovaný,
+        Drama,
         Fantasy,
         Horor,
         Komedie,
