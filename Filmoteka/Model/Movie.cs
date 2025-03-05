@@ -19,7 +19,7 @@ namespace Filmoteka.Model
         {
             get
             {
-                if (UserMovies != null)
+                if (UserMovies.Count > 0)
                 {
                     return Convert.ToInt32(UserMovies.Average(x => x.Rating) * 20);
 
@@ -29,7 +29,7 @@ namespace Filmoteka.Model
                     return 0;
                 }
             }
-        } 
-        public List<UserMovie>? UserMovies { get; set; }
+        }
+        public List<UserMovie>? UserMovies { get; set; } = new List<UserMovie>();
     }
 }

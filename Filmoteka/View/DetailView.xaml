@@ -17,6 +17,8 @@
                 <TextBlock Text="{Binding SelectedMovie.Name}"/>
                 <TextBlock Text="{Binding SelectedMovie.Genre}"/>
                 <TextBlock Text="{Binding SelectedMovie.Year}"/>
+                <TextBlock Text="{Binding SelectedMovie.AvgRating}"/>
+                <TextBlock Text="{Binding SelectedMovie.UserMovies.Count}"/>
             </StackPanel>
         </StackPanel>
         <TextBlock Text="{Binding SelectedMovie.Description}"/>
