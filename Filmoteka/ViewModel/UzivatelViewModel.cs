@@ -1,5 +1,6 @@
 ﻿using Filmoteka.Framework;
 using Filmoteka.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -105,7 +106,7 @@ namespace Filmoteka.ViewModel
             Users = new ObservableCollection<User>();
             using(MovieContext mc = new MovieContext())
             {
-                foreach (User user in mc.Users)
+                foreach (User user in mc.Users.Include(x => x.UserMovies).ThenInclude(y => y.Movie))
                 {
                     Users.Add(user);
                 }

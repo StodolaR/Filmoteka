@@ -3,6 +3,7 @@ using Filmoteka.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace Filmoteka.ViewModel
@@ -10,7 +11,6 @@ namespace Filmoteka.ViewModel
     public class ZebricekViewModel : ViewModelBase
     {
         private UzivatelViewModel uzivatelViewModel;
-        private User? loggedUser;
         private string newMovieName = string.Empty;
         private GenreType newMovieGenre;
         private string newMovieDescription = string.Empty;
@@ -20,6 +20,7 @@ namespace Filmoteka.ViewModel
         private Movie? selectedMovie;
         private int newMovieRating;
         private string newMovieReview = string.Empty;
+        private User? loggedUser;
 
         public User? LoggedUser
         {
@@ -27,20 +28,44 @@ namespace Filmoteka.ViewModel
             set
             {
                 loggedUser = value;
-                OnPropertyChanged(nameof(LoggedUser));
+                OnPropertyChanged(nameof(IsUserLogged));
             }
         }
+        public bool IsUserLogged
+        {
+            get { return LoggedUser != null; }
+        }
+        
         public ObservableCollection<Movie> Movies { get; set; }
         public Movie? SelectedMovie
         {
             get => selectedMovie;
             set
             {
+                if (selectedMovie == value) return;
                 selectedMovie = value;
+                if (SelectedMovie !=null)
+                {
+                    AddRatingsToCollection();
+                }
                 OnPropertyChanged(nameof(SelectedMovie));
             }
         }
-
+        public ObservableCollection<UserMovie> SelectedMovieRatings { get; set; }
+        public int SelectedMovieAvgRating
+        {
+            get
+            {
+                if (SelectedMovieRatings.Count > 0)
+                {
+                    return Convert.ToInt32(SelectedMovieRatings.Average(x => x.Rating) * 20);
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
         public string NewMovieName
         {
             get => newMovieName;
@@ -114,10 +139,15 @@ namespace Filmoteka.ViewModel
             }
         }
         public ICommand AddNewMovie => new RelayCommand(AddMovie, CanAddMovie);
+        public ICommand AddNewRating => new RelayCommand(AddRating, CanAddRating);
+
+        
+
         public ZebricekViewModel(UzivatelViewModel uzivatelViewModel)
         {
             this.uzivatelViewModel = uzivatelViewModel;
             this.uzivatelViewModel.PropertyChanged += UzivatelViewModel_PropertyChanged;
+            SelectedMovieRatings = new ObservableCollection<UserMovie>();
             Movies = new ObservableCollection<Movie>();
             using (MovieContext mc = new MovieContext())
             {
@@ -136,7 +166,7 @@ namespace Filmoteka.ViewModel
 
         private bool CanAddMovie(object? arg)
         {
-            return NewMovieName != string.Empty && NewMovieDescription != string.Empty && newMovieYear != string.Empty;
+            return NewMovieName != string.Empty && NewMovieDescription != string.Empty && NewMovieYear != string.Empty;
         }
 
         private void AddMovie(object? obj)
@@ -159,7 +189,7 @@ namespace Filmoteka.ViewModel
                     string targetPath = CopyPictureToPostersFolder();
                     Movie newMovieWithPicture = new Movie{Name = NewMovieName, Genre = NewMovieGenre,
                         Description = NewMovieDescription, Year = Convert.ToInt32(NewMovieYear), PicturePath = targetPath};
-                    UserMovie newRatingPictureMovie = new UserMovie { Movie = newMovieWithPicture, UserId = loggedUser.Id,
+                    UserMovie newRatingPictureMovie = new UserMovie { Movie = newMovieWithPicture, UserId = LoggedUser.Id,
                         Rating = NewMovieRating, Review = NewMovieReview};
                     newMovieWithPicture.UserMovies.Add(newRatingPictureMovie);
                     return newMovieWithPicture;
@@ -171,7 +201,7 @@ namespace Filmoteka.ViewModel
             }
             Movie newMovie = new Movie{Name = NewMovieName, Genre = NewMovieGenre,
                 Description = NewMovieDescription, Year = Convert.ToInt32(NewMovieYear)};
-            UserMovie newRating = new UserMovie { Movie = newMovie, UserId = loggedUser.Id, 
+            UserMovie newRating = new UserMovie { Movie = newMovie, UserId =LoggedUser.Id, 
                 Rating = NewMovieRating, Review = NewMovieReview};
             newMovie.UserMovies.Add(newRating);
             return newMovie;
@@ -262,6 +292,48 @@ namespace Filmoteka.ViewModel
             NewMovieDescription = string.Empty;
             NewMovieYear = string.Empty;
             NewMoviePicturePath = "Cesta k obrázku";
+            NewMovieReview = string.Empty;
+            NewMovieRating = 0;
+        }
+        private bool CanAddRating(object? arg)
+        {
+            return true;
+        }
+
+        private void AddRating(object? obj)
+        {
+            using (MovieContext mc = new MovieContext())
+            {
+                foreach (UserMovie rating in SelectedMovie.UserMovies)
+                {
+                    if (rating.UserId == LoggedUser.Id)
+                    {
+                        rating.Rating = NewMovieRating;
+                        rating.Review = NewMovieReview;
+                        mc.UserMovies.Where(x => x.UserId == LoggedUser.Id && x.MovieId == SelectedMovie.Id).First().Rating = NewMovieRating;
+                        mc.UserMovies.Where(x => x.UserId == LoggedUser.Id && x.MovieId == SelectedMovie.Id).First().Review = NewMovieReview;
+                        mc.SaveChanges();
+                        AddRatingsToCollection();
+                        return;
+                    }
+                }
+                UserMovie newRating = new UserMovie { MovieId = SelectedMovie.Id, UserId = LoggedUser.Id, 
+                    Rating = NewMovieRating, Review = NewMovieReview};
+                SelectedMovie.UserMovies.Add(newRating);
+                mc.UserMovies.Add(newRating);
+                mc.SaveChanges();
+                AddRatingsToCollection();
+            }
+        }
+        private void AddRatingsToCollection()
+        {
+            SelectedMovieRatings.Clear();
+            foreach (UserMovie rating in SelectedMovie.UserMovies)
+            {
+                SelectedMovieRatings.Add(rating);
+            }
+            OnPropertyChanged(nameof(SelectedMovieAvgRating));
+            ResetProperties();
         }
     }
 }

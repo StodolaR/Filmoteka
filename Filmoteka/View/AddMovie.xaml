@@ -8,7 +8,7 @@
              xmlns:model="clr-namespace:Filmoteka.Model"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="200">
+             d:DesignHeight="600" d:DesignWidth="200">
     <Grid>
         <Grid.Resources>
             <ObjectDataProvider x:Key="GenreEnum" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
@@ -28,7 +28,7 @@
                 <ComboBox ItemsSource="{Binding Source={StaticResource GenreEnum}}" Text="{Binding NewMovieGenre}" Width="300" VerticalContentAlignment="Center"/>
             </StackPanel>
             <Label Content="Obsah"/>
-            <TextBox Text="{Binding NewMovieDescription, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" MinHeight="60"/>
+            <TextBox Text="{Binding NewMovieDescription, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" MinHeight="180"/>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Rok:     "/>
                 <TextBox x:Name="tbxYear" Text="{Binding NewMovieYear, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="tbxYear_PreviewTextInput" MaxLength="4" VerticalContentAlignment="Center" Width="145"/>
@@ -38,7 +38,7 @@
                 <local:RatingBox RatingValue="{Binding NewMovieRating, Mode=TwoWay}"/>
             </StackPanel>
             <Label Content="Recenze:"/>
-            <TextBox Text="{Binding NewMovieReview, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" MinHeight="60"/>
+            <TextBox Text="{Binding NewMovieReview, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" MinHeight="120"/>
             <TextBox Text="{Binding NewMoviePicturePath}" x:Name="tbxPicturePath" TextWrapping="Wrap" MinHeight="40" IsReadOnly="True"/>
             <Button Content="Zvolit obrázek" Width="100" x:Name="btnPicturePath" Click="btnPicturePath_Click"/>
             <Button Content="Uložit film" Width="100" Margin="20" Command="{Binding AddNewMovie}"/>

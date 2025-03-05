@@ -24,7 +24,7 @@ namespace Filmoteka
             UzivatelViewModel uzivatelViewModel = (UzivatelViewModel)Application.Current.FindResource("uzivatelViewModel");
             ZebricekViewModel zebricekViewModel = new ZebricekViewModel(uzivatelViewModel);
             DataContext = zebricekViewModel;
-            MainTabControl.DataContext = zebricekViewModel;
+            
             //using (MovieContext mc = new MovieContext())
             //{
             //    mc.Movies.Add(new Movie()

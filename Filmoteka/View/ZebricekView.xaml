@@ -10,7 +10,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.Resources>
-            <framework:NullVisibilityConverter x:Key="NullVisibilityConverter"/>
+            <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter"/>
             <framework:FullPathConverter x:Key="FullPathConverter"/>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
@@ -26,18 +26,24 @@
                                 <BitmapImage UriSource="{Binding PicturePath, Converter={StaticResource FullPathConverter}}" />
                             </Image.Source>
                         </Image>
-                        <StackPanel>
+                        <StackPanel Width="300">
                             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                                 <TextBlock Text="{Binding Name}" FontSize="15"/>
                                 <TextBlock Text="{Binding Year, StringFormat={} (0)}"/>
                             </StackPanel>
                             <TextBlock Text="{Binding Genre}"/>
                         </StackPanel>
+                        <StackPanel Width="100">
+                            <TextBlock Text="{Binding AvgRating, StringFormat={}{0}%}" FontSize="30" 
+                                        HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding UserMovies.Count, StringFormat=Počet hodnocení: {0}}" 
+                                        HorizontalAlignment="Center"/>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
         <local:AddMovie HorizontalAlignment="Right" Grid.Column="1"
-                        Visibility="{Binding LoggedUser, Converter={StaticResource NullVisibilityConverter}}"/>
+                        Visibility="{Binding IsUserLogged, Converter={StaticResource boolToVisibilityConverter}}"/>
     </Grid>
 </UserControl>
