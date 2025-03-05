@@ -13,6 +13,8 @@ namespace Filmoteka.ViewModel
 {
     public class ZebricekViewModel : ViewModelBase
     {
+        private UzivatelViewModel uzivatelViewModel;
+        private User? loggedUser;
         private string newMovieName = string.Empty;
         private GenreType newMovieGenre;
         private string newMovieDescription = string.Empty;
@@ -23,6 +25,15 @@ namespace Filmoteka.ViewModel
         private int newMovieRating;
         private string newMovieReview = string.Empty;
 
+        public User? LoggedUser
+        {
+            get => loggedUser;
+            set
+            {
+                loggedUser = value;
+                OnPropertyChanged(nameof(LoggedUser));
+            }
+        }
         public ObservableCollection<Movie> Movies { get; set; }
         public Movie? SelectedMovie
         {
@@ -107,8 +118,10 @@ namespace Filmoteka.ViewModel
             }
         }
         public ICommand AddNewMovie => new RelayCommand(AddMovie, CanAddMovie);
-        public ZebricekViewModel()
+        public ZebricekViewModel(UzivatelViewModel uzivatelViewModel)
         {
+            this.uzivatelViewModel = uzivatelViewModel;
+            this.uzivatelViewModel.PropertyChanged += UzivatelViewModel_PropertyChanged;
             Movies = new ObservableCollection<Movie>();
             using (MovieContext mc = new MovieContext())
             {
@@ -118,6 +131,13 @@ namespace Filmoteka.ViewModel
                 }
             }
         }
+
+        private void UzivatelViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (LoggedUser != uzivatelViewModel.LoggedUser)
+                LoggedUser = uzivatelViewModel.LoggedUser;
+        }
+
         private bool CanAddMovie(object? arg)
         {
             return NewMovieName != string.Empty &&  NewMovieDescription != string.Empty && newMovieYear != string.Empty;

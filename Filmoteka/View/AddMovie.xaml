@@ -9,7 +9,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="200">
-    <Grid DataContext="{StaticResource zebricekViewModel}">
+    <Grid>
         <Grid.Resources>
             <ObjectDataProvider x:Key="GenreEnum" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
                 <ObjectDataProvider.MethodParameters>

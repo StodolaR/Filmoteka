@@ -17,8 +17,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TabControl SelectedIndex="{Binding SelectedMovie, Converter={StaticResource detailViewConverter}}" 
-                    DataContext="{StaticResource zebricekViewModel}">
+        <TabControl x:Name="MainTabControl" SelectedIndex="{Binding SelectedMovie, Converter={StaticResource detailViewConverter}}">
             <TabItem Header="Úvod">
                 <view:UvodView/>
             </TabItem>

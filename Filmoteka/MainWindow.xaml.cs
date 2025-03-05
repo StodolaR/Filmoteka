@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Filmoteka.Model;
+using Filmoteka.ViewModel;
 
 namespace Filmoteka
 {
@@ -20,6 +21,10 @@ namespace Filmoteka
         public MainWindow()
         {
             InitializeComponent();
+            UzivatelViewModel uzivatelViewModel = (UzivatelViewModel)Application.Current.FindResource("uzivatelViewModel");
+            ZebricekViewModel zebricekViewModel = new ZebricekViewModel(uzivatelViewModel);
+            DataContext = zebricekViewModel;
+            MainTabControl.DataContext = zebricekViewModel;
             //using (MovieContext mc = new MovieContext())
             //{
             //    mc.Movies.Add(new Movie()
