@@ -21,9 +21,9 @@ namespace Filmoteka
         public MainWindow()
         {
             InitializeComponent();
-            UzivatelViewModel uzivatelViewModel = (UzivatelViewModel)Application.Current.FindResource("uzivatelViewModel");
-            ZebricekViewModel zebricekViewModel = new ZebricekViewModel(uzivatelViewModel);
-            DataContext = zebricekViewModel;
+            UserViewModel userViewModel = (UserViewModel)Application.Current.FindResource("userViewModel");
+            MovieViewModel movieViewModel = new MovieViewModel(userViewModel);
+            DataContext = movieViewModel;
             
             //using (MovieContext mc = new MovieContext())
             //{

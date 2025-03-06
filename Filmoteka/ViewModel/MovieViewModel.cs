@@ -8,9 +8,9 @@ using System.Windows.Input;
 
 namespace Filmoteka.ViewModel
 {
-    public class ZebricekViewModel : ViewModelBase
+    public class MovieViewModel : ViewModelBase
     {
-        private UzivatelViewModel uzivatelViewModel;
+        private UserViewModel userViewModel;
         private string newMovieName = string.Empty;
         private GenreType newMovieGenre;
         private string newMovieDescription = string.Empty;
@@ -143,10 +143,10 @@ namespace Filmoteka.ViewModel
 
         
 
-        public ZebricekViewModel(UzivatelViewModel uzivatelViewModel)
+        public MovieViewModel(UserViewModel userViewModel)
         {
-            this.uzivatelViewModel = uzivatelViewModel;
-            this.uzivatelViewModel.PropertyChanged += UzivatelViewModel_PropertyChanged;
+            this.userViewModel = userViewModel;
+            this.userViewModel.PropertyChanged += UserViewModel_PropertyChanged;
             SelectedMovieRatings = new ObservableCollection<UserMovie>();
             Movies = new ObservableCollection<Movie>();
             using (MovieContext mc = new MovieContext())
@@ -158,10 +158,10 @@ namespace Filmoteka.ViewModel
             }
         }
 
-        private void UzivatelViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void UserViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (LoggedUser != uzivatelViewModel.LoggedUser)
-                LoggedUser = uzivatelViewModel.LoggedUser;
+            if (LoggedUser != userViewModel.LoggedUser)
+                LoggedUser = userViewModel.LoggedUser;
         }
 
         private bool CanAddMovie(object? arg)

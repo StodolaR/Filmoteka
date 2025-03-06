@@ -27,10 +27,10 @@
             <TabItem Header="Dle žánru" >
                 <view:ZanryView/>
             </TabItem>
-            <TabItem Header="Uživatelé" DataContext="{StaticResource uzivatelViewModel}">
+            <TabItem Header="Uživatelé" DataContext="{StaticResource userViewModel}">
                 <view:UzivatelView/>
             </TabItem>
-            <TabItem Header="Přihlášení" DataContext="{StaticResource uzivatelViewModel}">
+            <TabItem Header="Přihlášení" DataContext="{StaticResource userViewModel}">
                 <view:PrihlaseniView/>
             </TabItem>
             <TabItem Visibility="Collapsed" Header="Detail filmu" >
@@ -45,7 +45,7 @@
                 </Button.Content>
             </Button>
             <Label Content="Přihlášen uživatel: "/>
-            <Label Content="{Binding LoggedUser.Name}" DataContext="{StaticResource uzivatelViewModel}"/>
+            <Label Content="{Binding LoggedUser.Name}" DataContext="{StaticResource userViewModel}"/>
         </StackPanel>
     </Grid>
 </Window>
