@@ -8,7 +8,8 @@
         xmlns:view="clr-namespace:Filmoteka.View"
         xmlns:viewModel="clr-namespace:Filmoteka.ViewModel"
         mc:Ignorable="d"
-        Title="Filmotéka" Height="700" Width="900">
+        Title="Filmotéka" Height="700" Width="900"
+        DataContext="{StaticResource movieViewModel}">
     <Grid>
         <Grid.Resources>
             <framework:DetailViewConverter x:Key="detailViewConverter"/>

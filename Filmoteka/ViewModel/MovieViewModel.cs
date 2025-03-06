@@ -10,7 +10,6 @@ namespace Filmoteka.ViewModel
 {
     public class MovieViewModel : ViewModelBase
     {
-        private UserViewModel userViewModel;
         private string newMovieName = string.Empty;
         private GenreType newMovieGenre;
         private string newMovieDescription = string.Empty;
@@ -42,7 +41,6 @@ namespace Filmoteka.ViewModel
             get => selectedMovie;
             set
             {
-                if (selectedMovie == value) return;
                 selectedMovie = value;
                 if (SelectedMovie !=null)
                 {
@@ -143,10 +141,8 @@ namespace Filmoteka.ViewModel
 
         
 
-        public MovieViewModel(UserViewModel userViewModel)
+        public MovieViewModel()
         {
-            this.userViewModel = userViewModel;
-            this.userViewModel.PropertyChanged += UserViewModel_PropertyChanged;
             SelectedMovieRatings = new ObservableCollection<UserMovie>();
             Movies = new ObservableCollection<Movie>();
             using (MovieContext mc = new MovieContext())
@@ -157,13 +153,6 @@ namespace Filmoteka.ViewModel
                 }
             }
         }
-
-        private void UserViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (LoggedUser != userViewModel.LoggedUser)
-                LoggedUser = userViewModel.LoggedUser;
-        }
-
         private bool CanAddMovie(object? arg)
         {
             return NewMovieName != string.Empty && NewMovieDescription != string.Empty && NewMovieYear != string.Empty;
