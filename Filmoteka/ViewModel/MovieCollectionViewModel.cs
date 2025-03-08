@@ -42,28 +42,9 @@ namespace Filmoteka.ViewModel
             set
             {
                 selectedMovie = value;
-                //if (SelectedMovie !=null)
-                //{
-                //    AddRatingsToCollection();
-                //}
                 OnPropertyChanged(nameof(SelectedMovie));
             }
         }
-        //public ObservableCollection<UserMovie> SelectedMovieRatings { get; set; }
-        //public int SelectedMovieAvgRating
-        //{
-        //    get
-        //    {
-        //        if (SelectedMovieRatings.Count > 0)
-        //        {
-        //            return Convert.ToInt32(SelectedMovieRatings.Average(x => x.Rating) * 20);
-        //        }
-        //        else
-        //        {
-        //            return 0;
-        //        }
-        //    }
-        //}
         public string NewMovieName
         {
             get => newMovieName;
@@ -143,13 +124,11 @@ namespace Filmoteka.ViewModel
 
         public MovieCollectionViewModel()
         {
-            //SelectedMovieRatings = new ObservableCollection<UserMovie>();
             Movies = new ObservableCollection<MovieViewModel>();
             using (MovieContext mc = new MovieContext())
             {
                 foreach (Movie movie in mc.Movies.Include(x => x.UserMovies))
                 {
-                    //Movies.Add(movie);
                     ObservableCollection<UserMovie> ratings = new ObservableCollection<UserMovie>();
                     foreach (UserMovie rating in movie.UserMovies)
                     {
@@ -280,7 +259,7 @@ namespace Filmoteka.ViewModel
             {
                 ObservableCollection<UserMovie> newRatings = new ObservableCollection<UserMovie>();
                 newRatings.Add(newMovie.UserMovies.First());
-                Movies.Add(new MovieViewModel {Id = newMovie.Id, AvgRating = newMovie.UserMovies.First().Rating, 
+                Movies.Add(new MovieViewModel {Id = newMovie.Id, AvgRating = newMovie.UserMovies.First().Rating *20, 
                     Description = newMovie.Description, Genre = newMovie.Genre, Name = newMovie.Name, PicturePath = newMovie.PicturePath, 
                     Ratings = newRatings , Year = newMovie.Year});
                 ResetProperties();
@@ -306,8 +285,7 @@ namespace Filmoteka.ViewModel
         {
             using (MovieContext mc = new MovieContext())
             {
-                MovieViewModel movieWithNewRating = new MovieViewModel();
-                movieWithNewRating = SelectedMovie;
+                MovieViewModel movieWithNewRating = SelectedMovie;
                 Movies.Remove(SelectedMovie);
                 foreach (UserMovie rating in movieWithNewRating.Ratings)
                 {
@@ -315,6 +293,7 @@ namespace Filmoteka.ViewModel
                     {
                         rating.Rating = NewMovieRating;
                         rating.Review = NewMovieReview;
+                        movieWithNewRating.AvgRating = (int)(movieWithNewRating.Ratings.Average(x => x.Rating) * 20);
                         SelectedMovie = movieWithNewRating;
                         Movies.Add(SelectedMovie);
                         mc.UserMovies.Where(x => x.UserId == LoggedUser.Id && x.MovieId == SelectedMovie.Id).First().Rating = NewMovieRating;
@@ -324,9 +303,10 @@ namespace Filmoteka.ViewModel
                         return;
                     }
                 }
-                UserMovie newRating = new UserMovie { MovieId = SelectedMovie.Id, UserId = LoggedUser.Id, 
+                UserMovie newRating = new UserMovie { MovieId = movieWithNewRating.Id, UserId = LoggedUser.Id, 
                     Rating = NewMovieRating, Review = NewMovieReview};
                 movieWithNewRating.Ratings.Add(newRating);
+                movieWithNewRating.AvgRating = (int)(movieWithNewRating.Ratings.Average(x => x.Rating) * 20);
                 SelectedMovie = movieWithNewRating;
                 Movies.Add(selectedMovie);
                 mc.UserMovies.Add(newRating);
@@ -334,15 +314,5 @@ namespace Filmoteka.ViewModel
                 ResetProperties();
             }
         }
-        //private void AddRatingsToCollection()
-        //{
-        //    SelectedMovieRatings.Clear();
-        //    foreach (UserMovie rating in SelectedMovie.UserMovies)
-        //    {
-        //        SelectedMovieRatings.Add(rating);
-        //    }
-        //    OnPropertyChanged(nameof(SelectedMovieAvgRating));
-        //    ResetProperties();
-        //}
     }
 }

@@ -29,7 +29,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-                        <Image  Height="60">
+                        <Image  Height="60" Width="45" Stretch="Fill">
                             <Image.Source>
                                 <BitmapImage UriSource="{Binding PicturePath, Converter={StaticResource fullPathConverter}}" />
                             </Image.Source>
