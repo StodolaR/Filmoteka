@@ -10,9 +10,9 @@ namespace Filmoteka.ViewModel
     public class UserMovieViewmodel : ViewModelBase
     {
         private UserViewModel userViewModel;
-        private MovieViewModel movieViewModel;
+        private MovieCollectionViewModel movieViewModel;
 
-        public UserMovieViewmodel(UserViewModel userViewModel, MovieViewModel movieViewModel)
+        public UserMovieViewmodel(UserViewModel userViewModel, MovieCollectionViewModel movieViewModel)
         {
             this.userViewModel = userViewModel;
             this.movieViewModel = movieViewModel;

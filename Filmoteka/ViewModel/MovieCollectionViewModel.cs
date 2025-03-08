@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace Filmoteka.ViewModel
 {
-    public class MovieViewModel : ViewModelBase
+    public class MovieCollectionViewModel : ViewModelBase
     {
         private string newMovieName = string.Empty;
         private GenreType newMovieGenre;
@@ -141,7 +141,7 @@ namespace Filmoteka.ViewModel
 
         
 
-        public MovieViewModel()
+        public MovieCollectionViewModel()
         {
             SelectedMovieRatings = new ObservableCollection<UserMovie>();
             Movies = new ObservableCollection<Movie>();

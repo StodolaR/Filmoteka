@@ -2,5 +2,5 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewModel="clr-namespace:Filmoteka.ViewModel">
     <viewModel:UserViewModel x:Key="userViewModel"/>
-    <viewModel:MovieViewModel x:Key="movieViewModel"/>
+    <viewModel:MovieCollectionViewModel x:Key="movieCollectionViewModel"/>
 </ResourceDictionary>
