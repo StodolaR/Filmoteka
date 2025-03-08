@@ -16,7 +16,7 @@ namespace Filmoteka.ViewModel
         private string newMovieYear = string.Empty;
         private string newMoviePicturePath = "Cesta k obrázku";
         private string message = string.Empty;
-        private Movie? selectedMovie;
+        private MovieViewModel? selectedMovie;
         private int newMovieRating;
         private string newMovieReview = string.Empty;
         private User? loggedUser;
@@ -35,35 +35,35 @@ namespace Filmoteka.ViewModel
             get { return LoggedUser != null; }
         }
         
-        public ObservableCollection<Movie> Movies { get; set; }
-        public Movie? SelectedMovie
+        public ObservableCollection<MovieViewModel> Movies { get; set; }
+        public MovieViewModel? SelectedMovie
         {
             get => selectedMovie;
             set
             {
                 selectedMovie = value;
-                if (SelectedMovie !=null)
-                {
-                    AddRatingsToCollection();
-                }
+                //if (SelectedMovie !=null)
+                //{
+                //    AddRatingsToCollection();
+                //}
                 OnPropertyChanged(nameof(SelectedMovie));
             }
         }
-        public ObservableCollection<UserMovie> SelectedMovieRatings { get; set; }
-        public int SelectedMovieAvgRating
-        {
-            get
-            {
-                if (SelectedMovieRatings.Count > 0)
-                {
-                    return Convert.ToInt32(SelectedMovieRatings.Average(x => x.Rating) * 20);
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-        }
+        //public ObservableCollection<UserMovie> SelectedMovieRatings { get; set; }
+        //public int SelectedMovieAvgRating
+        //{
+        //    get
+        //    {
+        //        if (SelectedMovieRatings.Count > 0)
+        //        {
+        //            return Convert.ToInt32(SelectedMovieRatings.Average(x => x.Rating) * 20);
+        //        }
+        //        else
+        //        {
+        //            return 0;
+        //        }
+        //    }
+        //}
         public string NewMovieName
         {
             get => newMovieName;
@@ -143,13 +143,22 @@ namespace Filmoteka.ViewModel
 
         public MovieCollectionViewModel()
         {
-            SelectedMovieRatings = new ObservableCollection<UserMovie>();
-            Movies = new ObservableCollection<Movie>();
+            //SelectedMovieRatings = new ObservableCollection<UserMovie>();
+            Movies = new ObservableCollection<MovieViewModel>();
             using (MovieContext mc = new MovieContext())
             {
                 foreach (Movie movie in mc.Movies.Include(x => x.UserMovies))
                 {
-                    Movies.Add(movie);
+                    //Movies.Add(movie);
+                    ObservableCollection<UserMovie> ratings = new ObservableCollection<UserMovie>();
+                    foreach (UserMovie rating in movie.UserMovies)
+                    {
+                        ratings.Add(rating);
+                    }
+                    int avgRating = (int)(ratings.Average(x => x.Rating)*20);
+                    MovieViewModel movieForViewModel = new MovieViewModel {Id = movie.Id, AvgRating = avgRating, Description = movie.Description,
+                     Genre = movie.Genre, Name = movie.Name, PicturePath = movie.PicturePath, Ratings = ratings, Year = movie.Year};
+                    Movies.Add(movieForViewModel);
                 }
             }
         }
@@ -165,7 +174,7 @@ namespace Filmoteka.ViewModel
                 Movie newMovie = CreateNewMovieWithRating();
                 mc.Movies.Add(newMovie);
                 mc.SaveChanges();
-                var newMovieFromDatabase = mc.Movies.OrderBy(x => x.Id).Last();
+                Movie newMovieFromDatabase = mc.Movies.OrderBy(x => x.Id).Last();
                 AddMovieToCollection(newMovieFromDatabase);
             }
         }
@@ -260,16 +269,20 @@ namespace Filmoteka.ViewModel
                 throw new Exception("Nelze vytvořit složku obrázků");
             }
         }
-        private void AddMovieToCollection(Movie newMovieFromDatabase)
+        private void AddMovieToCollection(Movie newMovie)
         {
-            if (newMovieFromDatabase.Name != newMovieName)
+            if (newMovie.Name != newMovieName)
             {
                 ResetProperties();
                 Message = "Nelze se připojit k databázi, film nepřidán";
             }
             else
             {
-                Movies.Add(newMovieFromDatabase);
+                ObservableCollection<UserMovie> newRatings = new ObservableCollection<UserMovie>();
+                newRatings.Add(newMovie.UserMovies.First());
+                Movies.Add(new MovieViewModel {Id = newMovie.Id, AvgRating = newMovie.UserMovies.First().Rating, 
+                    Description = newMovie.Description, Genre = newMovie.Genre, Name = newMovie.Name, PicturePath = newMovie.PicturePath, 
+                    Ratings = newRatings , Year = newMovie.Year});
                 ResetProperties();
                 Message = "Film úspěšně přidán";
             }
@@ -293,36 +306,43 @@ namespace Filmoteka.ViewModel
         {
             using (MovieContext mc = new MovieContext())
             {
-                foreach (UserMovie rating in SelectedMovie.UserMovies)
+                MovieViewModel movieWithNewRating = new MovieViewModel();
+                movieWithNewRating = SelectedMovie;
+                Movies.Remove(SelectedMovie);
+                foreach (UserMovie rating in movieWithNewRating.Ratings)
                 {
                     if (rating.UserId == LoggedUser.Id)
                     {
                         rating.Rating = NewMovieRating;
                         rating.Review = NewMovieReview;
+                        SelectedMovie = movieWithNewRating;
+                        Movies.Add(SelectedMovie);
                         mc.UserMovies.Where(x => x.UserId == LoggedUser.Id && x.MovieId == SelectedMovie.Id).First().Rating = NewMovieRating;
                         mc.UserMovies.Where(x => x.UserId == LoggedUser.Id && x.MovieId == SelectedMovie.Id).First().Review = NewMovieReview;
                         mc.SaveChanges();
-                        AddRatingsToCollection();
+                        ResetProperties();
                         return;
                     }
                 }
                 UserMovie newRating = new UserMovie { MovieId = SelectedMovie.Id, UserId = LoggedUser.Id, 
                     Rating = NewMovieRating, Review = NewMovieReview};
-                SelectedMovie.UserMovies.Add(newRating);
+                movieWithNewRating.Ratings.Add(newRating);
+                SelectedMovie = movieWithNewRating;
+                Movies.Add(selectedMovie);
                 mc.UserMovies.Add(newRating);
                 mc.SaveChanges();
-                AddRatingsToCollection();
+                ResetProperties();
             }
         }
-        private void AddRatingsToCollection()
-        {
-            SelectedMovieRatings.Clear();
-            foreach (UserMovie rating in SelectedMovie.UserMovies)
-            {
-                SelectedMovieRatings.Add(rating);
-            }
-            OnPropertyChanged(nameof(SelectedMovieAvgRating));
-            ResetProperties();
-        }
+        //private void AddRatingsToCollection()
+        //{
+        //    SelectedMovieRatings.Clear();
+        //    foreach (UserMovie rating in SelectedMovie.UserMovies)
+        //    {
+        //        SelectedMovieRatings.Add(rating);
+        //    }
+        //    OnPropertyChanged(nameof(SelectedMovieAvgRating));
+        //    ResetProperties();
+        //}
     }
 }
