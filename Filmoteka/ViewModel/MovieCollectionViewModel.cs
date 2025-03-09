@@ -18,7 +18,7 @@ namespace Filmoteka.ViewModel
         private string message = string.Empty;
         private MovieViewModel? selectedMovie;
         private int newMovieRating;
-        private string newMovieReview = string.Empty;
+        private string? newMovieReview;
         private User? loggedUser;
 
         public User? LoggedUser

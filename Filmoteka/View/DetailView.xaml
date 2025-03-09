@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Filmoteka.View"
+             xmlns:uc="clr-namespace:Filmoteka.View.UserControls"
              xmlns:framework="clr-namespace:Filmoteka.Framework" 
              xmlns:viewmodel="clr-namespace:Filmoteka.ViewModel" 
              mc:Ignorable="d" 
@@ -36,7 +37,7 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,5">
-                                <TextBlock Text="{Binding Rating}"/>
+                                <uc:RatingBlock RatingValue="{Binding Rating}"/>
                                 <TextBlock Text="{Binding Review}" TextWrapping="Wrap" Width="450"/>
                             </StackPanel>
                         </DataTemplate>

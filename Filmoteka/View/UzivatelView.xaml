@@ -4,9 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Filmoteka.View"
+             xmlns:uc="clr-namespace:Filmoteka.View.UserControls"
              xmlns:viewModel="clr-namespace:Filmoteka.ViewModel"
+             xmlns:framework="clr-namespace:Filmoteka.Framework"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <framework:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -24,9 +29,14 @@
         <ListView Grid.Column="1" ItemsSource="{Binding SelectedUser.UserMovies}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Rating}"/>
-                        <TextBlock Text="{Binding Movie.Name}"/>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <uc:RatingBlock RatingValue="{Binding Rating}"/>
+                            <TextBlock Text="{Binding Movie.Name}"/>
+                        </StackPanel>
+                        <Expander ExpandDirection="Right" Visibility="{Binding Review, Converter={StaticResource nullToVisibleConverter}}">
+                            <TextBlock Text="{Binding Review}" TextWrapping="Wrap" Width="350"/>
+                        </Expander>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

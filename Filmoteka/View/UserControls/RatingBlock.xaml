@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Filmoteka.View.RatingBox"
+﻿<UserControl x:Class="Filmoteka.View.UserControls.RatingBlock"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,12 +8,11 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel Orientation="Horizontal" Height="20" x:Name="StarPanel">
-            <Button Tag="0" Click="StarButton_Click" Content="0" Width="20"/>
-            <Button/>
-            <Button/>
-            <Button/>
-            <Button/>
-            <Button/>
+            <Label Margin="0,-4,0,0"/>
+            <Label Margin="0,-4,0,0"/>
+            <Label Margin="0,-4,0,0"/>
+            <Label Margin="0,-4,0,0"/>
+            <Label Margin="0,-4,0,0"/>
         </StackPanel>
     </Grid>
 </UserControl>
