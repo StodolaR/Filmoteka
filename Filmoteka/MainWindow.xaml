@@ -19,7 +19,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <TabControl x:Name="MainTabControl" SelectedIndex="{Binding SelectedMovie, Converter={StaticResource detailViewConverter}}">
-            <TabItem Header="Úvod">
+            <TabItem Header="Úvod" Visibility="Collapsed">
                 <view:UvodView/>
             </TabItem>
             <TabItem Header="Žebříček" >
@@ -28,10 +28,10 @@
             <TabItem Header="Dle žánru" >
                 <view:ZanryView/>
             </TabItem>
-            <TabItem Header="Uživatelé" DataContext="{StaticResource userViewModel}">
+            <TabItem x:Name="usersTabItem" Header="Uživatelé" DataContext="{StaticResource userCollectionViewModel}">
                 <view:UzivatelView/>
             </TabItem>
-            <TabItem Header="Přihlášení" DataContext="{StaticResource userViewModel}">
+            <TabItem Header="Přihlášení" DataContext="{StaticResource userCollectionViewModel}">
                 <view:PrihlaseniView/>
             </TabItem>
             <TabItem Visibility="Collapsed" Header="Detail filmu" >
@@ -46,7 +46,7 @@
                 </Button.Content>
             </Button>
             <Label Content="Přihlášen uživatel: "/>
-            <Label Content="{Binding LoggedUser.Name}" DataContext="{StaticResource userViewModel}"/>
+            <Label Content="{Binding LoggedUser.Name}" DataContext="{StaticResource userCollectionViewModel}"/>
         </StackPanel>
     </Grid>
 </Window>

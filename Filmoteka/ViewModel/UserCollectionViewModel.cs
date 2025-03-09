@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace Filmoteka.ViewModel
 {
-    public class UserViewModel : ViewModelBase
+    public class UserCollectionViewModel : ViewModelBase
     {
         private User? loggedUser;
         private string loginName = string.Empty;
@@ -101,7 +101,7 @@ namespace Filmoteka.ViewModel
         public ICommand UserRegistration => new RelayCommand(Register, CanRegister);
 
        
-        public UserViewModel()
+        public UserCollectionViewModel()
         {
             Users = new ObservableCollection<User>();
             using(MovieContext mc = new MovieContext())

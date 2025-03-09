@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewModel="clr-namespace:Filmoteka.ViewModel">
-    <viewModel:UserViewModel x:Key="userViewModel"/>
+    <viewModel:UserCollectionViewModel x:Key="userCollectionViewModel"/>
     <viewModel:MovieCollectionViewModel x:Key="movieCollectionViewModel"/>
 </ResourceDictionary>

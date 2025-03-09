@@ -21,9 +21,9 @@ namespace Filmoteka
         public MainWindow()
         {
             InitializeComponent();
-            UserViewModel userViewModel = (UserViewModel)Application.Current.FindResource("userViewModel");
+            UserCollectionViewModel userCollectionViewModel = (UserCollectionViewModel)Application.Current.FindResource("userCollectionViewModel");
             MovieCollectionViewModel movieCollectionViewModel = (MovieCollectionViewModel)Application.Current.FindResource("movieCollectionViewModel");
-            UserMovieViewmodel userMovieViewmodel = new UserMovieViewmodel(userViewModel, movieCollectionViewModel);
+            UserMovieViewmodel userMovieViewmodel = new UserMovieViewmodel(userCollectionViewModel, movieCollectionViewModel);
         }
     }
 }
