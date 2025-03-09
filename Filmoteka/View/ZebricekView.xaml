@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              xmlns:local="clr-namespace:Filmoteka.View"
+             xmlns:uc="clr-namespace:Filmoteka.View.UserControls"
              xmlns:viewModel="clr-namespace:Filmoteka.ViewModel"
              xmlns:framework="clr-namespace:Filmoteka.Framework"
              mc:Ignorable="d" 
@@ -54,7 +55,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <local:AddMovie HorizontalAlignment="Right" Grid.Column="1"
+        <uc:AddMovie HorizontalAlignment="Right" Grid.Column="1"
                         Visibility="{Binding IsUserLogged, Converter={StaticResource boolToVisibilityConverter}}"/>
     </Grid>
 </UserControl>

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Filmoteka.View"
+             xmlns:uc="clr-namespace:Filmoteka.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="800">
     <Grid Height="650">
@@ -16,7 +17,7 @@
             <Label Content="Uživatelské jméno"/>
             <TextBox Text="{Binding LoginName, UpdateSourceTrigger=PropertyChanged}" Width="150"/>
             <Label Content="Heslo"/>
-            <local:PasswordUserControl PasswordDP="{Binding LoginPassword,
+            <uc:PasswordUserControl PasswordDP="{Binding LoginPassword,
                         UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             <Button  Content="Přihlásit se" Margin="0,20,0,0" Width="80"
                     Command="{Binding UserLogin}" IsDefault="True"/>
@@ -29,10 +30,10 @@
             <Label Content="Nové uživatelské jméno"/>
             <TextBox Text="{Binding RegistrationName, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
             <Label Content="Nové Heslo"/>
-            <local:PasswordUserControl PasswordDP="{Binding RegistrationPassword, 
+            <uc:PasswordUserControl PasswordDP="{Binding RegistrationPassword, 
                                 UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             <Label Content="Znova heslo pro kontrolu"/>
-            <local:PasswordUserControl PasswordDP="{Binding RegistrationPasswordVerification, 
+            <uc:PasswordUserControl PasswordDP="{Binding RegistrationPasswordVerification, 
                                 UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             <Button Command="{Binding UserRegistration}" Content="Registrovat" Margin="0,20,0,0" 
                     Width="80" IsDefault="True"/>

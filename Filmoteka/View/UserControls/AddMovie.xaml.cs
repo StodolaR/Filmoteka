@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Filmoteka.View
+namespace Filmoteka.View.UserControls
 {
     /// <summary>
     /// Interaction logic for AddMovie.xaml

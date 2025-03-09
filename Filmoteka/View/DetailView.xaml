@@ -44,7 +44,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </StackPanel>
-            <local:AddRating DockPanel.Dock="Right" Visibility="{Binding IsUserLogged, Converter={StaticResource boolToVisibilityConverter}}"/>
+            <uc:AddRating DockPanel.Dock="Right" Visibility="{Binding IsUserLogged, Converter={StaticResource boolToVisibilityConverter}}"/>
         </DockPanel>
     </StackPanel>
     
