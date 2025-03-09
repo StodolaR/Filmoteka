@@ -9,21 +9,23 @@ namespace Filmoteka.ViewModel
 {
     public class UserMovieViewmodel : ViewModelBase
     {
+        private MovieCollectionViewModel movieCollectionViewModel;
         private UserCollectionViewModel userCollectionViewModel;
-        private MovieCollectionViewModel movieViewModel;
 
-        public UserMovieViewmodel(UserCollectionViewModel userCollectionViewModel, MovieCollectionViewModel movieViewModel)
+        public UserCollectionViewModel UserCollectionViewModel { get => userCollectionViewModel; set => userCollectionViewModel = value; }
+
+        public UserMovieViewmodel(UserCollectionViewModel userCollectionViewModel, MovieCollectionViewModel movieCollectionViewModel)
         {
             this.userCollectionViewModel = userCollectionViewModel;
-            this.movieViewModel = movieViewModel;
+            this.movieCollectionViewModel = movieCollectionViewModel;
             userCollectionViewModel.PropertyChanged += UserCollectionViewModel_PropertyChanged;
         }
 
         private void UserCollectionViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (userCollectionViewModel.LoggedUser != movieViewModel.LoggedUser)
+            if (userCollectionViewModel.LoggedUser != movieCollectionViewModel.LoggedUser)
             {
-                movieViewModel.LoggedUser = userCollectionViewModel.LoggedUser;
+                movieCollectionViewModel.LoggedUser = userCollectionViewModel.LoggedUser;
             }
         }
     }

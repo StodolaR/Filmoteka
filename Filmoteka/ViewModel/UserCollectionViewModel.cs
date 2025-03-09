@@ -14,6 +14,7 @@ namespace Filmoteka.ViewModel
 {
     public class UserCollectionViewModel : ViewModelBase
     {
+        private User? selectedUser;
         private User? loggedUser;
         private string loginName = string.Empty;
         private string loginPassword = string.Empty;
@@ -24,6 +25,15 @@ namespace Filmoteka.ViewModel
         private string registrationMessage = string.Empty;
 
         public ObservableCollection<User> Users { get; set; }
+        public User? SelectedUser
+        {
+            get => selectedUser;
+            set
+            {
+                selectedUser = value;
+                OnPropertyChanged(nameof(SelectedUser));
+            }
+        }
         public User? LoggedUser
         {
             get => loggedUser;
