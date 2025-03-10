@@ -27,7 +27,7 @@
         </Grid.ColumnDefinitions>
         <ScrollViewer>
             <ListView ItemsSource="{Binding Source={StaticResource movies}}" SelectedItem="{Binding SelectedMovie}" 
-                                                                             AlternationCount="{Binding Movies.Count}">
+                       AlternationCount="{Binding Movies.Count}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
