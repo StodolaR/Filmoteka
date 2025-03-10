@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              xmlns:local="clr-namespace:Filmoteka.View"
              xmlns:framework="clr-namespace:Filmoteka.Framework"
              xmlns:viewModel="clr-namespace:Filmoteka.ViewModel"
@@ -13,8 +14,11 @@
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription PropertyName="Genre"/>
             </CollectionViewSource.GroupDescriptions>
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="AvgRating" Direction="Descending"/>
+            </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
-        <framework:FullPathConverter x:Key="FullPathConverter"/>
+        <framework:FullPathConverter x:Key="fullPathConverter"/>
     </UserControl.Resources>
     <Grid>
         <ListView ItemsSource="{Binding Source={StaticResource MovieSource}}" SelectedItem="{Binding SelectedMovie}">
@@ -32,8 +36,8 @@
                                     <Setter.Value>
                                         <ControlTemplate>
                                             <StackPanel>
-                                                <TextBlock Text="{Binding Name}"/>
-                                                <ScrollViewer Height="200">
+                                                <TextBlock Text="{Binding Name}" FontSize="25"/>
+                                                <ScrollViewer Height="200" Width="300" VerticalScrollBarVisibility="Auto">
                                                     <ItemsPresenter/>
                                                 </ScrollViewer>
                                             </StackPanel>
@@ -45,25 +49,23 @@
                     </GroupStyle.ContainerStyle>
                 </GroupStyle>
             </ListView.GroupStyle>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-                                    <Image Source="{Binding PicturePath, Converter={StaticResource FullPathConverter}}" Height="60"/>
-                                    <StackPanel>
-                                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Name}" FontSize="15"/>
-                                        </StackPanel>
-                                        <TextBlock Text="{Binding Year, StringFormat={} (0)}"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                        <Image Height="60" Width="45" Stretch="Fill">
+                            <Image.Source>
+                                <BitmapImage UriSource="{Binding PicturePath, Converter={StaticResource fullPathConverter}}" />
+                            </Image.Source>
+                        </Image>
+                        <DockPanel LastChildFill="False" Width="220">
+                            <TextBlock Text="{Binding Name}" FontSize="15" DockPanel.Dock="Top"/>
+                            <TextBlock Text="{Binding AvgRating, StringFormat={}{0}%}" FontSize="20" DockPanel.Dock="Right"/>
+                            <TextBlock Text="{Binding Ratings.Count, StringFormat=Počet hodnocení: {0}}"  DockPanel.Dock="Bottom"/>
+                            <TextBlock Text="{Binding Year, StringFormat={} (0)}" DockPanel.Dock="Left"/>
+                        </DockPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
     </Grid>
 </UserControl>

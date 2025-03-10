@@ -25,36 +25,36 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <ListView ItemsSource="{Binding Source={StaticResource movies}}" SelectedItem="{Binding SelectedMovie}" 
-                  AlternationCount="{Binding Movies.Count}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-                        <Image  Height="60" Width="45" Stretch="Fill">
-                            <Image.Source>
-                                <BitmapImage UriSource="{Binding PicturePath, Converter={StaticResource fullPathConverter}}" />
-                            </Image.Source>
-                        </Image>
-                        <StackPanel Width="300">
-                            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                                <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, StringFormat={}{0}.,
-                                    Path=(ItemsControl.AlternationIndex), Converter={StaticResource orderNumberConverter}}" 
-                                           FontSize="15" MinWidth="20"/>
-                                <TextBlock Text="{Binding Name}" FontSize="15"/>
-                                <TextBlock Text="{Binding Year, StringFormat={} (0)}"/>
+        <ScrollViewer>
+            <ListView ItemsSource="{Binding Source={StaticResource movies}}" SelectedItem="{Binding SelectedMovie}" 
+                                                                             AlternationCount="{Binding Movies.Count}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                            <Image  Height="60" Width="45" Stretch="Fill">
+                                <Image.Source>
+                                    <BitmapImage UriSource="{Binding PicturePath, Converter={StaticResource fullPathConverter}}" />
+                                </Image.Source>
+                            </Image>
+                            <StackPanel Width="300">
+                                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                    <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, StringFormat={}{0}.,
+                                                      Path=(ItemsControl.AlternationIndex), Converter={StaticResource orderNumberConverter}}" 
+                                                      FontSize="15" MinWidth="20"/>
+                                    <TextBlock Text="{Binding Name}" FontSize="15"/>
+                                    <TextBlock Text="{Binding Year, StringFormat={} (0)}"/>
+                                </StackPanel>
+                                <TextBlock Text="{Binding Genre}"/>
                             </StackPanel>
-                            <TextBlock Text="{Binding Genre}"/>
+                            <StackPanel Width="100">
+                                <TextBlock Text="{Binding AvgRating, StringFormat={}{0}%}" FontSize="30" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Ratings.Count, StringFormat=Počet hodnocení: {0}}" HorizontalAlignment="Center"/>
+                            </StackPanel>
                         </StackPanel>
-                        <StackPanel Width="100">
-                            <TextBlock Text="{Binding AvgRating, StringFormat={}{0}%}" FontSize="30" 
-                                        HorizontalAlignment="Center"/>
-                            <TextBlock Text="{Binding Ratings.Count, StringFormat=Počet hodnocení: {0}}" 
-                                        HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
         <uc:AddMovie HorizontalAlignment="Right" Grid.Column="1"
                         Visibility="{Binding IsUserLogged, Converter={StaticResource boolToVisibilityConverter}}"/>
     </Grid>
