@@ -20,11 +20,6 @@
         <ListView ItemsSource="{Binding Source={StaticResource MovieSource}}" SelectedItem="{Binding SelectedMovie}">
             <ListView.GroupStyle>
                 <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}"/>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
                     <GroupStyle.Panel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Vertical" Height="700"/>
@@ -33,7 +28,18 @@
                     <GroupStyle.ContainerStyle>
                         <Style TargetType="GroupItem">
                             <Style.Setters>
-                                <Setter Property="Height" Value="205"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Name}"/>
+                                                <ScrollViewer Height="200">
+                                                    <ItemsPresenter/>
+                                                </ScrollViewer>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
                             </Style.Setters>
                         </Style>
                     </GroupStyle.ContainerStyle>

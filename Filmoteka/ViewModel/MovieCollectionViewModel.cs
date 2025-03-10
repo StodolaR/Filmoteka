@@ -19,9 +19,9 @@ namespace Filmoteka.ViewModel
         private MovieViewModel? selectedMovie;
         private int newMovieRating;
         private string? newMovieReview;
-        private User? loggedUser;
+        private UserViewModel? loggedUser;
 
-        public User? LoggedUser
+        public UserViewModel? LoggedUser
         {
             get => loggedUser;
             set

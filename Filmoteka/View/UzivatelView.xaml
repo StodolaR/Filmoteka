@@ -26,7 +26,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ListView Grid.Column="1" ItemsSource="{Binding SelectedUser.UserMovies}">
+        <ListView Grid.Column="1" ItemsSource="{Binding SelectedUser.Ratings}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>

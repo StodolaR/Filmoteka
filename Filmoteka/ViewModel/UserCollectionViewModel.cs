@@ -1,5 +1,6 @@
 ﻿using Filmoteka.Framework;
 using Filmoteka.Model;
+using Filmoteka.View.UserControls;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,8 @@ namespace Filmoteka.ViewModel
 {
     public class UserCollectionViewModel : ViewModelBase
     {
-        private User? selectedUser;
-        private User? loggedUser;
+        private UserViewModel? selectedUser;
+        private UserViewModel? loggedUser;
         private string loginName = string.Empty;
         private string loginPassword = string.Empty;
         private string registrationName = string.Empty;
@@ -24,8 +25,8 @@ namespace Filmoteka.ViewModel
         private string message = string.Empty;
         private string registrationMessage = string.Empty;
 
-        public ObservableCollection<User> Users { get; set; }
-        public User? SelectedUser
+        public ObservableCollection<UserViewModel> Users { get; set; }
+        public UserViewModel? SelectedUser
         {
             get => selectedUser;
             set
@@ -34,7 +35,7 @@ namespace Filmoteka.ViewModel
                 OnPropertyChanged(nameof(SelectedUser));
             }
         }
-        public User? LoggedUser
+        public UserViewModel? LoggedUser
         {
             get => loggedUser;
             set
@@ -113,12 +114,18 @@ namespace Filmoteka.ViewModel
        
         public UserCollectionViewModel()
         {
-            Users = new ObservableCollection<User>();
+            Users = new ObservableCollection<UserViewModel>();
             using(MovieContext mc = new MovieContext())
             {
                 foreach (User user in mc.Users.Include(x => x.UserMovies).ThenInclude(y => y.Movie))
                 {
-                    Users.Add(user);
+                    ObservableCollection<UserMovie> ratings = new ObservableCollection<UserMovie>();
+                    foreach (UserMovie rating in user.UserMovies)
+                    {
+                        ratings.Add(rating);
+                    }
+                    UserViewModel userForViewModel = new UserViewModel { Id = user.Id, Name = user.Name, Password = user.Password, Ratings = ratings };
+                    Users.Add(userForViewModel);
                 }
             }
         }
@@ -129,7 +136,7 @@ namespace Filmoteka.ViewModel
 
         private void Login(object? obj)
         {
-            foreach (User user in Users)
+            foreach (UserViewModel user in Users)
             {
                 if (user.Name == LoginName && user.Password == LoginPassword)
                 {
@@ -183,8 +190,14 @@ namespace Filmoteka.ViewModel
                 }
                 else
                 {
-                    LoggedUser = newUser;
-                    Users.Add(newUser);
+                    ObservableCollection<UserMovie> ratings = new ObservableCollection<UserMovie>();
+                    foreach (UserMovie rating in newUser.UserMovies)
+                    {
+                        ratings.Add(rating);
+                    }
+                    UserViewModel newUserViewModel = new UserViewModel { Id = newUser.Id, Name = newUser.Name, Password = newUser.Password, Ratings = ratings};
+                    LoggedUser = newUserViewModel;
+                    Users.Add(newUserViewModel);
                     Message = "Přihlášen: " + RegistrationName;
                     RegistrationName = string.Empty;
                     RegistrationPassword = string.Empty;
