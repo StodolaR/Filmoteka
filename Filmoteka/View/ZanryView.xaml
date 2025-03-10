@@ -17,8 +17,7 @@
         <framework:FullPathConverter x:Key="FullPathConverter"/>
     </UserControl.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding Source={StaticResource MovieSource}}" 
-                  SelectedItem="{Binding SelectedMovie}">
+        <ListView ItemsSource="{Binding Source={StaticResource MovieSource}}" SelectedItem="{Binding SelectedMovie}">
             <ListView.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
@@ -26,6 +25,18 @@
                             <TextBlock Text="{Binding Name}"/>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Vertical" Height="700"/>
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="GroupItem">
+                            <Style.Setters>
+                                <Setter Property="Height" Value="205"/>
+                            </Style.Setters>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
                 </GroupStyle>
             </ListView.GroupStyle>
             <ListView.View>
