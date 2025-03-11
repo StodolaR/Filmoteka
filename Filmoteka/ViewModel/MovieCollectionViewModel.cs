@@ -308,7 +308,7 @@ namespace Filmoteka.ViewModel
                 movieWithNewRating.Ratings.Add(newRating);
                 movieWithNewRating.AvgRating = (int)(movieWithNewRating.Ratings.Average(x => x.Rating) * 20);
                 SelectedMovie = movieWithNewRating;
-                Movies.Add(selectedMovie);
+                Movies.Add(SelectedMovie);
                 mc.UserMovies.Add(newRating);
                 mc.SaveChanges();
                 ResetProperties();
