@@ -40,7 +40,7 @@ namespace Filmoteka.ViewModel
                 {
                     userCollectionViewModel.LoggedUser.Ratings.Remove(movieRatingInLoggedUserRatings);
                 }
-                userCollectionViewModel.LoggedUser.Ratings.Add(newRatedMovie.Ratings.Last());
+                userCollectionViewModel.LoggedUser.Ratings.Add(newRatedMovie.Ratings.Where(x => x.UserId == userCollectionViewModel.LoggedUser.Id).First());
             } 
         }      
     }
