@@ -35,7 +35,7 @@ namespace Filmoteka.ViewModel
             {
                 MovieViewModel newRatedMovie = new MovieViewModel();
                 newRatedMovie = (MovieViewModel)(e.NewItems[0]);
-                UserMovie? movieRatingInLoggedUserRatings = userCollectionViewModel.LoggedUser.Ratings.Where(x => x.MovieId == newRatedMovie.Id).First();
+                UserMovie? movieRatingInLoggedUserRatings = userCollectionViewModel.LoggedUser.Ratings.Where(x => x.MovieId == newRatedMovie.Id).FirstOrDefault();
                 if (movieRatingInLoggedUserRatings != null)
                 {
                     userCollectionViewModel.LoggedUser.Ratings.Remove(movieRatingInLoggedUserRatings);

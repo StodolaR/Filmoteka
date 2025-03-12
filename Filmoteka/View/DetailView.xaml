@@ -37,7 +37,10 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,5">
-                                <uc:RatingBlock RatingValue="{Binding Rating}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <uc:RatingBlock RatingValue="{Binding Rating}"/>
+                                    <TextBlock Text="{Binding User.Name}"/>
+                                </StackPanel>
                                 <TextBlock Text="{Binding Review}" TextWrapping="Wrap" Width="450"/>
                             </StackPanel>
                         </DataTemplate>

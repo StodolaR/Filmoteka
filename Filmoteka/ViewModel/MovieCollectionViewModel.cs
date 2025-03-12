@@ -135,7 +135,7 @@ namespace Filmoteka.ViewModel
             Movies = new ObservableCollection<MovieViewModel>();
             using (MovieContext mc = new MovieContext())
             {
-                foreach (Movie movie in mc.Movies.Include(x => x.UserMovies))
+                foreach (Movie movie in mc.Movies.Include(x => x.UserMovies).ThenInclude(y => y.User))
                 {
                     ObservableCollection<UserMovie> ratings = new ObservableCollection<UserMovie>();
                     foreach (UserMovie rating in movie.UserMovies)
@@ -301,6 +301,7 @@ namespace Filmoteka.ViewModel
                     {
                         rating.Rating = NewMovieRating;
                         rating.Review = NewMovieReview;
+                        rating.User = new User {Name = LoggedUser.Name};
                         movieWithNewRating.AvgRating = (int)(movieWithNewRating.Ratings.Average(x => x.Rating) * 20);
                         SelectedMovie = movieWithNewRating;
                         Movies.Add(SelectedMovie);
@@ -313,12 +314,13 @@ namespace Filmoteka.ViewModel
                 }
                 UserMovie newRating = new UserMovie { MovieId = movieWithNewRating.Id, UserId = LoggedUser.Id, 
                     Rating = NewMovieRating, Review = NewMovieReview};
+                mc.UserMovies.Add(newRating);
+                mc.SaveChanges();
+                newRating.User = new User { Id = LoggedUser.Id, Name = LoggedUser.Name };
                 movieWithNewRating.Ratings.Add(newRating);
                 movieWithNewRating.AvgRating = (int)(movieWithNewRating.Ratings.Average(x => x.Rating) * 20);
                 SelectedMovie = movieWithNewRating;
-                Movies.Add(SelectedMovie);
-                mc.UserMovies.Add(newRating);
-                mc.SaveChanges();
+                Movies.Add(SelectedMovie);                
                 ResetProperties();
             }
         }
