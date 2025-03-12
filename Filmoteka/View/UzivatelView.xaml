@@ -26,8 +26,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ListView Grid.Column="1" ItemsSource="{Binding SelectedUser.Ratings}">
-            <ListView.ItemTemplate>
+        <ItemsControl Grid.Column="1" ItemsSource="{Binding SelectedUser.Ratings}">
+            <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
@@ -39,7 +39,7 @@
                         </Expander>
                     </StackPanel>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>
