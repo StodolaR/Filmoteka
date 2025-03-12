@@ -16,9 +16,9 @@
                 <scm:SortDescription PropertyName="AvgRating" Direction="Descending"/>
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
-        <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter"/>
         <framework:FullPathConverter x:Key="fullPathConverter"/>
         <framework:OrderNumbersConverter x:Key="orderNumberConverter"/>
+        <framework:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -56,6 +56,6 @@
             </ListView>
         </ScrollViewer>
         <uc:AddMovie HorizontalAlignment="Right" Grid.Column="1"
-                        Visibility="{Binding IsUserLogged, Converter={StaticResource boolToVisibilityConverter}}"/>
+                        Visibility="{Binding LoggedUser, Converter={StaticResource nullToVisibleConverter}}"/>
     </Grid>
 </UserControl>

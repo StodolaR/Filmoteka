@@ -28,14 +28,9 @@ namespace Filmoteka.ViewModel
             set
             {
                 loggedUser = value;
-                OnPropertyChanged(nameof(IsUserLogged));
+                OnPropertyChanged(nameof(LoggedUser));
             }
         }
-        public bool IsUserLogged
-        {
-            get { return LoggedUser != null; }
-        }
-        
         public ObservableCollection<MovieViewModel> Movies { get; set; }
         public MovieViewModel? SelectedMovie
         {

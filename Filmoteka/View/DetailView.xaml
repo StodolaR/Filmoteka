@@ -11,7 +11,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <framework:FullPathConverter x:Key="fullPathConverter"/>
-        <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+        <framework:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
     </UserControl.Resources>
     <StackPanel>
         <DockPanel LastChildFill="False">
@@ -44,7 +44,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </StackPanel>
-            <uc:AddRating DockPanel.Dock="Right" Visibility="{Binding IsUserLogged, Converter={StaticResource boolToVisibilityConverter}}"/>
+            <uc:AddRating DockPanel.Dock="Right" Visibility="{Binding LoggedUser, Converter={StaticResource nullToVisibleConverter}}"/>
         </DockPanel>
     </StackPanel>
     
