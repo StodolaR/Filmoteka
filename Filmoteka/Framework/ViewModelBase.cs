@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Filmoteka.Framework
 {
-    public class ViewModelBase : INotifyPropertyChanged
+    class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         public void OnPropertyChanged(string PropertyName)

@@ -13,7 +13,7 @@ using System.Windows.Input;
 
 namespace Filmoteka.ViewModel
 {
-    public class UserCollectionViewModel : ViewModelBase
+    class UserCollectionViewModel : ViewModelBase
     {
         private UserViewModel? selectedUser;
         private UserViewModel? loggedUser;

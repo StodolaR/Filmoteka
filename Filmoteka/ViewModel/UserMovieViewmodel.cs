@@ -9,13 +9,10 @@ using Filmoteka.Model;
 
 namespace Filmoteka.ViewModel
 {
-    public class UserMovieViewmodel : ViewModelBase
+    class UserMovieViewmodel : ViewModelBase
     {
         private MovieCollectionViewModel movieCollectionViewModel;
         private UserCollectionViewModel userCollectionViewModel;
-
-        public UserCollectionViewModel UserCollectionViewModel { get => userCollectionViewModel; set => userCollectionViewModel = value; }
-
         public UserMovieViewmodel(UserCollectionViewModel userCollectionViewModel, MovieCollectionViewModel movieCollectionViewModel)
         {
             this.userCollectionViewModel = userCollectionViewModel;

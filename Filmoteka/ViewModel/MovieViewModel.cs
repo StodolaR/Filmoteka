@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Filmoteka.ViewModel
 {
-    public class MovieViewModel :ViewModelBase
+    class MovieViewModel :ViewModelBase
     {
         private int avgRating;
 

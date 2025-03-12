@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Filmoteka.ViewModel
 {
-    public class UserViewModel : ViewModelBase
+    class UserViewModel : ViewModelBase
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;

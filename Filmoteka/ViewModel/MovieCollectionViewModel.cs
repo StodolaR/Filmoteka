@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace Filmoteka.ViewModel
 {
-    public class MovieCollectionViewModel : ViewModelBase
+    class MovieCollectionViewModel : ViewModelBase
     {
         private string newMovieName = string.Empty;
         private GenreType newMovieGenre;
