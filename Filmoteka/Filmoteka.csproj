@@ -11,7 +11,6 @@
   <ItemGroup>
     <None Remove="Resources\bezobrazku.png" />
     <None Remove="Resources\filmy.png" />
-    <None Remove="Resources\search.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,9 +26,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\filmy.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\search.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

@@ -25,7 +25,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <ScrollViewer>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
             <ListView ItemsSource="{Binding Source={StaticResource movies}}" SelectedItem="{Binding SelectedMovie}" 
                        AlternationCount="{Binding Movies.Count}">
                 <ListView.ItemTemplate>

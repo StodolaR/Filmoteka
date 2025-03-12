@@ -20,6 +20,7 @@ namespace Filmoteka.ViewModel
         private int newMovieRating;
         private string? newMovieReview;
         private UserViewModel? loggedUser;
+        private MovieViewModel selectedSearchedMovie;
 
         public UserViewModel? LoggedUser
         {
@@ -44,6 +45,18 @@ namespace Filmoteka.ViewModel
                 selectedMovie = value;
                 OnPropertyChanged(nameof(SelectedMovie));
             }
+        }
+        public MovieViewModel SelectedSearchedMovie 
+        {
+            get => selectedSearchedMovie;
+            set 
+            {
+                selectedSearchedMovie = value;
+                if (value != null)
+                {
+                    SelectedMovie = value;
+                }
+            } 
         }
         public string NewMovieName
         {

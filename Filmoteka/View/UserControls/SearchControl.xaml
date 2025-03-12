@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="Filmoteka.View.UserControls.SearchControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Filmoteka.View.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="300">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="movies" Source="{Binding Movies}" Filter="CollectionViewSource_Filter"/>
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBox x:Name="tbSearch" Width="200" VerticalAlignment="Center"/>
+                <Button Height="20" Name="btnSearch" Click="btnSearch_Click">
+                    <Button.Content>
+                        <Path Stroke="gray" Data="M 0,10 L 3,7 A 5,5 0 1 1 4,8 L 1,11 Z"/>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+            <ListBox x:Name="lbSearch" ItemsSource="{Binding Source={StaticResource movies}}" SelectedItem="{Binding SelectedSearchedMovie}" SelectedValue="" 
+                     SelectionChanged="lbSearch_SelectionChanged" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}"/>
+                            <TextBlock Text="{Binding Year, StringFormat={} (0)}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </Grid>
+</UserControl>
