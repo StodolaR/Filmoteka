@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Image Source="/Resources/filmy.png"/>
+        <Image Source="/Resources/filmy.png" Stretch="Fill"/>
         <TextBlock Text="Filmotéka" VerticalAlignment="Center" HorizontalAlignment="Center" 
                    FontFamily="Vladimir Script" Foreground="Black" FontSize="120" FontWeight="Bold"/>
         <TextBlock Text="Filmotéka" VerticalAlignment="Center" HorizontalAlignment="Center" 

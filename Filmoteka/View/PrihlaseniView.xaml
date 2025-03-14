@@ -7,12 +7,18 @@
              xmlns:uc="clr-namespace:Filmoteka.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="800">
-    <Grid Height="650">
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel HorizontalAlignment="Center" Margin="0,100,0,0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+        <StackPanel HorizontalAlignment="Center" Grid.Row="1">
             <TextBlock Text="Přihlášení uživatele" FontSize="15"/>
             <Label Content="Uživatelské jméno"/>
             <TextBox Text="{Binding LoginName, UpdateSourceTrigger=PropertyChanged}" Width="150"/>
@@ -25,7 +31,14 @@
             <Button  Content="Odhlásit se" Margin="0,20,0,0" Width="80"
                     Command="{Binding UserLogout}"/>
         </StackPanel>
-        <StackPanel HorizontalAlignment="Center" Margin="0,100,0,0" Grid.Column="1">
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <StackPanel HorizontalAlignment="Center" Grid.Row="1">
             <TextBlock Text="Registrace nového uživatele" FontSize="15"/>
             <Label Content="Nové uživatelské jméno"/>
             <TextBox Text="{Binding RegistrationName, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
@@ -39,5 +52,6 @@
                     Width="80" IsDefault="True"/>
             <TextBlock Text="{Binding RegistrationMessage}"/>
         </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

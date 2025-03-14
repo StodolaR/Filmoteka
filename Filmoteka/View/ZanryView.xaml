@@ -27,32 +27,30 @@
                 <GroupStyle>
                     <GroupStyle.Panel>
                         <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Vertical" Height="700"/>
+                            <UniformGrid Columns="3" Rows="3"/>
                         </ItemsPanelTemplate>
                     </GroupStyle.Panel>
                     <GroupStyle.ContainerStyle>
                         <Style TargetType="GroupItem">
-                            <Style.Setters>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate>
-                                            <StackPanel>
-                                                <TextBlock Text="{Binding Name}" FontSize="25"/>
-                                                <ScrollViewer Height="200" Width="330" VerticalScrollBarVisibility="Auto">
-                                                    <ItemsPresenter/>
-                                                </ScrollViewer>
-                                            </StackPanel>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style.Setters>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Name}" FontSize="25"/>
+                                            <ScrollViewer  VerticalScrollBarVisibility="Auto" MaxHeight="190">
+                                                <ItemsPresenter/>
+                                            </ScrollViewer>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
                         </Style>
                     </GroupStyle.ContainerStyle>
                 </GroupStyle>
             </ListView.GroupStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" >
                         <Image Height="60" Width="45" Stretch="Fill">
                             <Image.Source>
                                 <BitmapImage UriSource="{Binding PicturePath, Converter={StaticResource fullPathConverter}}" />

@@ -9,16 +9,12 @@
         xmlns:view="clr-namespace:Filmoteka.View"
         xmlns:viewModel="clr-namespace:Filmoteka.ViewModel"
         mc:Ignorable="d"
-        Title="Filmotéka" Height="700" Width="1000"
+        Title="Filmotéka" Height="750" Width="1000"
         DataContext="{StaticResource movieCollectionViewModel}">
     <Grid>
         <Grid.Resources>
             <framework:DetailViewConverter x:Key="detailViewConverter"/>
         </Grid.Resources>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
         <TabControl x:Name="MainTabControl" SelectedIndex="{Binding SelectedMovie, Converter={StaticResource detailViewConverter}}">
             <TabItem Header="Úvod" Visibility="Collapsed">
                 <view:UvodView/>
