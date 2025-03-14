@@ -4,17 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Filmoteka.View.UserControls"
+             xmlns:framework="clr-namespace:Filmoteka.Framework"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <StackPanel Width="300" >
+        <Grid.Resources>
+            <framework:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
+        </Grid.Resources>
+        <StackPanel Width="300" Visibility="{Binding LoggedUser, Converter={StaticResource nullToVisibleConverter}}">
             <TextBlock Text="Přidat hodnocení"/>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Hodnocení: "/>
-                <local:RatingBox RatingValue="{Binding NewMovieRating, Mode=TwoWay}"/>
+                <local:RatingBox RatingValue="{Binding NewDetailMovieRating, Mode=TwoWay}"/>
             </StackPanel>
             <Label Content="Recenze:"/>
-            <TextBox Text="{Binding NewMovieReview, UpdateSourceTrigger=PropertyChanged}" 
+            <TextBox Text="{Binding NewDetailMovieReview, UpdateSourceTrigger=PropertyChanged}" 
              TextWrapping="Wrap" AcceptsReturn="True" MinHeight="180"/>
             <Button Content="Přidej hodnocení" Width="100" Margin="20" Command="{Binding AddNewRating}"/>
         </StackPanel>

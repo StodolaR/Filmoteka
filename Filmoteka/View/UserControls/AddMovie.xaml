@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Filmoteka.View.UserControls"
+             xmlns:framework="clr-namespace:Filmoteka.Framework"
              xmlns:viewModel="clr-namespace:Filmoteka.ViewModel"
              xmlns:model="clr-namespace:Filmoteka.Model"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -16,6 +17,7 @@
                     <x:Type TypeName="model:GenreType"/>
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
+            <framework:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
         </Grid.Resources>
         <StackPanel Width="400">
             <Label Content="Přidat nový film"/>

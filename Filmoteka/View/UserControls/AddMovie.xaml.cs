@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Filmoteka.ViewModel;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,10 @@ namespace Filmoteka.View.UserControls
         public AddMovie()
         {
             InitializeComponent();
+            UserCollectionViewModel userCollectionViewModel = (UserCollectionViewModel)Application.Current.FindResource("userCollectionViewModel");
+            MovieCollectionViewModel movieCollectionViewModel = (MovieCollectionViewModel)Application.Current.FindResource("movieCollectionViewModel");
+            AddMovieViewModel addMovieViewModel = new AddMovieViewModel(userCollectionViewModel, movieCollectionViewModel);
+            DataContext = addMovieViewModel;
         }
 
         private void tbxYear_PreviewTextInput(object sender, TextCompositionEventArgs e)

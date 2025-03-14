@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Filmoteka.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,10 @@ namespace Filmoteka.View.UserControls
         public AddRating()
         {
             InitializeComponent();
+            UserCollectionViewModel userCollectionViewModel = (UserCollectionViewModel)Application.Current.FindResource("userCollectionViewModel");
+            MovieCollectionViewModel movieCollectionViewModel = (MovieCollectionViewModel)Application.Current.FindResource("movieCollectionViewModel");
+            AddRatingViewModel addRatingViewModel = new AddRatingViewModel(userCollectionViewModel, movieCollectionViewModel);
+            DataContext = addRatingViewModel;
         }
     }
 }

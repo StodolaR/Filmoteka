@@ -47,7 +47,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </StackPanel>
-            <uc:AddRating DockPanel.Dock="Right" Visibility="{Binding LoggedUser, Converter={StaticResource nullToVisibleConverter}}"/>
+            <uc:AddRating DockPanel.Dock="Right" />
         </DockPanel>
     </StackPanel>
     

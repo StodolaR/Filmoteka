@@ -9,38 +9,50 @@ using Filmoteka.Model;
 
 namespace Filmoteka.ViewModel
 {
-    class UserMovieViewmodel : ViewModelBase
+    abstract class UserMovieViewmodel : ViewModelBase
     {
-        private MovieCollectionViewModel movieCollectionViewModel;
-        private UserCollectionViewModel userCollectionViewModel;
-        public UserMovieViewmodel(UserCollectionViewModel userCollectionViewModel, MovieCollectionViewModel movieCollectionViewModel)
+        protected UserCollectionViewModel userCollectionViewModel;
+        protected MovieCollectionViewModel movieCollectionViewModel;
+        private UserViewModel? loggedUser;
+
+        public UserViewModel? LoggedUser 
+        {
+            get => loggedUser;
+            set 
+            {
+                loggedUser = value;
+                OnPropertyChanged(nameof(LoggedUser));
+            } 
+        }
+
+        protected UserMovieViewmodel(UserCollectionViewModel userCollectionViewModel, MovieCollectionViewModel movieCollectionViewModel)
         {
             this.userCollectionViewModel = userCollectionViewModel;
             this.movieCollectionViewModel = movieCollectionViewModel;
-            userCollectionViewModel.PropertyChanged += UserCollectionViewModel_PropertyChanged;
             movieCollectionViewModel.Movies.CollectionChanged += Movies_CollectionChanged;
+            userCollectionViewModel.PropertyChanged += UserCollectionViewModel_PropertyChanged;
         }
 
         private void UserCollectionViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if(userCollectionViewModel.LoggedUser != movieCollectionViewModel.LoggedUser)
+            if (userCollectionViewModel.LoggedUser != LoggedUser)
             {
-                movieCollectionViewModel.LoggedUser = userCollectionViewModel.LoggedUser;
+                LoggedUser = userCollectionViewModel.LoggedUser;
             }
         }
 
-        private void Movies_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        protected void Movies_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
                 MovieViewModel newRatedMovie = new MovieViewModel();
                 newRatedMovie = (MovieViewModel)(e.NewItems[0]);
-                UserMovie? movieRatingInLoggedUserRatings = userCollectionViewModel.LoggedUser.Ratings.Where(x => x.MovieId == newRatedMovie.Id).FirstOrDefault();
+                UserMovie? movieRatingInLoggedUserRatings = LoggedUser.Ratings.Where(x => x.MovieId == newRatedMovie.Id).FirstOrDefault();
                 if (movieRatingInLoggedUserRatings != null)
                 {
-                    userCollectionViewModel.LoggedUser.Ratings.Remove(movieRatingInLoggedUserRatings);
+                    LoggedUser.Ratings.Remove(movieRatingInLoggedUserRatings);
                 }
-                userCollectionViewModel.LoggedUser.Ratings.Add(newRatedMovie.Ratings.Where(x => x.UserId == userCollectionViewModel.LoggedUser.Id).First());
+                LoggedUser.Ratings.Add(newRatedMovie.Ratings.Where(x => x.UserId == LoggedUser.Id).First());
             } 
         }      
     }
