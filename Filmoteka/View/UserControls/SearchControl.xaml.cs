@@ -35,7 +35,7 @@ namespace Filmoteka.View.UserControls
                 bool isAccepted = false;
                 foreach (string searchString in searchStrings)
                 {
-                    if (movie.Name.Contains(searchString))
+                    if (movie.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase))
                     {
                         isAccepted = true;
                     }
