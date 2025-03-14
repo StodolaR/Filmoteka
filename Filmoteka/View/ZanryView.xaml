@@ -38,10 +38,9 @@
                                         <StackPanel>
                                             <TextBlock Text="{Binding Name}" FontSize="25"/>
                                             <Border BorderBrush="Gray" BorderThickness="1">
-                                                
-                                            <ScrollViewer  VerticalScrollBarVisibility="Auto" MaxHeight="190">
-                                                <ItemsPresenter/>
-                                            </ScrollViewer>
+                                                <ScrollViewer  VerticalScrollBarVisibility="Auto" MaxHeight="190">
+                                                    <ItemsPresenter/>
+                                                </ScrollViewer>
                                             </Border>
                                         </StackPanel>
                                     </ControlTemplate>
