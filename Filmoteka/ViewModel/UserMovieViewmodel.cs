@@ -14,7 +14,6 @@ namespace Filmoteka.ViewModel
         protected UserCollectionViewModel userCollectionViewModel;
         protected MovieCollectionViewModel movieCollectionViewModel;
         private UserViewModel? loggedUser;
-
         public UserViewModel? LoggedUser 
         {
             get => loggedUser;
@@ -24,7 +23,6 @@ namespace Filmoteka.ViewModel
                 OnPropertyChanged(nameof(LoggedUser));
             } 
         }
-
         protected UserMovieViewmodel(UserCollectionViewModel userCollectionViewModel, MovieCollectionViewModel movieCollectionViewModel)
         {
             this.userCollectionViewModel = userCollectionViewModel;
@@ -32,7 +30,6 @@ namespace Filmoteka.ViewModel
             movieCollectionViewModel.Movies.CollectionChanged += Movies_CollectionChanged;
             userCollectionViewModel.PropertyChanged += UserCollectionViewModel_PropertyChanged;
         }
-
         private void UserCollectionViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (userCollectionViewModel.LoggedUser != LoggedUser)
@@ -40,13 +37,11 @@ namespace Filmoteka.ViewModel
                 LoggedUser = userCollectionViewModel.LoggedUser;
             }
         }
-
         protected void Movies_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                MovieViewModel newRatedMovie = new MovieViewModel();
-                newRatedMovie = (MovieViewModel)(e.NewItems[0]);
+                MovieViewModel newRatedMovie = (MovieViewModel)(e.NewItems[0]);
                 UserMovie? movieRatingInLoggedUserRatings = LoggedUser.Ratings.Where(x => x.MovieId == newRatedMovie.Id).FirstOrDefault();
                 if (movieRatingInLoggedUserRatings != null)
                 {

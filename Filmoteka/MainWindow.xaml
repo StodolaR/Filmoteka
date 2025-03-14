@@ -25,7 +25,7 @@
             <TabItem Header="Dle žánru" >
                 <view:ZanryView/>
             </TabItem>
-            <TabItem x:Name="usersTabItem" Header="Uživatelé" DataContext="{StaticResource userCollectionViewModel}">
+            <TabItem Header="Uživatelé" DataContext="{StaticResource userCollectionViewModel}">
                 <view:UzivatelView/>
             </TabItem>
             <TabItem Header="Přihlášení" DataContext="{StaticResource userCollectionViewModel}">

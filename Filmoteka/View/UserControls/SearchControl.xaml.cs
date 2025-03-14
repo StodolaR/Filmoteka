@@ -56,6 +56,10 @@ namespace Filmoteka.View.UserControls
                 lbSearch.SelectedItem = null;
                 CollectionViewSource.GetDefaultView(lbSearch.ItemsSource).Refresh();
                 lbSearch.Visibility = Visibility.Visible;
+                if (!lbSearch.HasItems)
+                {
+                    PopupSearch.IsOpen = true;
+                }
             }
         }
         private void lbSearch_SelectionChanged(object sender, SelectionChangedEventArgs e)

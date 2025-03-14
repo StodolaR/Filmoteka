@@ -11,7 +11,9 @@ namespace Filmoteka.Framework
             try
             {
                 if ((value as string)[0] != ('/'))
+                {
                     return Path.GetFullPath(value as string);
+                }
             }
             catch
             {

@@ -23,9 +23,6 @@ namespace Filmoteka.ViewModel
         private string message = string.Empty;
         private int newMovieRating;
         private string? newMovieReview;
-
-        
-
         public string NewMovieName
         {
             get => newMovieName;
@@ -80,7 +77,7 @@ namespace Filmoteka.ViewModel
                 OnPropertyChanged(nameof(NewMovieRating));
             }
         }
-        public string NewMovieReview
+        public string? NewMovieReview
         {
             get => newMovieReview;
             set
@@ -99,16 +96,14 @@ namespace Filmoteka.ViewModel
             }
         }
         public ICommand AddNewMovie => new RelayCommand(AddMovie, CanAddMovie);
-
-        public AddMovieViewModel(UserCollectionViewModel userCollectionViewModel, MovieCollectionViewModel movieCollectionViewModel) : base(userCollectionViewModel, movieCollectionViewModel)
+        public AddMovieViewModel(UserCollectionViewModel userCollectionViewModel, MovieCollectionViewModel movieCollectionViewModel) 
+            : base(userCollectionViewModel, movieCollectionViewModel)
         {
-
         }
         private bool CanAddMovie(object? arg)
         {
             return NewMovieName != string.Empty && NewMovieDescription != string.Empty && NewMovieYear != string.Empty;
         }
-
         private void AddMovie(object? obj)
         {
             using (MovieContext mc = new MovieContext())

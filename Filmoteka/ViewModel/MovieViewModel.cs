@@ -12,7 +12,6 @@ namespace Filmoteka.ViewModel
     class MovieViewModel :ViewModelBase
     {
         private int avgRating;
-
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public GenreType Genre { get; set; }

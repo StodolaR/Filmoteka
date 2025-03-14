@@ -24,7 +24,6 @@ namespace Filmoteka.ViewModel
         private string registrationPasswordVerification = string.Empty;
         private string message = string.Empty;
         private string registrationMessage = string.Empty;
-
         public ObservableCollection<UserViewModel> Users { get; set; }
         public UserViewModel? SelectedUser
         {
@@ -109,9 +108,7 @@ namespace Filmoteka.ViewModel
         }
         public ICommand UserLogin => new RelayCommand(Login, CanLogin);
         public ICommand UserLogout => new RelayCommand(Logout, CanLogout);
-        public ICommand UserRegistration => new RelayCommand(Register, CanRegister);
-
-       
+        public ICommand UserRegistration => new RelayCommand(Register, CanRegister);      
         public UserCollectionViewModel()
         {
             Users = new ObservableCollection<UserViewModel>();
@@ -133,7 +130,6 @@ namespace Filmoteka.ViewModel
         {
             return LoginName != string.Empty && LoginPassword != string.Empty && LoggedUser == null;
         }
-
         private void Login(object? obj)
         {
             foreach (UserViewModel user in Users)
@@ -155,7 +151,6 @@ namespace Filmoteka.ViewModel
         {
             return LoggedUser != null;
         }
-
         private void Logout(object? obj)
         {
             LoggedUser = null;
@@ -166,7 +161,6 @@ namespace Filmoteka.ViewModel
         {
             return RegistrationName != string.Empty && RegistrationPassword != string.Empty && RegistrationPasswordVerification != string.Empty;
         }
-
         private void Register(object? obj)
         {
             if (RegistrationPassword != RegistrationPasswordVerification)
@@ -190,12 +184,8 @@ namespace Filmoteka.ViewModel
                 }
                 else
                 {
-                    ObservableCollection<UserMovie> ratings = new ObservableCollection<UserMovie>();
-                    foreach (UserMovie rating in newUser.UserMovies)
-                    {
-                        ratings.Add(rating);
-                    }
-                    UserViewModel newUserViewModel = new UserViewModel { Id = newUser.Id, Name = newUser.Name, Password = newUser.Password, Ratings = ratings};
+                    UserViewModel newUserViewModel = new UserViewModel { Id = newUser.Id, Name = newUser.Name, Password = newUser.Password, 
+                        Ratings = new ObservableCollection<UserMovie>() };
                     LoggedUser = newUserViewModel;
                     Users.Add(newUserViewModel);
                     Message = "Přihlášen: " + RegistrationName;
@@ -206,6 +196,5 @@ namespace Filmoteka.ViewModel
                 }
             }
         }
-
     }
 }
