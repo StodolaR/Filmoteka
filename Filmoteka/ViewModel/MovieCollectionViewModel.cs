@@ -161,7 +161,7 @@ namespace Filmoteka.ViewModel
                 Movie newMovie = CreateNewMovieWithRating();
                 mc.Movies.Add(newMovie);
                 mc.SaveChanges();
-                Movie newMovieFromDatabase = mc.Movies.OrderBy(x => x.Id).Last();
+                Movie newMovieFromDatabase = (mc.Movies.Include(y => y.UserMovies).ThenInclude(z =>z.User)).OrderBy(x => x.Id).Last();
                 AddMovieToCollection(newMovieFromDatabase);
             }
         }
