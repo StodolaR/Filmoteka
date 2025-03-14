@@ -106,94 +106,42 @@ namespace Filmoteka.ViewModel
         }
         private void AddMovie(object? obj)
         {
-            using (MovieContext mc = new MovieContext())
+            string targetPath = string.Empty;
+            try
             {
-                Movie newMovie = CreateNewMovieWithRating();
+                CreateDirectoryIfNotExist();
+                string pictureFileName = Path.GetFileName(NewMoviePicturePath);
+                pictureFileName = CheckFileNameUniqueness(pictureFileName);
+                targetPath = CopyPictureToPostersFolder(pictureFileName);
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+            }
+            Movie newMovie = CreateNewMovieWithRating(targetPath);
+            using (MovieContext mc = new MovieContext())
+            {               
                 mc.Movies.Add(newMovie);
                 mc.SaveChanges();
                 Movie newMovieFromDatabase = (mc.Movies.Include(y => y.UserMovies).ThenInclude(z => z.User)).OrderBy(x => x.Id).Last();
                 AddMovieToCollection(newMovieFromDatabase);
             }
         }
-        private Movie CreateNewMovieWithRating()
+        private void CreateDirectoryIfNotExist()
         {
-            if (NewMoviePicturePath != "Cesta k obrázku")
-            {
-                try
-                {
-                    string targetPath = CopyPictureToPostersFolder();
-                    Movie newMovieWithPicture = new Movie
-                    {
-                        Name = NewMovieName,
-                        Genre = NewMovieGenre,
-                        Description = NewMovieDescription,
-                        Year = Convert.ToInt32(NewMovieYear),
-                        PicturePath = targetPath
-                    };
-                    UserMovie newRatingPictureMovie = new UserMovie
-                    {
-                        Movie = newMovieWithPicture,
-                        UserId = LoggedUser.Id,
-                        Rating = NewMovieRating,
-                        Review = NewMovieReview
-                    };
-                    newMovieWithPicture.UserMovies.Add(newRatingPictureMovie);
-                    return newMovieWithPicture;
-                }
-                catch (Exception ex)
-                {
-                    Message = ex.Message;
-                }
-            }
-            Movie newMovie = new Movie
-            {
-                Name = NewMovieName,
-                Genre = NewMovieGenre,
-                Description = NewMovieDescription,
-                Year = Convert.ToInt32(NewMovieYear)
-            };
-            UserMovie newRating = new UserMovie
-            {
-                Movie = newMovie,
-                UserId = LoggedUser.Id,
-                Rating = NewMovieRating,
-                Review = NewMovieReview
-            };
-            newMovie.UserMovies.Add(newRating);
-            return newMovie;
-        }
-        private string CopyPictureToPostersFolder()
-        {
-            string pictureFileName = Path.GetFileName(NewMoviePicturePath);
-            pictureFileName = CheckFileNameUniqueness(pictureFileName);
             try
             {
-                string targetPath = Path.Combine("Posters", pictureFileName);
-                File.Copy(NewMoviePicturePath, targetPath);
-                return targetPath;
+                Directory.CreateDirectory("Posters");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                if (ex.Message == "Nelze vytvořit složku obrázků" || ex.Message == "Nelze vytvořit jedinečný název souboru")
-                {
-                    throw;
-                }
-                else
-                {
-                    throw new Exception("Nelze zkopírovat obrázek do složky");
-                }
+                throw new Exception("Nelze vytvořit složku obrázků");
             }
         }
-
         private string CheckFileNameUniqueness(string pictureFileName)
         {
             try
             {
-                if (!Directory.Exists("Posters"))
-                {
-                    CreateDirectoryIfNotExist();
-                    return pictureFileName;
-                }
                 string targetFileName = Path.GetFileName(NewMoviePicturePath);
                 string[] pictureFilePaths = Directory.GetFiles("Posters");
                 List<string> pictureFileNames = new List<string>();
@@ -209,23 +157,41 @@ namespace Filmoteka.ViewModel
                 }
                 return targetFileName;
             }
-            catch (Exception ex)
-            {
-                if (ex.Message == "Nelze vytvořit složku obrázků") throw;
-                else
-                    throw new Exception("Nelze vytvořit jedinečný název souboru");
+            catch (Exception)
+            {      
+                 throw new Exception("Nelze vytvořit jedinečný název souboru");
             }
+
         }
-        private void CreateDirectoryIfNotExist()
+        private string CopyPictureToPostersFolder(string pictureFileName)
         {
             try
             {
-                Directory.CreateDirectory("Posters");
+                string targetPath = Path.Combine("Posters", pictureFileName);
+                File.Copy(NewMoviePicturePath, targetPath);
+                return targetPath;
             }
             catch (Exception)
-            {
-                throw new Exception("Nelze vytvořit složku obrázků");
+            {               
+                throw new Exception("Nelze zkopírovat obrázek do složky");
             }
+        }
+        private Movie CreateNewMovieWithRating(string targetPath)
+        {
+            if (targetPath != string.Empty)
+            {
+                Movie newMovieWithPicture = new Movie{Name = NewMovieName, Genre = NewMovieGenre, Description = NewMovieDescription,
+                    Year = Convert.ToInt32(NewMovieYear), PicturePath = targetPath};
+                UserMovie newRatingPictureMovie = new UserMovie{Movie = newMovieWithPicture, UserId = LoggedUser.Id, 
+                    Rating = NewMovieRating,Review = NewMovieReview};
+                newMovieWithPicture.UserMovies.Add(newRatingPictureMovie);
+                return newMovieWithPicture;
+            }
+            Movie newMovie = new Movie{Name = NewMovieName, Genre = NewMovieGenre, Description = NewMovieDescription, 
+                Year = Convert.ToInt32(NewMovieYear)};
+            UserMovie newRating = new UserMovie{Movie = newMovie, UserId = LoggedUser.Id, Rating = NewMovieRating, Review = NewMovieReview};
+            newMovie.UserMovies.Add(newRating);
+            return newMovie;
         }
         private void AddMovieToCollection(Movie newMovie)
         {
@@ -238,17 +204,9 @@ namespace Filmoteka.ViewModel
             {
                 ObservableCollection<UserMovie> newRatings = new ObservableCollection<UserMovie>();
                 newRatings.Add(newMovie.UserMovies.First());
-                movieCollectionViewModel.Movies.Add(new MovieViewModel
-                {
-                    Id = newMovie.Id,
-                    AvgRating = newMovie.UserMovies.First().Rating * 20,
-                    Description = newMovie.Description,
-                    Genre = newMovie.Genre,
-                    Name = newMovie.Name,
-                    PicturePath = newMovie.PicturePath,
-                    Ratings = newRatings,
-                    Year = newMovie.Year
-                });
+                movieCollectionViewModel.Movies.Add(new MovieViewModel{Id = newMovie.Id, AvgRating = newMovie.UserMovies.First().Rating * 20,
+                    Description = newMovie.Description, Genre = newMovie.Genre, Name = newMovie.Name, PicturePath = newMovie.PicturePath,
+                    Ratings = newRatings, Year = newMovie.Year});
                 ResetProperties();
                 Message = "Film úspěšně přidán";
             }
