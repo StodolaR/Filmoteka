@@ -7,6 +7,33 @@
              xmlns:uc="clr-namespace:Filmoteka.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="validation">
+            <StackPanel>
+                <AdornedElementPlaceholder/>
+                <ItemsControl ItemsSource="{Binding}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ControlTemplate>
+        <Style TargetType="TextBox">
+            <Style.Setters>
+                <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource validation}"/>
+                <Setter Property="Width" Value="200"/>
+                <Setter Property="Margin" Value="0,0,0,15"/>
+            </Style.Setters>
+        </Style>
+        <Style TargetType="uc:PasswordUserControl">
+            <Style.Setters>
+                <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource validation}"/>
+                <Setter Property="Margin" Value="0,0,0,15"/>
+            </Style.Setters>
+        </Style>
+    </UserControl.Resources>
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -21,7 +48,7 @@
         <StackPanel HorizontalAlignment="Center" Grid.Row="1">
             <TextBlock Text="Přihlášení uživatele" FontSize="15"/>
             <Label Content="Uživatelské jméno"/>
-            <TextBox Text="{Binding LoginName, UpdateSourceTrigger=PropertyChanged}" Width="150"/>
+            <TextBox Text="{Binding LoginName, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
             <Label Content="Heslo"/>
             <uc:PasswordUserControl PasswordDP="{Binding LoginPassword,
                         UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
@@ -41,12 +68,12 @@
             <StackPanel HorizontalAlignment="Center" Grid.Row="1">
             <TextBlock Text="Registrace nového uživatele" FontSize="15"/>
             <Label Content="Nové uživatelské jméno"/>
-            <TextBox Text="{Binding RegistrationName, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+            <TextBox Text="{Binding RegistrationName, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
             <Label Content="Nové Heslo"/>
-            <uc:PasswordUserControl PasswordDP="{Binding RegistrationPassword, 
+            <uc:PasswordUserControl PasswordDP="{Binding RegistrationPassword, ValidatesOnNotifyDataErrors=True,
                                 UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             <Label Content="Znova heslo pro kontrolu"/>
-            <uc:PasswordUserControl PasswordDP="{Binding RegistrationPasswordVerification, 
+            <uc:PasswordUserControl PasswordDP="{Binding RegistrationPasswordVerification, ValidatesOnNotifyDataErrors=True,
                                 UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             <Button Command="{Binding UserRegistration}" Content="Registrovat" Margin="0,20,0,0" 
                     Width="80" IsDefault="True"/>

@@ -50,6 +50,11 @@ namespace Filmoteka.ViewModel
             {
                 loginName = value;
                 OnPropertyChanged(nameof(LoginName));
+                if (_errors.ContainsKey(nameof(LoginName)))
+                {
+                    CheckErrors(nameof(LoginName));
+                    OnErrorsChanged(nameof(LoginName));
+                }
             }
         }
         public string LoginPassword
@@ -68,6 +73,11 @@ namespace Filmoteka.ViewModel
             {
                 registrationName = value;
                 OnPropertyChanged(nameof(RegistrationName));
+                if (_errors.ContainsKey(nameof(RegistrationName)))
+                {
+                    CheckErrors(nameof(RegistrationName));
+                    OnErrorsChanged(nameof(RegistrationName));
+                }
             }
         }
         public string RegistrationPassword
@@ -77,6 +87,11 @@ namespace Filmoteka.ViewModel
             {
                 registrationPassword = value;
                 OnPropertyChanged(nameof(RegistrationPassword));
+                if (_errors.ContainsKey(nameof(RegistrationPassword)))
+                {
+                    CheckErrors(nameof(RegistrationPassword));
+                    OnErrorsChanged(nameof(RegistrationPassword));
+                }
             }
         }
         public string RegistrationPasswordVerification
@@ -86,6 +101,11 @@ namespace Filmoteka.ViewModel
             {
                 registrationPasswordVerification = value;
                 OnPropertyChanged(nameof(RegistrationPasswordVerification));
+                if (_errors.ContainsKey(nameof(RegistrationPasswordVerification)))
+                {
+                    CheckErrors(nameof(RegistrationPasswordVerification));
+                    OnErrorsChanged(nameof(RegistrationPasswordVerification));
+                }
             }
         }
         public string Message
@@ -132,20 +152,22 @@ namespace Filmoteka.ViewModel
         }
         private void Login(object? obj)
         {
-            foreach (UserViewModel user in Users)
+            CheckErrors(nameof(LoginName));
+            if (!HasErrors)
             {
-                if (user.Name == LoginName && user.Password == LoginPassword)
+                if (Users.Any(x => x.Name == LoginName && x.Password == LoginPassword))
                 {
-                    LoggedUser = user;
+                    LoggedUser = Users.Where(x => x.Name == loginName).First();
                     Message = "Přihlášen: " + LoginName;
                     LoginName = string.Empty;
                     LoginPassword = string.Empty;
-                    return;
+                }
+                else
+                {
+                    Message = "Nesprávné heslo";
+                    LoginPassword = string.Empty;
                 }
             }
-            Message = "Chybné jméno či heslo";
-            LoginName = string.Empty;
-            LoginPassword = string.Empty;
         }
         private bool CanLogout(object? arg)
         {
@@ -163,37 +185,60 @@ namespace Filmoteka.ViewModel
         }
         private void Register(object? obj)
         {
-            if (RegistrationPassword != RegistrationPasswordVerification)
+            CheckErrors(nameof(RegistrationName));
+            CheckErrors(nameof(RegistrationPassword));
+            CheckErrors(nameof(RegistrationPasswordVerification));
+            if (!HasErrors)
             {
-                RegistrationPassword = string.Empty;
-                RegistrationPasswordVerification = string.Empty;
-                RegistrationMessage = "Ověření hesla se nezdařilo," + Environment.NewLine + "zadejte prosím hesla znova";
-                return;
-            }
-            using (MovieContext mc = new MovieContext())
+                using (MovieContext mc = new MovieContext())
+                {
+                    mc.Users.Add(new User { Name = RegistrationName, Password = RegistrationPassword });
+                    mc.SaveChanges();
+                    var newUser = mc.Users.OrderBy(x => x.Id).Last();
+                    if (newUser.Name != RegistrationName)
+                    {
+                        RegistrationName = string.Empty;
+                        RegistrationPassword = string.Empty;
+                        RegistrationPasswordVerification = string.Empty;
+                        RegistrationMessage = "Nelze se připojit k databázi";
+                    }
+                    else
+                    {
+                        UserViewModel newUserViewModel = new UserViewModel{Id = newUser.Id, Name = newUser.Name,
+                            Password = newUser.Password, Ratings = new ObservableCollection<UserMovie>()};
+                        LoggedUser = newUserViewModel;
+                        Users.Add(newUserViewModel);
+                        Message = "Přihlášen: " + RegistrationName;
+                        RegistrationName = string.Empty;
+                        RegistrationPassword = string.Empty;
+                        RegistrationPasswordVerification = string.Empty;
+                        RegistrationMessage = "Registrace úspěšná, jste přihlášen";
+                    }
+                }
+            }          
+        }
+        private void CheckErrors(string propertyName)
+        {
+            RemoveErrors(propertyName);
+            switch (propertyName)
             {
-                mc.Users.Add(new User { Name = RegistrationName, Password = RegistrationPassword });
-                mc.SaveChanges();
-                var newUser = mc.Users.OrderBy(x => x.Id).Last();
-                if (newUser.Name != RegistrationName)
-                {
-                    RegistrationName = string.Empty;
-                    RegistrationPassword = string.Empty;
-                    RegistrationPasswordVerification = string.Empty;
-                    RegistrationMessage = "Nelze se připojit k databázi";
-                }
-                else
-                {
-                    UserViewModel newUserViewModel = new UserViewModel { Id = newUser.Id, Name = newUser.Name, Password = newUser.Password, 
-                        Ratings = new ObservableCollection<UserMovie>() };
-                    LoggedUser = newUserViewModel;
-                    Users.Add(newUserViewModel);
-                    Message = "Přihlášen: " + RegistrationName;
-                    RegistrationName = string.Empty;
-                    RegistrationPassword = string.Empty;
-                    RegistrationPasswordVerification = string.Empty;
-                    RegistrationMessage = "Registrace úspěšná, jste přihlášen";
-                }
+                case nameof(LoginName): 
+                    if (!Users.Any(x => x.Name == LoginName)) 
+                        AddError(propertyName, "Tento uživatel není registrován"); break;
+                case nameof(LoginPassword):
+                    if (Users.Any(x => x.Name == LoginName && x.Password != LoginPassword))
+                        AddError(propertyName, "Chybné heslo"); break;
+                case nameof(RegistrationName):
+                    if (Users.Any(x => x.Name == RegistrationName))
+                        AddError(propertyName, "Toto jméno již používá jiný uživatel");
+                    if (string.IsNullOrEmpty(RegistrationName) || RegistrationName.Length < 3)
+                        AddError(propertyName, "Uživatelské jméno musí mít alespoň 3 znaky"); break;
+                case nameof(RegistrationPassword):
+                    if (RegistrationPassword.Length < 3)
+                        AddError(propertyName, "Heslo musí mít alespoň 3 znaky"); break;
+                case nameof(RegistrationPasswordVerification):
+                    if (RegistrationPasswordVerification != RegistrationPassword)
+                        AddError(propertyName, "Heslo nesouhlasí, zkuste zadat znova"); break;
             }
         }
     }
