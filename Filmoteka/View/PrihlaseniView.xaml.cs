@@ -24,5 +24,14 @@ namespace Filmoteka.View
         {
             InitializeComponent();
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            tbLoginName.Text = string.Empty;
+            pucLoginPassword.passwordBox.Password = string.Empty;
+            tbRegistrationName.Text = string.Empty;
+            pucRegistrationPassword.passwordBox.Password = string.Empty;
+            pucRegistrationPasswordVer.passwordBox.Password = string.Empty;
+        }
     }
 }

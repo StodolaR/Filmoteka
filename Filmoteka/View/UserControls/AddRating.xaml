@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Filmoteka.View.UserControls"
              xmlns:framework="clr-namespace:Filmoteka.Framework"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.Resources>
             <framework:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
@@ -15,11 +15,11 @@
             <TextBlock Text="Přidat hodnocení"/>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Hodnocení: "/>
-                <local:RatingBox RatingValue="{Binding NewDetailMovieRating, Mode=TwoWay}"/>
+                <local:RatingBox RatingValue="{Binding NewDetailMovieRating, Mode=TwoWay}" x:Name="rbRating"/>
             </StackPanel>
             <Label Content="Recenze:"/>
             <TextBox Text="{Binding NewDetailMovieReview, UpdateSourceTrigger=PropertyChanged}" 
-             TextWrapping="Wrap" AcceptsReturn="True" MinHeight="180"/>
+             TextWrapping="Wrap" AcceptsReturn="True" MinHeight="180" x:Name="tbxReview"/>
             <Button Content="Přidej hodnocení" Width="100" Margin="20" Command="{Binding AddNewRating}"/>
         </StackPanel>
     </Grid>

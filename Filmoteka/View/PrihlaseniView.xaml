@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Filmoteka.View"
              xmlns:uc="clr-namespace:Filmoteka.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="650" d:DesignWidth="800">
+             d:DesignHeight="650" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ControlTemplate x:Key="validation">
             <StackPanel>
@@ -48,13 +48,13 @@
         <StackPanel HorizontalAlignment="Center" Grid.Row="1">
             <TextBlock Text="Přihlášení uživatele" FontSize="15"/>
             <Label Content="Uživatelské jméno"/>
-            <TextBox Text="{Binding LoginName, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Text="{Binding LoginName, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" x:Name="tbLoginName"/>
             <Label Content="Heslo"/>
-            <uc:PasswordUserControl PasswordDP="{Binding LoginPassword,
+            <uc:PasswordUserControl x:Name="pucLoginPassword" PasswordDP="{Binding LoginPassword,
                         UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             <Button  Content="Přihlásit se" Margin="0,20,0,0" Width="80"
                     Command="{Binding UserLogin}" IsDefault="True"/>
-            <TextBlock Text="{Binding Message}"/>
+            <TextBlock Text="{Binding Message}" />
             <Button  Content="Odhlásit se" Margin="0,20,0,0" Width="80"
                     Command="{Binding UserLogout}"/>
         </StackPanel>
@@ -68,13 +68,13 @@
             <StackPanel HorizontalAlignment="Center" Grid.Row="1">
             <TextBlock Text="Registrace nového uživatele" FontSize="15"/>
             <Label Content="Nové uživatelské jméno"/>
-            <TextBox Text="{Binding RegistrationName, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Text="{Binding RegistrationName, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" x:Name="tbRegistrationName"/>
             <Label Content="Nové Heslo"/>
             <uc:PasswordUserControl PasswordDP="{Binding RegistrationPassword, ValidatesOnNotifyDataErrors=True,
-                                UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" x:Name="pucRegistrationPassword"/>
             <Label Content="Znova heslo pro kontrolu"/>
             <uc:PasswordUserControl PasswordDP="{Binding RegistrationPasswordVerification, ValidatesOnNotifyDataErrors=True,
-                                UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" x:Name="pucRegistrationPasswordVer"/>
             <Button Command="{Binding UserRegistration}" Content="Registrovat" Margin="0,20,0,0" 
                     Width="80" IsDefault="True"/>
             <TextBlock Text="{Binding RegistrationMessage}"/>

@@ -1,4 +1,5 @@
-﻿using Filmoteka.ViewModel;
+﻿using Filmoteka.Model;
+using Filmoteka.ViewModel;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,17 @@ namespace Filmoteka.View.UserControls
                 tbxPicturePath.Text = dialog.FileName;
                 tbxPicturePath.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            tbxName.Text = string.Empty;
+            tbxDescription.Text = string.Empty;
+            tbxYear.Text = string.Empty;
+            rbRating.RatingValue = 0;
+            tbxReview.Text = string.Empty;
+            tbxPicturePath.Text = string.Empty;
+            cbxGenre.SelectedIndex = 0;
         }
     }
 }
