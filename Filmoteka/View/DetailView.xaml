@@ -13,42 +13,43 @@
         <framework:FullPathConverter x:Key="fullPathConverter"/>
         <framework:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
     </UserControl.Resources>
-    <StackPanel>
-        <DockPanel LastChildFill="False">
-            <Image  Source="{Binding SelectedMovie.PicturePath, Converter={StaticResource fullPathConverter}}" 
-                    DockPanel.Dock="Left" Height="200"/>
-            <StackPanel DockPanel.Dock="Left">
-                <TextBlock Text="{Binding SelectedMovie.Name}" FontSize="30"/>
-                <TextBlock Text="{Binding SelectedMovie.Genre}"/>
-                <TextBlock Text="{Binding SelectedMovie.Year}"/>
-            </StackPanel>
-            <StackPanel DockPanel.Dock="Right" Width="200" >
-                <TextBlock Text="{Binding SelectedMovie.AvgRating, StringFormat={}{0}%}" FontSize="60" 
-                           HorizontalAlignment="Center"/>
-                <TextBlock Text="{Binding SelectedMovie.Ratings.Count, StringFormat=Počet hodnocení: {0}}" 
-                           HorizontalAlignment="Center"/>
-            </StackPanel>
-        </DockPanel>
-        <DockPanel LastChildFill="False">
-            <StackPanel Width="500" DockPanel.Dock="Left">
-                <TextBlock Text="{Binding SelectedMovie.Description}"  TextWrapping="Wrap" />
-                <TextBlock Text="Recenze" Margin="0,20,0,10" />
-                <ItemsControl ItemsSource="{Binding SelectedMovie.Ratings}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,5">
-                                <StackPanel Orientation="Horizontal">
-                                    <uc:RatingBlock RatingValue="{Binding Rating}"/>
-                                    <TextBlock Text="{Binding User.Name}"/>
+    <Grid>
+        <StackPanel>
+            <DockPanel LastChildFill="False">
+                <Image  Source="{Binding SelectedMovie.PicturePath, Converter={StaticResource fullPathConverter}}" 
+                DockPanel.Dock="Left" Height="200"/>
+                <StackPanel DockPanel.Dock="Left">
+                    <TextBlock Text="{Binding SelectedMovie.Name}" FontSize="30"/>
+                    <TextBlock Text="{Binding SelectedMovie.Genre}"/>
+                    <TextBlock Text="{Binding SelectedMovie.Year}"/>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Right" Width="200" >
+                    <TextBlock Text="{Binding SelectedMovie.AvgRating, StringFormat={}{0}%}" FontSize="60" 
+                       HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding SelectedMovie.Ratings.Count, StringFormat=Počet hodnocení: {0}}" 
+                       HorizontalAlignment="Center"/>
+                </StackPanel>
+            </DockPanel>
+            <DockPanel LastChildFill="False">
+                <StackPanel Width="500" DockPanel.Dock="Left">
+                    <TextBlock Text="{Binding SelectedMovie.Description}"  TextWrapping="Wrap" />
+                    <TextBlock Text="Recenze" Margin="0,20,0,10" />
+                    <ItemsControl ItemsSource="{Binding SelectedMovie.Ratings}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,5">
+                                    <StackPanel Orientation="Horizontal">
+                                        <uc:RatingBlock RatingValue="{Binding Rating}"/>
+                                        <TextBlock Text="{Binding User.Name}"/>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Review}" TextWrapping="Wrap" Width="450"/>
                                 </StackPanel>
-                                <TextBlock Text="{Binding Review}" TextWrapping="Wrap" Width="450"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-            <uc:AddRating DockPanel.Dock="Right" />
-        </DockPanel>
-    </StackPanel>
-    
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <uc:AddRating DockPanel.Dock="Right" />
+            </DockPanel>
+        </StackPanel>
+    </Grid>
 </UserControl>

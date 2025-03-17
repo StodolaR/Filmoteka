@@ -13,7 +13,7 @@
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
                                     <GradientStop Offset="0" Color="AntiqueWhite"/>
-                                    <GradientStop x:Name="gradientStop1" Offset="-0.1" Color="SaddleBrown"/>
+                                    <GradientStop x:Name="gradientStop1" Offset="-0.1" Color="Goldenrod"/>
                                     <GradientStop Offset="1" Color="AntiqueWhite"/>
                                 </LinearGradientBrush>
                             </Border.Background>
