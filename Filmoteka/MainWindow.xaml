@@ -19,16 +19,16 @@
             <TabItem Header="Úvod" Visibility="Collapsed">
                 <view:UvodView/>
             </TabItem>
-            <TabItem Header="Žebříček" >
+            <TabItem Header="Žebříček" Style="{StaticResource TabItemTemplate1}">
                 <view:ZebricekView/>
             </TabItem>
-            <TabItem Header="Dle žánru" >
+            <TabItem Header="Dle žánru" Style="{StaticResource TabItemTemplate1}">
                 <view:ZanryView/>
             </TabItem>
-            <TabItem Header="Uživatelé" DataContext="{StaticResource userCollectionViewModel}">
+            <TabItem Header="Uživatelé" DataContext="{StaticResource userCollectionViewModel}" Style="{StaticResource TabItemTemplate1}">
                 <view:UzivatelView/>
             </TabItem>
-            <TabItem Header="Přihlášení" DataContext="{StaticResource userCollectionViewModel}">
+            <TabItem Header="Přihlášení" DataContext="{StaticResource userCollectionViewModel}" Style="{StaticResource TabItemTemplate1}">
                 <view:PrihlaseniView/>
             </TabItem>
             <TabItem Visibility="Collapsed" Header="Detail filmu" >
