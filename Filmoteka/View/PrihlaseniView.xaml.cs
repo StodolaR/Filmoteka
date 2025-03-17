@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Filmoteka.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,8 @@ namespace Filmoteka.View
             tbRegistrationName.Text = string.Empty;
             pucRegistrationPassword.passwordBox.Password = string.Empty;
             pucRegistrationPasswordVer.passwordBox.Password = string.Empty;
+            var viewModel = (UserCollectionViewModel)DataContext;
+            viewModel.ErrorsReset.Execute(null);
         }
     }
 }

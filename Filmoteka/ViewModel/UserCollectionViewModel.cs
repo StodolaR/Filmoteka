@@ -128,7 +128,8 @@ namespace Filmoteka.ViewModel
         }
         public ICommand UserLogin => new RelayCommand(Login, CanLogin);
         public ICommand UserLogout => new RelayCommand(Logout, CanLogout);
-        public ICommand UserRegistration => new RelayCommand(Register, CanRegister);      
+        public ICommand UserRegistration => new RelayCommand(Register, CanRegister);
+        public ICommand ErrorsReset => new RelayCommand(ResetErrors);
         public UserCollectionViewModel()
         {
             Users = new ObservableCollection<UserViewModel>();
@@ -240,6 +241,14 @@ namespace Filmoteka.ViewModel
                     if (RegistrationPasswordVerification != RegistrationPassword)
                         AddError(propertyName, "Heslo nesouhlasí, zkuste zadat znova"); break;
             }
+        }
+        private void ResetErrors(object? obj)
+        {
+            _errors.Clear();
+            OnErrorsChanged(nameof(LoginName));
+            OnErrorsChanged(nameof(RegistrationName));
+            OnErrorsChanged(nameof(RegistrationPassword));
+            OnErrorsChanged(nameof(RegistrationPasswordVerification));
         }
     }
 }
