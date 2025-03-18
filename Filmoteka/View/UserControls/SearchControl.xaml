@@ -15,7 +15,7 @@
                 <TextBox x:Name="tbSearch" Width="200" VerticalAlignment="Center"/>
                 <Button Height="20" Name="btnSearch" Click="btnSearch_Click">
                     <Button.Content>
-                        <Path Stroke="gray" Data="M 0,10 L 3,7 A 5,5 0 1 1 4,8 L 1,11 Z"/>
+                        <Path Stroke="Black" Data="M 0,10 L 3,7 A 5,5 0 1 1 4,8 L 1,11 Z"/>
                     </Button.Content>
                 </Button>
                 <Popup IsOpen="False" Placement="{Binding ElementName=tbSearch}" x:Name="PopupSearch" StaysOpen="False">
@@ -23,7 +23,7 @@
                 </Popup>
             </StackPanel>
             <ListBox x:Name="lbSearch" ItemsSource="{Binding Source={StaticResource movies}}" SelectedItem="{Binding SelectedSearchedMovie}" SelectedValue="" 
-                     SelectionChanged="lbSearch_SelectionChanged" >
+                     SelectionChanged="lbSearch_SelectionChanged" Visibility="Collapsed">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">

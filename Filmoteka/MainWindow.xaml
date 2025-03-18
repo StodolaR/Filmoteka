@@ -37,8 +37,8 @@
         </TabControl>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Top">
             <uc:SearchControl/>
-            <Label Content="Přihlášen uživatel: "/>
-            <Label Content="{Binding LoggedUser.Name}" DataContext="{StaticResource userCollectionViewModel}"/>
+            <Label Content="Přihlášen uživatel:"/>
+            <Label Content="{Binding LoggedUser.Name}" DataContext="{StaticResource userCollectionViewModel}" MinWidth="100"/>
         </StackPanel>
     </Grid>
 </Window>

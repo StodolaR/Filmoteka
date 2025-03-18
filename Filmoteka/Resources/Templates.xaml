@@ -104,7 +104,7 @@
                     <Border x:Name="Bd" Padding="4,1">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                <GradientStop x:Name="gradientStop1" Offset="-0.1" Color="Gold"/>
+                                <GradientStop x:Name="gradientStop1" Offset="-0.1" Color="NavajoWhite"/>
                                 <GradientStop x:Name="gradientStop2" Offset="0" Color="AntiqueWhite"/>
                             </LinearGradientBrush>
                         </Border.Background>
@@ -143,7 +143,7 @@
                                 <Condition Property="Selector.IsSelectionActive" Value="True"/>
                                 <Condition Property="IsSelected" Value="True"/>
                             </MultiTrigger.Conditions>
-                            <Setter Property="Background" TargetName="Bd" Value="Goldenrod"/>
+                            <Setter Property="Background" TargetName="Bd" Value="Gold"/>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
