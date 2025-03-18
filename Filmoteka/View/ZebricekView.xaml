@@ -20,7 +20,7 @@
         <framework:OrderNumbersConverter x:Key="orderNumberConverter"/>
         <framework:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
     </UserControl.Resources>
-    <Grid>
+    <Grid Background="{StaticResource background}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>

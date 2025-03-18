@@ -7,7 +7,7 @@
     <Style TargetType="ListView">
         <Setter Property="Background" Value="{StaticResource background}"/>
     </Style>
-    <Style TargetType="Grid">
+    <Style x:Key="GridBackground" TargetType="Grid">
         <Setter Property="Background" Value="{StaticResource background}"/>
     </Style>
 </ResourceDictionary>

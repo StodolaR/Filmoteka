@@ -12,7 +12,7 @@
     <UserControl.Resources>
         <framework:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
     </UserControl.Resources>
-    <Grid>
+    <Grid Background="{StaticResource background}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
