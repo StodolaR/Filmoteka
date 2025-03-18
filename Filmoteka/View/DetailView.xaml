@@ -13,7 +13,7 @@
         <framework:FullPathConverter x:Key="fullPathConverter"/>
         <framework:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
     </UserControl.Resources>
-    <Grid>
+    <Grid Background="{StaticResource background}">
         <StackPanel>
             <DockPanel LastChildFill="False">
                 <Image  Source="{Binding SelectedMovie.PicturePath, Converter={StaticResource fullPathConverter}}" 
