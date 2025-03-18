@@ -32,13 +32,11 @@ namespace Filmoteka.View.UserControls
             AddMovieViewModel addMovieViewModel = new AddMovieViewModel(userCollectionViewModel, movieCollectionViewModel);
             DataContext = addMovieViewModel;
         }
-
         private void tbxYear_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
-
         private void btnPicturePath_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -49,7 +47,6 @@ namespace Filmoteka.View.UserControls
                 tbxPicturePath.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             }
         }
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             tbxName.Text = string.Empty;

@@ -26,16 +26,12 @@ namespace Filmoteka.View.UserControls
             get { return (int)GetValue(RatingValueProperty); }
             set { SetValue(RatingValueProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for RatingValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty RatingValueProperty =
             DependencyProperty.Register("RatingValue", typeof(int), typeof(RatingBlock), new PropertyMetadata(OnSourcePropertyChanged));
-
         public static void OnSourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-           
-                RatingBlock control = d as RatingBlock;
-                control.RatingValue = (int)e.NewValue;
+        {      
+            RatingBlock control = d as RatingBlock;
+            control.RatingValue = (int)e.NewValue;
             control. starLabels = control. StarPanel.Children;
             for (int i = 0; i < control. RatingValue; i++)
             {
@@ -49,12 +45,10 @@ namespace Filmoteka.View.UserControls
                 (control.starLabels[i] as Label).Height = 21;
                 (control.starLabels[i] as Label).Content = control.StarCreating(Brushes.Black);
             }
-
         }
         public RatingBlock()
         {
-            InitializeComponent();
-            
+            InitializeComponent();           
         }
         private Path StarCreating(Brush color)
         {

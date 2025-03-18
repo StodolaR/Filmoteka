@@ -29,7 +29,6 @@ namespace Filmoteka.View.UserControls
             AddRatingViewModel addRatingViewModel = new AddRatingViewModel(userCollectionViewModel, movieCollectionViewModel);
             DataContext = addRatingViewModel;
         }
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             rbRating.RatingValue = 0;

@@ -26,7 +26,6 @@ namespace Filmoteka.View.UserControls
         {
             InitializeComponent();
         }
-
         private void CollectionViewSource_Filter(object sender, FilterEventArgs e)
         {
             MovieViewModel movie = e.Item as MovieViewModel;
@@ -47,7 +46,6 @@ namespace Filmoteka.View.UserControls
                 e.Accepted = false; 
             }
         }
-
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             if (tbSearch.Text != "")

@@ -21,17 +21,13 @@ namespace Filmoteka.View.UserControls
     public partial class RatingBox : UserControl
     {
         UIElementCollection starButtons;
-
         public int RatingValue
         {
             get { return (int)GetValue(RatingValueProperty); }
             set { SetValue(RatingValueProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for RatingValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty RatingValueProperty =
             DependencyProperty.Register("RatingValue", typeof(int), typeof(RatingBox), new PropertyMetadata(OnSourcePropertyChanged));
-
         public static void OnSourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if ((int)e.NewValue == 0)
@@ -44,10 +40,8 @@ namespace Filmoteka.View.UserControls
                         (control.starButtons[i] as Button).Content = control.StarCreating(Brushes.Black);
                     }
                 }
-            }
-           
+            }         
         }
-
         public RatingBox()
         {
             InitializeComponent();
@@ -57,14 +51,11 @@ namespace Filmoteka.View.UserControls
                 (starButtons[i] as Button).Content = StarCreating(Brushes.Black);
                 (starButtons[i] as Button).Tag = i;
                 (starButtons[i] as Button).Width = 20;
-                (starButtons[i] as Button).Click += StarButton_Click;
-                
+                (starButtons[i] as Button).Click += StarButton_Click;            
             }
         }
-
         private void StarButton_Click(object sender, RoutedEventArgs e)
-        {
-            
+        {           
             Button starButton = sender as Button;
             int rating = Convert.ToInt32(starButton.Tag);
             RatingValue = rating;

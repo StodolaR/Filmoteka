@@ -24,8 +24,6 @@ namespace Filmoteka.View
         public ZebricekView()
         {
             InitializeComponent();
-        }
-
-        
+        }      
     }
 }
