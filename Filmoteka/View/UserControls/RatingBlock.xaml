@@ -8,11 +8,16 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel Orientation="Horizontal" Height="20" x:Name="StarPanel">
-            <Label Margin="0,-4,0,0"/>
-            <Label Margin="0,-4,0,0"/>
-            <Label Margin="0,-4,0,0"/>
-            <Label Margin="0,-4,0,0"/>
-            <Label Margin="0,-4,0,0"/>
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                    <Setter Property="Padding" Value="1"/>
+                </Style>
+            </StackPanel.Resources>
+            <Label />
+            <Label />
+            <Label />
+            <Label />
+            <Label />
         </StackPanel>
     </Grid>
 </UserControl>

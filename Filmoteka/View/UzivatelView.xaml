@@ -40,7 +40,7 @@
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <uc:RatingBlock RatingValue="{Binding Rating}"/>
-                            <TextBlock Text="{Binding Movie.Name}"/>
+                            <TextBlock Text="{Binding Movie.Name}" VerticalAlignment="Center"/>
                         </StackPanel>
                         <Expander ExpandDirection="Right" Visibility="{Binding Review, Converter={StaticResource nullToVisibleConverter}}">
                             <TextBlock Text="{Binding Review}" TextWrapping="Wrap" Width="350"/>

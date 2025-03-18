@@ -35,14 +35,14 @@ namespace Filmoteka.View.UserControls
             control. starLabels = control. StarPanel.Children;
             for (int i = 0; i < control. RatingValue; i++)
             {
-                (control. starLabels[i] as Label).Width = 21;
-                (control.starLabels[i] as Label).Height = 21;
+                (control. starLabels[i] as Label).Width = 15;
+                (control.starLabels[i] as Label).Height = 15;
                 (control.starLabels[i] as Label).Content = control.StarCreating(Brushes.Goldenrod);
             }
             for (int i = control.RatingValue; i < 5; i++)
             {               
-                (control. starLabels[i] as Label).Width = 21;
-                (control.starLabels[i] as Label).Height = 21;
+                (control. starLabels[i] as Label).Width = 15;
+                (control.starLabels[i] as Label).Height = 15;
                 (control.starLabels[i] as Label).Content = control.StarCreating(Brushes.Black);
             }
         }
