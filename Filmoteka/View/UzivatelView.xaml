@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Filmoteka.View"
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              xmlns:uc="clr-namespace:Filmoteka.View.UserControls"
              xmlns:viewModel="clr-namespace:Filmoteka.ViewModel"
              xmlns:framework="clr-namespace:Filmoteka.Framework"
@@ -13,11 +14,18 @@
         <framework:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
     </UserControl.Resources>
     <Grid Background="{StaticResource background}">
+        <Grid.Resources>
+            <CollectionViewSource x:Key="users" Source="{Binding Users}">
+                <CollectionViewSource.SortDescriptions>
+                    <scm:SortDescription PropertyName="Name"/>
+                </CollectionViewSource.SortDescriptions>
+            </CollectionViewSource>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ListView ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}">
+        <ListView ItemsSource="{Binding Source={StaticResource users}}" SelectedItem="{Binding SelectedUser}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel >
