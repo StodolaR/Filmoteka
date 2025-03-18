@@ -59,6 +59,8 @@ namespace Filmoteka.View.UserControls
             tbxReview.Text = string.Empty;
             tbxPicturePath.Text = string.Empty;
             cbxGenre.SelectedIndex = 0;
+            var viewModel = (AddMovieViewModel)DataContext;
+            viewModel.ErrorsReset.Execute(null);
         }
     }
 }

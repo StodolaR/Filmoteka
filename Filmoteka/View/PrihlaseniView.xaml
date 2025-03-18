@@ -8,28 +8,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <UserControl.Resources>
-        <ControlTemplate x:Key="validation">
-            <StackPanel>
-                <AdornedElementPlaceholder/>
-                <ItemsControl ItemsSource="{Binding}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-        </ControlTemplate>
+        <Style TargetType="uc:PasswordUserControl">
+            <Style.Setters>
+                <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource validation}"/>
+                <Setter Property="Margin" Value="0,0,0,15"/>
+            </Style.Setters>
+        </Style>
         <Style TargetType="TextBox">
             <Style.Setters>
                 <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource validation}"/>
                 <Setter Property="Width" Value="200"/>
-                <Setter Property="Margin" Value="0,0,0,15"/>
-            </Style.Setters>
-        </Style>
-        <Style TargetType="uc:PasswordUserControl">
-            <Style.Setters>
-                <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource validation}"/>
                 <Setter Property="Margin" Value="0,0,0,15"/>
             </Style.Setters>
         </Style>

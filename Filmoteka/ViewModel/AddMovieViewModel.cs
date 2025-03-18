@@ -30,6 +30,11 @@ namespace Filmoteka.ViewModel
             {
                 newMovieName = value;
                 OnPropertyChanged(nameof(NewMovieName));
+                if (_errors.ContainsKey(nameof(NewMovieName)))
+                {
+                    CheckErrors(nameof(NewMovieName));
+                    OnErrorsChanged(nameof(NewMovieName));
+                }
             }
         }
         public GenreType NewMovieGenre
@@ -48,6 +53,11 @@ namespace Filmoteka.ViewModel
             {
                 newMovieDescription = value;
                 OnPropertyChanged(nameof(NewMovieDescription));
+                if (_errors.ContainsKey(nameof(NewMovieDescription)))
+                {
+                    CheckErrors(nameof(NewMovieDescription));
+                    OnErrorsChanged(nameof(NewMovieDescription));
+                }
             }
         }
         public string NewMovieYear
@@ -57,6 +67,11 @@ namespace Filmoteka.ViewModel
             {
                 newMovieYear = value;
                 OnPropertyChanged(nameof(NewMovieYear));
+                if (_errors.ContainsKey(nameof(NewMovieYear)))
+                {
+                    CheckErrors(nameof(NewMovieYear));
+                    OnErrorsChanged(nameof(NewMovieYear));
+                }
             }
         }
         public string NewMoviePicturePath
@@ -96,6 +111,7 @@ namespace Filmoteka.ViewModel
             }
         }
         public ICommand AddNewMovie => new RelayCommand(AddMovie, CanAddMovie);
+        public ICommand ErrorsReset => new RelayCommand(ResetErrors);
         public AddMovieViewModel(UserCollectionViewModel userCollectionViewModel, MovieCollectionViewModel movieCollectionViewModel) 
             : base(userCollectionViewModel, movieCollectionViewModel)
         {
@@ -106,25 +122,31 @@ namespace Filmoteka.ViewModel
         }
         private void AddMovie(object? obj)
         {
-            string targetPath = string.Empty;
-            try
+            CheckErrors(nameof(NewMovieName));
+            CheckErrors(nameof(NewMovieDescription));
+            CheckErrors(nameof(NewMovieYear));
+            if (!HasErrors)
             {
-                CreateDirectoryIfNotExist();
-                string pictureFileName = Path.GetFileName(NewMoviePicturePath);
-                pictureFileName = CheckFileNameUniqueness(pictureFileName);
-                targetPath = CopyPictureToPostersFolder(pictureFileName);
-            }
-            catch (Exception ex)
-            {
-                message = ex.Message;
-            }
-            Movie newMovie = CreateNewMovieWithRating(targetPath);
-            using (MovieContext mc = new MovieContext())
-            {               
-                mc.Movies.Add(newMovie);
-                mc.SaveChanges();
-                Movie newMovieFromDatabase = (mc.Movies.Include(y => y.UserMovies).ThenInclude(z => z.User)).OrderBy(x => x.Id).Last();
-                AddMovieToCollection(newMovieFromDatabase);
+                string targetPath = string.Empty;
+                try
+                {
+                    CreateDirectoryIfNotExist();
+                    string pictureFileName = Path.GetFileName(NewMoviePicturePath);
+                    pictureFileName = CheckFileNameUniqueness(pictureFileName);
+                    targetPath = CopyPictureToPostersFolder(pictureFileName);
+                }
+                catch (Exception ex)
+                {
+                    message = ex.Message;
+                }
+                Movie newMovie = CreateNewMovieWithRating(targetPath);
+                using (MovieContext mc = new MovieContext())
+                {
+                    mc.Movies.Add(newMovie);
+                    mc.SaveChanges();
+                    Movie newMovieFromDatabase = (mc.Movies.Include(y => y.UserMovies).ThenInclude(z => z.User)).OrderBy(x => x.Id).Last();
+                    AddMovieToCollection(newMovieFromDatabase);
+                }
             }
         }
         private void CreateDirectoryIfNotExist()
@@ -220,6 +242,33 @@ namespace Filmoteka.ViewModel
             NewMoviePicturePath = "Cesta k obrázku";
             NewMovieReview = string.Empty;
             NewMovieRating = 0;
+        }
+        private void CheckErrors(string propertyName)
+        {
+            RemoveErrors(propertyName);
+            switch (propertyName)
+            {
+                case nameof(NewMovieName):
+                    if (string.IsNullOrWhiteSpace(NewMovieName))
+                        AddError(propertyName, "Zadej název filmu");
+                    if (movieCollectionViewModel.Movies.Any(x => x.Name == NewMovieName && x.Year == Convert.ToInt32(NewMovieYear)))
+                        AddError(propertyName, "Film s tímto názvem a rokem výroby je již v seznamu"); break;
+                case nameof(NewMovieDescription):
+                    if (string.IsNullOrWhiteSpace(NewMovieDescription))
+                        AddError(propertyName, "Zadej popis filmu"); break;
+                case nameof(NewMovieYear):
+                    if (NewMovieYear == "")
+                        AddError(propertyName, "Zadej rok výroby filmu");
+                    else if (Convert.ToInt32(NewMovieYear) < 1900 || Convert.ToInt32(NewMovieYear) > DateTime.Now.Year)
+                        AddError(propertyName, "Rok výroby mimo rozsah (1900 - letošní rok)");break;
+            }
+        }
+        private void ResetErrors(object? obj)
+        {
+            _errors.Clear();
+            OnErrorsChanged(nameof(NewMovieName));
+            OnErrorsChanged(nameof(NewMovieDescription));
+            OnErrorsChanged(nameof(NewMovieYear));
         }
     }
 }

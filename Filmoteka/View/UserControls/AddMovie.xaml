@@ -9,7 +9,7 @@
              xmlns:model="clr-namespace:Filmoteka.Model"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="200" Loaded="UserControl_Loaded">
+             d:DesignHeight="600" d:DesignWidth="400" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.Resources>
             <ObjectDataProvider x:Key="GenreEnum" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
@@ -18,12 +18,18 @@
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
             <framework:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
+            <Style TargetType="TextBox">
+                <Style.Setters>
+                    <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource validation}"/>
+                    <Setter Property="Margin" Value="0,0,0,15"/>
+                </Style.Setters>
+            </Style>
         </Grid.Resources>
         <StackPanel Width="400">
             <Label Content="Přidat nový film"/>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Jméno: "/>
-                <TextBox Text="{Binding NewMovieName, UpdateSourceTrigger=PropertyChanged}" Width="300" 
+                <TextBox Text="{Binding NewMovieName, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Width="300" 
                          VerticalContentAlignment="Center" x:Name="tbxName"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
@@ -32,11 +38,11 @@
                           VerticalContentAlignment="Center" x:Name="cbxGenre"/>
             </StackPanel>
             <Label Content="Obsah"/>
-            <TextBox Text="{Binding NewMovieDescription, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" 
-                     MinHeight="180" x:Name="tbxDescription"/>
+            <TextBox Text="{Binding NewMovieDescription, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                     TextWrapping="Wrap" AcceptsReturn="True" MinHeight="180" x:Name="tbxDescription"/>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Rok:     "/>
-                <TextBox x:Name="tbxYear" Text="{Binding NewMovieYear, UpdateSourceTrigger=PropertyChanged}"
+                <TextBox x:Name="tbxYear" Text="{Binding NewMovieYear, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                          PreviewTextInput="tbxYear_PreviewTextInput" MaxLength="4" VerticalContentAlignment="Center" Width="145"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
@@ -49,7 +55,7 @@
             <TextBox Text="{Binding NewMoviePicturePath}" x:Name="tbxPicturePath" TextWrapping="Wrap" MinHeight="40" IsReadOnly="True"/>
             <Button Content="Zvolit obrázek" Width="100" x:Name="btnPicturePath" Click="btnPicturePath_Click"/>
             <Button Content="Uložit film" Width="100" Margin="20" Command="{Binding AddNewMovie}"/>
-            <TextBlock Text="{Binding Message}"/>
+            <TextBlock Text="{Binding Message}" HorizontalAlignment="Center"/>
         </StackPanel>
         
     </Grid>
