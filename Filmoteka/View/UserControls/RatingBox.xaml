@@ -7,13 +7,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <StackPanel Orientation="Horizontal" Height="20" x:Name="StarPanel">
-            <Button Tag="0" Click="StarButton_Click" Content="0" Width="20"/>
-            <Button/>
-            <Button/>
-            <Button/>
-            <Button/>
-            <Button/>
-        </StackPanel>
+        <Border BorderBrush="#ACACAC" BorderThickness="1">
+            <StackPanel Orientation="Horizontal" Height="20" x:Name="StarPanel">
+                <Button Tag="0" Click="StarButton_Click" Content="0" Width="20" Style="{StaticResource starButton}"/>
+                <Button Style="{StaticResource starButton}"/>
+                <Button Style="{StaticResource starButton}"/>
+                <Button Style="{StaticResource starButton}"/>
+                <Button Style="{StaticResource starButton}"/>
+                <Button Style="{StaticResource starButton}"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

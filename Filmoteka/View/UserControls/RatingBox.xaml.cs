@@ -58,6 +58,7 @@ namespace Filmoteka.View.UserControls
                 (starButtons[i] as Button).Tag = i;
                 (starButtons[i] as Button).Width = 20;
                 (starButtons[i] as Button).Click += StarButton_Click;
+                
             }
         }
 
