@@ -1,6 +1,7 @@
 ﻿using Filmoteka.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,7 +51,15 @@ namespace Filmoteka.View.UserControls
         {
             if (tbSearch.Text != "")
             {
-                searchStrings = tbSearch.Text.Split(" ");
+                var movies = (ObservableCollection<MovieViewModel>)(searchControl.FindResource("movies") as CollectionViewSource).Source;
+                if (movies.Any(x => x.Name.Contains(tbSearch.Text, StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    searchStrings = new string[] { tbSearch.Text };
+                }
+                else
+                {
+                    searchStrings = tbSearch.Text.Split(" ");
+                }
                 lbSearch.SelectedItem = null;
                 CollectionViewSource.GetDefaultView(lbSearch.ItemsSource).Refresh();
                 lbSearch.Visibility = Visibility.Visible;
