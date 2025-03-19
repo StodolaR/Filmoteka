@@ -19,7 +19,7 @@
                     </Button.Content>
                 </Button>
                 <Popup IsOpen="False" Placement="{Binding ElementName=tbSearch}" x:Name="PopupSearch" StaysOpen="False">
-                    <TextBlock Text="Film nenalezen" Background="White" Foreground="Black"/>
+                    <TextBlock Text=" Film nenalezen " Background="White" Foreground="Black" Padding="5" FontSize="14"/>
                 </Popup>
             </StackPanel>
             <ListBox x:Name="lbSearch" ItemsSource="{Binding Source={StaticResource movies}}" SelectedItem="{Binding SelectedSearchedMovie}" SelectedValue="" 

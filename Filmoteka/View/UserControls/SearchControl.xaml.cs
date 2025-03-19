@@ -65,6 +65,8 @@ namespace Filmoteka.View.UserControls
                 lbSearch.Visibility = Visibility.Visible;
                 if (!lbSearch.HasItems)
                 {
+                    lbSearch.Visibility = Visibility.Collapsed;
+                    tbSearch.Text = "";
                     PopupSearch.IsOpen = true;
                 }
             }
