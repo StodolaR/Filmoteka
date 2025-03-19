@@ -9,7 +9,7 @@
         xmlns:view="clr-namespace:Filmoteka.View"
         xmlns:viewModel="clr-namespace:Filmoteka.ViewModel"
         mc:Ignorable="d"
-        Title="Filmotéka" Height="750" Width="1000"
+        Title="Filmotéka" Height="760" Width="1010" WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource movieCollectionViewModel}">
     <Grid>
         <Grid.Resources>
@@ -19,26 +19,26 @@
             <TabItem Header="Úvod" Visibility="Collapsed">
                 <view:UvodView/>
             </TabItem>
-            <TabItem Header="Žebříček" Style="{StaticResource TabItemTemplate1}">
+            <TabItem Header="Žebříček" Style="{StaticResource TabItemTemplate1}" FontSize="14">
                 <view:ZebricekView/>
             </TabItem>
-            <TabItem Header="Dle žánru" Style="{StaticResource TabItemTemplate1}">
+            <TabItem Header="Dle žánru" Style="{StaticResource TabItemTemplate1}" FontSize="14" >
                 <view:ZanryView/>
             </TabItem>
-            <TabItem Header="Uživatelé" DataContext="{StaticResource userCollectionViewModel}" Style="{StaticResource TabItemTemplate1}">
+            <TabItem Header="Uživatelé" DataContext="{StaticResource userCollectionViewModel}" Style="{StaticResource TabItemTemplate1}" FontSize="14">
                 <view:UzivatelView/>
             </TabItem>
-            <TabItem Header="Přihlášení" DataContext="{StaticResource userCollectionViewModel}" Style="{StaticResource TabItemTemplate1}">
+            <TabItem Header="Přihlášení" DataContext="{StaticResource userCollectionViewModel}" Style="{StaticResource TabItemTemplate1}" FontSize="14">
                 <view:PrihlaseniView/>
             </TabItem>
-            <TabItem Visibility="Collapsed" Header="Detail filmu" >
+            <TabItem Visibility="Collapsed" Header="Detail filmu" FontSize="14">
                 <view:DetailView/>
             </TabItem>
         </TabControl>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Top">
             <uc:SearchControl/>
             <Label Content="Přihlášen uživatel:"/>
-            <Label Content="{Binding LoggedUser.Name}" DataContext="{StaticResource userCollectionViewModel}" MinWidth="100"/>
+            <Label Content="{Binding LoggedUser.Name}" DataContext="{StaticResource userCollectionViewModel}" MinWidth="200" FontSize="13" FontWeight="DemiBold" Margin="-4,-2,0,0"/>
         </StackPanel>
     </Grid>
 </Window>

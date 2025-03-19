@@ -31,7 +31,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-                            <Image  Height="60" Width="45" Stretch="Fill">
+                            <Image  Height="60" Width="45" Stretch="Fill" Margin="0,0,5,0">
                                 <Image.Source>
                                     <BitmapImage UriSource="{Binding PicturePath, Converter={StaticResource fullPathConverter}}" />
                                 </Image.Source>
@@ -40,15 +40,15 @@
                                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                                     <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, StringFormat={}{0}.,
                                                       Path=(ItemsControl.AlternationIndex), Converter={StaticResource orderNumberConverter}}" 
-                                                      FontSize="15" MinWidth="20"/>
-                                    <TextBlock Text="{Binding Name}" FontSize="15"/>
-                                    <TextBlock Text="{Binding Year, StringFormat={} (0)}"/>
+                                                      FontSize="15"/>
+                                    <TextBlock Text="{Binding Name}" FontSize="15" Margin="5,0,0,0" FontWeight="DemiBold"/>
                                 </StackPanel>
-                                <TextBlock Text="{Binding Genre}"/>
+                                <TextBlock Text="{Binding Genre}" Margin="5,0,0,0" FontStyle="Italic"/>
+                                <TextBlock Text="{Binding Year, StringFormat={} (0)}"/>
                             </StackPanel>
                             <StackPanel Width="100">
                                 <TextBlock Text="{Binding AvgRating, StringFormat={}{0}%}" FontSize="30" HorizontalAlignment="Center"/>
-                                <TextBlock Text="{Binding Ratings.Count, StringFormat=Počet hodnocení: {0}}" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Ratings.Count, StringFormat=Počet hodnocení: {0}}" HorizontalAlignment="Center" FontSize="12"/>
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>

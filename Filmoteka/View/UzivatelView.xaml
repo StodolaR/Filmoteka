@@ -25,29 +25,33 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ListView ItemsSource="{Binding Source={StaticResource users}}" SelectedItem="{Binding SelectedUser}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel >
-                        <TextBlock Text="{Binding Name}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <ItemsControl Grid.Column="1" ItemsSource="{Binding SelectedUser.Ratings}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <uc:RatingBlock RatingValue="{Binding Rating}"/>
-                            <TextBlock Text="{Binding Movie.Name}" VerticalAlignment="Center"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ListView ItemsSource="{Binding Source={StaticResource users}}" SelectedItem="{Binding SelectedUser}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel >
+                            <TextBlock Text="{Binding Name}" FontSize="14" Margin="2" FontWeight="DemiBold"/>
                         </StackPanel>
-                        <Expander ExpandDirection="Right" Visibility="{Binding Review, Converter={StaticResource nullToVisibleConverter}}">
-                            <TextBlock Text="{Binding Review}" TextWrapping="Wrap" Width="350"/>
-                        </Expander>
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+            <ItemsControl  ItemsSource="{Binding SelectedUser.Ratings}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Movie.Name}" VerticalAlignment="Center" Margin="5,0"/>
+                                <uc:RatingBlock RatingValue="{Binding Rating}"/>
+                            </StackPanel>
+                            <Expander ExpandDirection="Right" Visibility="{Binding Review, Converter={StaticResource nullToVisibleConverter}}">
+                                <TextBlock Text="{Binding Review}" TextWrapping="Wrap" Width="350" HorizontalAlignment="Left" Margin="10,0,0,5"/>
+                            </Expander>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>

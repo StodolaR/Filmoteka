@@ -37,7 +37,7 @@
                                 <Setter.Value>
                                     <ControlTemplate>
                                         <StackPanel>
-                                            <TextBlock Text="{Binding Name}" FontSize="25"/>
+                                            <TextBlock Text="{Binding Name}" FontSize="25" FontWeight="Bold" FontStyle="Italic"/>
                                             <Border BorderBrush="Gray" BorderThickness="1">
                                                 <ScrollViewer  VerticalScrollBarVisibility="Auto" MaxHeight="190">
                                                     <ItemsPresenter/>
@@ -54,7 +54,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" >
-                        <Image Height="60" Width="45" Stretch="Fill">
+                        <Image Height="60" Width="45" Stretch="Fill" Margin="0,0,5,0">
                             <Image.Source>
                                 <BitmapImage UriSource="{Binding PicturePath, Converter={StaticResource fullPathConverter}}" />
                             </Image.Source>
@@ -63,11 +63,11 @@
                             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
                                 <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, StringFormat={}{0}.,
                                             Path=(ItemsControl.AlternationIndex), Converter={StaticResource orderNumberConverter}}" 
-                                            FontSize="15" MinWidth="20"/>
-                                <TextBlock Text="{Binding Name}" FontSize="15" />
+                                            FontSize="15" />
+                                <TextBlock Text="{Binding Name}" FontSize="15" FontWeight="DemiBold" Margin="5,0,0,0"/>
                             </StackPanel>
-                            <TextBlock Text="{Binding AvgRating, StringFormat={}{0}%}" FontSize="20" DockPanel.Dock="Right"/>
-                            <TextBlock Text="{Binding Ratings.Count, StringFormat=Počet hodnocení: {0}}"  DockPanel.Dock="Bottom"/>
+                            <TextBlock Text="{Binding AvgRating, StringFormat={}{0}%}" FontSize="30" DockPanel.Dock="Right"/>
+                            <TextBlock Text="{Binding Ratings.Count, StringFormat=Počet hodnocení: {0}}"  DockPanel.Dock="Bottom" FontSize="12"/>
                             <TextBlock Text="{Binding Year, StringFormat={} (0)}" DockPanel.Dock="Left"/>
                         </DockPanel>
                     </StackPanel>

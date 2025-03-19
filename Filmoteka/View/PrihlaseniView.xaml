@@ -34,7 +34,7 @@
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
         <StackPanel HorizontalAlignment="Center" Grid.Row="1">
-            <TextBlock Text="Přihlášení uživatele" FontSize="15"/>
+            <TextBlock Text="Přihlášení uživatele" FontSize="15" FontWeight="DemiBold"/>
             <Label Content="Uživatelské jméno"/>
             <TextBox Text="{Binding LoginName, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" x:Name="tbLoginName"/>
             <Label Content="Heslo"/>
@@ -54,7 +54,7 @@
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <StackPanel HorizontalAlignment="Center" Grid.Row="1">
-            <TextBlock Text="Registrace nového uživatele" FontSize="15"/>
+            <TextBlock Text="Registrace nového uživatele" FontSize="15" FontWeight="DemiBold"/>
             <Label Content="Nové uživatelské jméno"/>
             <TextBox Text="{Binding RegistrationName, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" x:Name="tbRegistrationName"/>
             <Label Content="Nové Heslo"/>
