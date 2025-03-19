@@ -11,13 +11,25 @@
             <StackPanel.Resources>
                 <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
                     <Setter Property="Padding" Value="1"/>
+                    <Setter Property="Width" Value="13"/>
+                    <Setter Property="Height" Value="14"/>
                 </Style>
             </StackPanel.Resources>
-            <Label />
-            <Label />
-            <Label />
-            <Label />
-            <Label />
+            <Label>
+                <Path Data="M 0 4.5 L 4.1 4.3 L 5.8 0 L 7.5 4.3 L 11.5 4.5 L 8.3 7.3 L 9.7 12 L 5.8 9.2 L 2.1 12 L 3.3 7.3 Z" Fill="Black"/>
+            </Label>
+            <Label>
+                <Path Data="M 0 4.5 L 4.1 4.3 L 5.8 0 L 7.5 4.3 L 11.5 4.5 L 8.3 7.3 L 9.7 12 L 5.8 9.2 L 2.1 12 L 3.3 7.3 Z" Fill="Black"/>
+            </Label>
+            <Label>
+                <Path Data="M 0 4.5 L 4.1 4.3 L 5.8 0 L 7.5 4.3 L 11.5 4.5 L 8.3 7.3 L 9.7 12 L 5.8 9.2 L 2.1 12 L 3.3 7.3 Z" Fill="Black"/>
+            </Label>
+            <Label>
+                <Path Data="M 0 4.5 L 4.1 4.3 L 5.8 0 L 7.5 4.3 L 11.5 4.5 L 8.3 7.3 L 9.7 12 L 5.8 9.2 L 2.1 12 L 3.3 7.3 Z" Fill="Black"/>
+            </Label>
+            <Label>
+                <Path Data="M 0 4.5 L 4.1 4.3 L 5.8 0 L 7.5 4.3 L 11.5 4.5 L 8.3 7.3 L 9.7 12 L 5.8 9.2 L 2.1 12 L 3.3 7.3 Z" Fill="Black"/>
+            </Label>
         </StackPanel>
     </Grid>
 </UserControl>

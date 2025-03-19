@@ -32,31 +32,15 @@ namespace Filmoteka.View.UserControls
         {      
             RatingBlock control = d as RatingBlock;
             control.RatingValue = (int)e.NewValue;
-            control. starLabels = control. StarPanel.Children;
-            for (int i = 0; i < control. RatingValue; i++)
+            control. starLabels = control.StarPanel.Children;
+            for (int i = 0; i < control.RatingValue; i++)
             {
-                (control. starLabels[i] as Label).Width = 15;
-                (control.starLabels[i] as Label).Height = 15;
-                (control.starLabels[i] as Label).Content = control.StarCreating(Brushes.Goldenrod);
-            }
-            for (int i = control.RatingValue; i < 5; i++)
-            {               
-                (control. starLabels[i] as Label).Width = 15;
-                (control.starLabels[i] as Label).Height = 15;
-                (control.starLabels[i] as Label).Content = control.StarCreating(Brushes.Black);
+                ((control.starLabels[i] as Label).Content as Path).Fill = Brushes.Goldenrod;
             }
         }
         public RatingBlock()
         {
             InitializeComponent();           
-        }
-        private Path StarCreating(Brush color)
-        {
-            Path star = new Path();
-            star.Data = Geometry.Parse
-                ("M 0 4.5 L 4.1 4.3 L 5.8 0 L 7.5 4.3 L 11.5 4.5 L 8.3 7.3 L 9.7 12 L 5.8 9.2 L 2.1 12 L 3.3 7.3 Z");
-            star.Fill = color;
-            return star;
         }
     }
 }
