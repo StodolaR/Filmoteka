@@ -37,7 +37,7 @@ namespace Filmoteka.View.UserControls
                 {
                     for (int i = 1; i <= 5; i++)
                     {
-                        (control.starButtons[i] as Button).Content = control.StarCreating(Brushes.Black);
+                        ((control.starButtons[i] as Button).Content as Path).Fill = Brushes.Black;
                     }
                 }
             }         
@@ -45,14 +45,7 @@ namespace Filmoteka.View.UserControls
         public RatingBox()
         {
             InitializeComponent();
-            starButtons = StarPanel.Children;
-            for (int i = 1; i <= 5; i++)
-            {
-                (starButtons[i] as Button).Content = StarCreating(Brushes.Black);
-                (starButtons[i] as Button).Tag = i;
-                (starButtons[i] as Button).Width = 20;
-                (starButtons[i] as Button).Click += StarButton_Click;            
-            }
+            starButtons = StarPanel.Children;       
         }
         private void StarButton_Click(object sender, RoutedEventArgs e)
         {           
@@ -63,21 +56,13 @@ namespace Filmoteka.View.UserControls
             {
                 for (int i = 1; i <= rating; i++)
                 {
-                    (starButtons[i] as Button).Content = StarCreating(Brushes.Goldenrod);
+                    ((starButtons[i] as Button).Content as Path).Fill = Brushes.Goldenrod;
                 }
                 for (int i = rating + 1; i <= 5; i++)
                 {
-                    (starButtons[i] as Button).Content = StarCreating(Brushes.Black);
+                    ((starButtons[i] as Button).Content as Path).Fill = Brushes.Black;
                 }
             }
-        }
-        private Path StarCreating(Brush color)
-        {
-            Path star = new Path();
-            star.Data = Geometry.Parse
-                ("M 0 4.5 L 4.1 4.3 L 5.8 0 L 7.5 4.3 L 11.5 4.5 L 8.3 7.3 L 9.7 12 L 5.8 9.2 L 2.1 12 L 3.3 7.3 Z");
-            star.Fill = color;
-            return star;
         }
     }
 }

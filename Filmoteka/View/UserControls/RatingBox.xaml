@@ -9,12 +9,37 @@
     <Grid>
         <Border BorderBrush="#ACACAC" BorderThickness="1">
             <StackPanel Orientation="Horizontal" Height="20" x:Name="StarPanel">
-                <Button Tag="0" Click="StarButton_Click" Content="0" Width="20" Style="{StaticResource starButton}"/>
-                <Button Style="{StaticResource starButton}"/>
-                <Button Style="{StaticResource starButton}"/>
-                <Button Style="{StaticResource starButton}"/>
-                <Button Style="{StaticResource starButton}"/>
-                <Button Style="{StaticResource starButton}"/>
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="border" Background="White" BorderBrush="White" BorderThickness="0" >
+                                        <ContentPresenter x:Name="contentPresenter"  HorizontalAlignment="Center" Margin="0"  VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Width" Value="20"/>
+                        <EventSetter Event="Click" Handler="StarButton_Click"/>
+                    </Style>
+                </StackPanel.Resources>
+                <Button Tag="0" Content="0"/>
+                <Button Tag="1">
+                    <Path Data="M 0 4.5 L 4.1 4.3 L 5.8 0 L 7.5 4.3 L 11.5 4.5 L 8.3 7.3 L 9.7 12 L 5.8 9.2 L 2.1 12 L 3.3 7.3 Z" Fill="Black"/>
+                </Button>
+                <Button Tag="2">
+                    <Path Data="M 0 4.5 L 4.1 4.3 L 5.8 0 L 7.5 4.3 L 11.5 4.5 L 8.3 7.3 L 9.7 12 L 5.8 9.2 L 2.1 12 L 3.3 7.3 Z" Fill="Black"/>
+                </Button>
+                <Button Tag="3">
+                    <Path Data="M 0 4.5 L 4.1 4.3 L 5.8 0 L 7.5 4.3 L 11.5 4.5 L 8.3 7.3 L 9.7 12 L 5.8 9.2 L 2.1 12 L 3.3 7.3 Z" Fill="Black"/>
+                </Button>
+                <Button Tag="4">
+                    <Path Data="M 0 4.5 L 4.1 4.3 L 5.8 0 L 7.5 4.3 L 11.5 4.5 L 8.3 7.3 L 9.7 12 L 5.8 9.2 L 2.1 12 L 3.3 7.3 Z" Fill="Black"/>
+                </Button>
+                <Button Tag="5">
+                    <Path Data="M 0 4.5 L 4.1 4.3 L 5.8 0 L 7.5 4.3 L 11.5 4.5 L 8.3 7.3 L 9.7 12 L 5.8 9.2 L 2.1 12 L 3.3 7.3 Z" Fill="Black"/>
+                </Button>
             </StackPanel>
         </Border>
     </Grid>
