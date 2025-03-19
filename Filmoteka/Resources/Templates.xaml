@@ -117,7 +117,7 @@
                     <Border x:Name="Bd" Padding="4,1">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                <GradientStop x:Name="gradientStop1" Offset="-0.1" Color="NavajoWhite"/>
+                                <GradientStop x:Name="gradientStop1" Offset="-0.5" Color="NavajoWhite"/>
                                 <GradientStop x:Name="gradientStop2" Offset="0" Color="AntiqueWhite"/>
                             </LinearGradientBrush>
                         </Border.Background>
@@ -128,9 +128,9 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <DoubleAnimation Storyboard.TargetName="gradientStop2" Storyboard.TargetProperty="Offset"
-                                                    From="0" To="1.1" Duration="0:0:0.3" />
+                                                    From="0" To="1.5" Duration="0:0:0.3" />
                                     <DoubleAnimation Storyboard.TargetName="gradientStop1" Storyboard.TargetProperty="Offset"
-                                                    From="-0.1" To="1" Duration="0:0:0.3" />
+                                                    From="-0.5" To="1" Duration="0:0:0.3" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
