@@ -20,6 +20,7 @@
         </CollectionViewSource>
         <framework:FullPathConverter x:Key="fullPathConverter"/>
         <framework:OrderNumbersConverter x:Key="orderNumberConverter"/>
+        <Style TargetType="ListViewItem" BasedOn="{StaticResource listViewItem2}"/>
     </UserControl.Resources>
     <Grid>
         <ListView ItemsSource="{Binding Source={StaticResource MovieSource}}" SelectedItem="{Binding SelectedMovie}" AlternationCount="{Binding Movies.Count}">
