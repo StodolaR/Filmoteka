@@ -22,7 +22,8 @@ namespace Filmoteka.ViewModel
                 loggedUser = value;
                 OnPropertyChanged(nameof(LoggedUser));
             } 
-        }
+        }     
+        
         protected UserMovieViewmodel(UserCollectionViewModel userCollectionViewModel, MovieCollectionViewModel movieCollectionViewModel)
         {
             this.userCollectionViewModel = userCollectionViewModel;

@@ -24,7 +24,18 @@ namespace Filmoteka.ViewModel
         private string registrationPasswordVerification = string.Empty;
         private string message = string.Empty;
         private string registrationMessage = string.Empty;
+        private string? editMode;
+
         public ObservableCollection<UserViewModel> Users { get; set; }
+        public string? EditMode 
+        {
+            get => editMode;
+            set 
+            {
+                editMode = value;
+                OnPropertyChanged(nameof(EditMode));
+            } 
+        }
         public UserViewModel? SelectedUser
         {
             get => selectedUser;
@@ -149,10 +160,17 @@ namespace Filmoteka.ViewModel
         }
         private bool CanLogin(object? arg)
         {
-            return LoginName != string.Empty && LoginPassword != string.Empty && LoggedUser == null;
+            return LoginName != string.Empty && LoginPassword != string.Empty && LoggedUser == null && EditMode == null;
         }
         private void Login(object? obj)
         {
+            if (EditLogin())
+            {
+                Message = "Editace filmu: " + EditMode;
+                LoginName = string.Empty;
+                LoginPassword = string.Empty;
+                return;
+            }
             CheckErrors(nameof(LoginName));
             if (!HasErrors)
             {
@@ -170,13 +188,29 @@ namespace Filmoteka.ViewModel
                 }
             }
         }
+        private bool EditLogin()
+        {
+            if (loginName == "Movie")
+            {
+                switch (LoginPassword)
+                {
+                    case "Name": EditMode = "Name"; return true;
+                    case "Genre": EditMode = "Genre"; return true;
+                    case "Description": EditMode = "Description"; return true;
+                    case "Picture": EditMode = "Picture"; return true;
+                    case "Delete": EditMode = "Delete"; return true;
+                }
+            }
+            return false;
+        }
         private bool CanLogout(object? arg)
         {
-            return LoggedUser != null;
+            return LoggedUser != null || EditMode != null;
         }
         private void Logout(object? obj)
         {
             LoggedUser = null;
+            EditMode = null;
             Message = string.Empty;
             RegistrationMessage = string.Empty;
         }

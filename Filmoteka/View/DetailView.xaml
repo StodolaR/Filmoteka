@@ -50,7 +50,8 @@
                         </ItemsControl>
                     </ScrollViewer>
                 </StackPanel>
-                <uc:AddRating DockPanel.Dock="Right" />
+                <uc:AddRating DockPanel.Dock="Right"/>
+                <uc:EditMovie DockPanel.Dock="Right"/>
             </DockPanel>
         </StackPanel>
     </Grid>

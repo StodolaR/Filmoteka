@@ -56,6 +56,5 @@
             <Button Content="Uložit film" Width="100" Margin="20" Command="{Binding AddNewMovie}"/>
             <TextBlock Text="{Binding Message}" HorizontalAlignment="Center"/>
         </StackPanel>
-        
     </Grid>
 </UserControl>
