@@ -129,7 +129,7 @@ namespace Filmoteka.ViewModel
         public ICommand OriginalDescription => new RelayCommand(ShowOriginalDescription);
         public ICommand DescriptionEdit => new RelayCommand(EditDescription);
         public ICommand PictureEdit => new RelayCommand(EditPicture);
-        public ICommand MovieDelete => new RelayCommand(DeleteMovie);
+        public ICommand MovieDelete => new RelayCommand(DeleteMovie, CanDeleteMovie);
         public EditMovieViewModel(UserCollectionViewModel userCollectionViewModel, MovieCollectionViewModel movieCollectionViewModel) 
             : base(userCollectionViewModel, movieCollectionViewModel)
         {
@@ -272,26 +272,26 @@ namespace Filmoteka.ViewModel
                 throw new Exception("Nelze zkopírovat obrázek do složky");
             }
         }
-        private void DeleteMovie(object? obj)
+        private bool CanDeleteMovie(object? arg)
         {
-            //if(movieCollectionViewModel.SelectedMovie != null)
-            //{
-            //    int deleteMovieId = movieCollectionViewModel.SelectedMovie.Id;
-            //    using (MovieContext mc = new MovieContext())
-            //    {
-            //        foreach (UserMovie userMovie in mc.UserMovies)
-            //        {
-            //            if (userMovie.MovieId == deleteMovieId)
-            //            {
-
-            //            }
-            //        }
-            //        mc.Movies.Remove(movieCollectionViewModel.SelectedMovie)
-            //        mc.SaveChanges();
-            //    }
-            //    movieCollectionViewModel.Movies.Remove(movieCollectionViewModel.SelectedMovie);
-            //    Message = "Film smazán";
-            //}
+            return movieCollectionViewModel.SelectedMovie != null;
+        }
+        private void DeleteMovie(object? obj)
+        {           
+            using (MovieContext mc = new MovieContext())
+            {               
+                foreach (UserMovie userMovie in movieCollectionViewModel.SelectedMovie.Ratings)
+                {
+                    mc.UserMovies.Remove(userMovie);
+                }
+                Movie deleteDatabaseMovie = mc.Movies.Where(x => x.Id == movieCollectionViewModel.SelectedMovie.Id).First();
+                mc.Movies.Remove(deleteDatabaseMovie);
+                mc.SaveChanges();
+            }
+            userCollectionViewModel.Users.Clear();
+            userCollectionViewModel.GetUsersFromDatabase();
+            MovieViewModel deleteMovie = movieCollectionViewModel.SelectedMovie;
+            movieCollectionViewModel.Movies.Remove(deleteMovie);
         }
         private void CheckErrors(string propertyName)
         {

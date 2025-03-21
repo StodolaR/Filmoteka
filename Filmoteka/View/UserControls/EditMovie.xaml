@@ -25,7 +25,7 @@
             </Style>
         </Grid.Resources>
         <StackPanel Width="400" Visibility="{Binding EditMode, Converter={StaticResource nullToVisibleConverter}}">
-            <Label Content="Editace zvoleného filmu" FontSize="15" FontWeight="Bold"/>
+            <Label Content="Editace zvoleného filmu" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center"/>
             <StackPanel Visibility="{Binding EditedName, Converter={StaticResource nullToVisibleConverter}}">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Jméno: "/>
@@ -59,7 +59,10 @@
                 <Button Content="Zvolit obrázek" Width="100" x:Name="btnPicturePath" Click="btnPicturePath_Click"/>
                 <Button x:Name="btnPicture" Content="Potvrď změny" Width="100" Command="{Binding PictureEdit}"/>
             </StackPanel>
-            <Button Content="Smazat film" Width="100" Margin="20" Visibility="{Binding Delete, Converter={StaticResource nullToVisibleConverter}}"/>
+            <StackPanel Visibility="{Binding Delete, Converter={StaticResource nullToVisibleConverter}}">
+                <Button Content="Smazat film" Width="100" Margin="20" Command="{Binding MovieDelete}"/>
+                <TextBlock Text="(Po smazání tohoto filmu se zobrazení přepne zpět na úvod)"/>
+            </StackPanel>
             <TextBlock Text="{Binding Message}" HorizontalAlignment="Center"/>
         </StackPanel>
     </Grid>
