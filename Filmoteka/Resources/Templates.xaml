@@ -105,7 +105,7 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <DoubleAnimation Storyboard.TargetName="gradientStop2" Storyboard.TargetProperty="Offset"
-                                                    From="0" To="1.1" Duration="0:0:0.3" />
+                                                    From="0" To="2" Duration="0:0:0.3" />
                                     <DoubleAnimation Storyboard.TargetName="gradientStop1" Storyboard.TargetProperty="Offset"
                                                     From="-0.5" To="1" Duration="0:0:0.3" />
                                 </Storyboard>
@@ -117,7 +117,7 @@
                                     <DoubleAnimation Storyboard.TargetName="gradientStop1" Storyboard.TargetProperty="Offset"
                                                     From="1" To="-0.1" Duration="0:0:0.3" />
                                     <DoubleAnimation Storyboard.TargetName="gradientStop2" Storyboard.TargetProperty="Offset"
-                                                    From="1.1" To="0" Duration="0:0:0.3" />
+                                                    From="2" To="0" Duration="0:0:0.3" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -159,7 +159,7 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <DoubleAnimation Storyboard.TargetName="gradientStop2" Storyboard.TargetProperty="Offset"
-                                                From="0" To="1.1" Duration="0:0:0.3" />
+                                                From="0" To="2" Duration="0:0:0.3" />
                                     <DoubleAnimation Storyboard.TargetName="gradientStop1" Storyboard.TargetProperty="Offset"
                                                 From="-0.5" To="1" Duration="0:0:0.3" />
                                 </Storyboard>
@@ -171,7 +171,7 @@
                                     <DoubleAnimation Storyboard.TargetName="gradientStop1" Storyboard.TargetProperty="Offset"
                                                 From="1" To="-0.1" Duration="0:0:0.3" />
                                     <DoubleAnimation Storyboard.TargetName="gradientStop2" Storyboard.TargetProperty="Offset"
-                                                From="1.1" To="0" Duration="0:0:0.3" />
+                                                From="2" To="0" Duration="0:0:0.3" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
