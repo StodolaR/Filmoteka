@@ -47,7 +47,7 @@ namespace Filmoteka.View.UserControls
                 tbxPicturePath.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             }
         }
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             tbxName.Text = string.Empty;
             tbxDescription.Text = string.Empty;

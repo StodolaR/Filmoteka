@@ -9,7 +9,7 @@
              xmlns:model="clr-namespace:Filmoteka.Model"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="400" Loaded="UserControl_Loaded">
+             d:DesignHeight="600" d:DesignWidth="400" Unloaded="UserControl_Unloaded">
     <Grid>
         <Grid.Resources>
             <ObjectDataProvider x:Key="GenreEnum" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">

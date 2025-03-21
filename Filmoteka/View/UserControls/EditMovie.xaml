@@ -9,7 +9,7 @@
              xmlns:model="clr-namespace:Filmoteka.Model"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             d:DesignHeight="650" d:DesignWidth="800">
+             d:DesignHeight="650" d:DesignWidth="800" Unloaded="UserControl_Unloaded">
     <Grid>
         <Grid.Resources>
             <ObjectDataProvider x:Key="GenreEnum" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
@@ -57,7 +57,7 @@
             <StackPanel Visibility="{Binding EditedPicturePath, Converter={StaticResource nullToVisibleConverter}}">
                 <TextBox Text="{Binding EditedPicturePath}" x:Name="tbxPicturePath" TextWrapping="Wrap" MinHeight="40" IsReadOnly="True"/>
                 <Button Content="Zvolit obrázek" Width="100" x:Name="btnPicturePath" Click="btnPicturePath_Click"/>
-                <Button x:Name="btnPicture" Content="Potvrď změny" Width="100"/>
+                <Button x:Name="btnPicture" Content="Potvrď změny" Width="100" Command="{Binding PictureEdit}"/>
             </StackPanel>
             <Button Content="Smazat film" Width="100" Margin="20" Visibility="{Binding Delete, Converter={StaticResource nullToVisibleConverter}}"/>
             <TextBlock Text="{Binding Message}" HorizontalAlignment="Center"/>

@@ -34,6 +34,10 @@ namespace Filmoteka.ViewModel
             {
                 editMode = value;
                 OnPropertyChanged(nameof(EditMode));
+                if (editMode == null)
+                {
+                    Message = "";
+                }
             } 
         }
         public UserViewModel? SelectedUser
@@ -287,6 +291,10 @@ namespace Filmoteka.ViewModel
             OnErrorsChanged(nameof(RegistrationName));
             OnErrorsChanged(nameof(RegistrationPassword));
             OnErrorsChanged(nameof(RegistrationPasswordVerification));
+            if (Message == "Nesprávné heslo")
+            {
+                Message = "";
+            }
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using Filmoteka.Framework;
 using Filmoteka.Model;
+using Filmoteka.View.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +21,7 @@ namespace Filmoteka.ViewModel
         private string? editedDescription;
         private string? editedPicturePath;
         private bool? delete;
+        private string? message;
         public string? EditMode
         {
             get => editMode;
@@ -111,10 +114,22 @@ namespace Filmoteka.ViewModel
                 OnPropertyChanged(nameof(Delete));
             }
         }
+        public string? Message
+        {
+            get => message;
+            set
+            {
+                message = value;
+                OnPropertyChanged(nameof(Message));
+            }
+        }
+        public ICommand EditModeClose => new RelayCommand(CloseEdit);
         public ICommand NameEdit => new RelayCommand(EditName);
         public ICommand GenreEdit => new RelayCommand(EditGenre);
         public ICommand OriginalDescription => new RelayCommand(ShowOriginalDescription);
         public ICommand DescriptionEdit => new RelayCommand(EditDescription);
+        public ICommand PictureEdit => new RelayCommand(EditPicture);
+        public ICommand MovieDelete => new RelayCommand(DeleteMovie);
         public EditMovieViewModel(UserCollectionViewModel userCollectionViewModel, MovieCollectionViewModel movieCollectionViewModel) 
             : base(userCollectionViewModel, movieCollectionViewModel)
         {
@@ -183,6 +198,101 @@ namespace Filmoteka.ViewModel
                 };
             }
         }
+        private void EditPicture(object? obj)
+        {
+            string targetPath = string.Empty;
+            try
+            {
+                CreateDirectoryIfNotExist();
+                string pictureFileName = Path.GetFileName(EditedPicturePath);
+                pictureFileName = CheckFileNameUniqueness(pictureFileName);
+                targetPath = CopyPictureToPostersFolder(pictureFileName);
+                MovieViewModel editedMovie = movieCollectionViewModel.SelectedMovie;
+                movieCollectionViewModel.Movies.Remove(movieCollectionViewModel.SelectedMovie);
+                editedMovie.PicturePath = EditedPicturePath;
+                movieCollectionViewModel.SelectedMovie = editedMovie;
+                movieCollectionViewModel.Movies.Add(movieCollectionViewModel.SelectedMovie);
+                using (MovieContext mc = new MovieContext())
+                {
+                    mc.Movies.Where(x => x.Id == editedMovie.Id).First().PicturePath = EditedPicturePath;
+                    mc.SaveChanges();
+                };
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+            }
+        }
+        private void CreateDirectoryIfNotExist()
+        {
+            try
+            {
+                Directory.CreateDirectory("Posters");
+            }
+            catch (Exception)
+            {
+                throw new Exception("Nelze vytvořit složku obrázků");
+            }
+        }
+        private string CheckFileNameUniqueness(string pictureFileName)
+        {
+            try
+            {
+                string targetFileName = Path.GetFileName(EditedPicturePath);
+                string[] pictureFilePaths = Directory.GetFiles("Posters");
+                List<string> pictureFileNames = new List<string>();
+                foreach (var filePath in pictureFilePaths)
+                {
+                    pictureFileNames.Add(Path.GetFileName(filePath));
+                }
+                while (pictureFileNames.Contains(targetFileName))
+                {
+                    string extension = Path.GetExtension(targetFileName);
+                    string newFileName = Path.GetFileNameWithoutExtension(targetFileName) + "x";
+                    targetFileName = newFileName + extension;
+                }
+                return targetFileName;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Nelze vytvořit jedinečný název souboru");
+            }
+
+        }
+        private string CopyPictureToPostersFolder(string pictureFileName)
+        {
+            try
+            {
+                string targetPath = Path.Combine("Posters", pictureFileName);
+                File.Copy(EditedPicturePath, targetPath);
+                return targetPath;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Nelze zkopírovat obrázek do složky");
+            }
+        }
+        private void DeleteMovie(object? obj)
+        {
+            //if(movieCollectionViewModel.SelectedMovie != null)
+            //{
+            //    int deleteMovieId = movieCollectionViewModel.SelectedMovie.Id;
+            //    using (MovieContext mc = new MovieContext())
+            //    {
+            //        foreach (UserMovie userMovie in mc.UserMovies)
+            //        {
+            //            if (userMovie.MovieId == deleteMovieId)
+            //            {
+
+            //            }
+            //        }
+            //        mc.Movies.Remove(movieCollectionViewModel.SelectedMovie)
+            //        mc.SaveChanges();
+            //    }
+            //    movieCollectionViewModel.Movies.Remove(movieCollectionViewModel.SelectedMovie);
+            //    Message = "Film smazán";
+            //}
+        }
         private void CheckErrors(string propertyName)
         {
             RemoveErrors(propertyName);
@@ -203,12 +313,11 @@ namespace Filmoteka.ViewModel
                         AddError(propertyName, "Rok výroby mimo rozsah (1900 - letošní rok)"); break;
             }
         }
-        private void ResetErrors(object? obj)
+        private void CloseEdit(object? obj)
         {
             _errors.Clear();
-            OnErrorsChanged(nameof(EditedName));
-            OnErrorsChanged(nameof(EditedDescription));
-            OnErrorsChanged(nameof(EditedYear));
+            EditMode = null;
+            userCollectionViewModel.EditMode = null;
         }
     }
 }
