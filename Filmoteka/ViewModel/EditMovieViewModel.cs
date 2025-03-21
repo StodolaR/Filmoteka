@@ -1,9 +1,11 @@
-﻿using Filmoteka.Model;
+﻿using Filmoteka.Framework;
+using Filmoteka.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Filmoteka.ViewModel
 {
@@ -16,7 +18,6 @@ namespace Filmoteka.ViewModel
         private string? editedDescription;
         private string? editedPicturePath;
         private bool? delete;
-
         public string? EditMode
         {
             get => editMode;
@@ -52,6 +53,11 @@ namespace Filmoteka.ViewModel
             {
                 editedName = value;
                 OnPropertyChanged(nameof(EditedName));
+                if (_errors.ContainsKey(nameof(EditedName)))
+                {
+                    CheckErrors(nameof(EditedName));
+                    OnErrorsChanged(nameof(EditedName));
+                }
             } 
         }
         public string? EditedYear
@@ -61,6 +67,11 @@ namespace Filmoteka.ViewModel
             {
                 editedYear = value;
                 OnPropertyChanged(nameof(EditedYear));
+                if (_errors.ContainsKey(nameof(EditedYear)))
+                {
+                    CheckErrors(nameof(EditedYear));
+                    OnErrorsChanged(nameof(EditedYear));
+                }
             }
         }
         public GenreType? EditedGenre
@@ -99,6 +110,7 @@ namespace Filmoteka.ViewModel
                 OnPropertyChanged(nameof(Delete));
             }
         }
+        public ICommand NameEdit => new RelayCommand(EditName, CanEditName);
         public EditMovieViewModel(UserCollectionViewModel userCollectionViewModel, MovieCollectionViewModel movieCollectionViewModel) 
             : base(userCollectionViewModel, movieCollectionViewModel)
         {
@@ -110,6 +122,60 @@ namespace Filmoteka.ViewModel
             {
                 EditMode = userCollectionViewModel.EditMode;
             }
+        }
+        private bool CanEditName(object? arg)
+        {
+            return true;
+        }
+        private void EditName(object? obj)
+        {
+            CheckErrors(nameof(EditedName));
+            CheckErrors(nameof(EditedYear));
+            if (!HasErrors)
+            {
+                MovieViewModel editedMovie = movieCollectionViewModel.SelectedMovie;
+                movieCollectionViewModel.Movies.Remove(movieCollectionViewModel.SelectedMovie);
+                editedMovie.Name = EditedName;
+                editedMovie.Year = Convert.ToInt32(EditedYear);
+                movieCollectionViewModel.SelectedMovie = editedMovie;
+                movieCollectionViewModel.Movies.Add(movieCollectionViewModel.SelectedMovie);
+                using (MovieContext mc = new MovieContext())
+                {
+                    mc.Movies.Where(x => x.Id == editedMovie.Id).First().Name = EditedName;
+                    mc.Movies.Where(x => x.Id == editedMovie.Id).First().Year = Convert.ToInt32(EditedYear);
+                    mc.SaveChanges();
+                }
+                ;
+                userCollectionViewModel.Users.Clear();
+                userCollectionViewModel.GetUsersFromDatabase();
+            }
+        }
+        private void CheckErrors(string propertyName)
+        {
+            RemoveErrors(propertyName);
+            switch (propertyName)
+            {
+                case nameof(EditedName):
+                    if (string.IsNullOrWhiteSpace(EditedName))
+                        AddError(propertyName, "Zadej název filmu");
+                    if (movieCollectionViewModel.Movies.Any(x => x.Name == EditedName && x.Year == Convert.ToInt32(EditedYear)))
+                        AddError(propertyName, "Film s tímto názvem a rokem výroby je již v seznamu"); break;
+                case nameof(EditedDescription):
+                    if (string.IsNullOrWhiteSpace(EditedDescription))
+                        AddError(propertyName, "Zadej popis filmu"); break;
+                case nameof(EditedYear):
+                    if (EditedYear == "")
+                        AddError(propertyName, "Zadej rok výroby filmu");
+                    else if (Convert.ToInt32(EditedYear) < 1900 || Convert.ToInt32(EditedYear) > DateTime.Now.Year)
+                        AddError(propertyName, "Rok výroby mimo rozsah (1900 - letošní rok)"); break;
+            }
+        }
+        private void ResetErrors(object? obj)
+        {
+            _errors.Clear();
+            OnErrorsChanged(nameof(EditedName));
+            OnErrorsChanged(nameof(EditedDescription));
+            OnErrorsChanged(nameof(EditedYear));
         }
     }
 }

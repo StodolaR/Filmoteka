@@ -37,7 +37,7 @@
                     <TextBox x:Name="tbxYear" Text="{Binding EditedYear, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                             PreviewTextInput="tbxYear_PreviewTextInput" MaxLength="4" VerticalContentAlignment="Center" Width="145" Margin="0,0,0,23"/>
                 </StackPanel>
-                <Button x:Name="btnName" Content="Potvrď změny" Width="100"/>
+                <Button x:Name="btnName" Content="Potvrď změny" Width="100" Command="{Binding NameEdit}"/>
             </StackPanel>
             <StackPanel Visibility="{Binding EditedGenre, Converter={StaticResource nullToVisibleConverter}}">
                 <StackPanel Orientation="Horizontal">

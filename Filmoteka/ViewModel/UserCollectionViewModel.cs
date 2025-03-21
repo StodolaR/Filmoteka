@@ -144,7 +144,11 @@ namespace Filmoteka.ViewModel
         public UserCollectionViewModel()
         {
             Users = new ObservableCollection<UserViewModel>();
-            using(MovieContext mc = new MovieContext())
+            GetUsersFromDatabase();
+        }
+        public void GetUsersFromDatabase()
+        {
+            using (MovieContext mc = new MovieContext())
             {
                 foreach (User user in mc.Users.Include(x => x.UserMovies).ThenInclude(y => y.Movie))
                 {

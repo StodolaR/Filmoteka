@@ -40,7 +40,7 @@ namespace Filmoteka.ViewModel
         }
         protected void Movies_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Add)
+            if (LoggedUser != null && e.Action == NotifyCollectionChangedAction.Add)
             {
                 MovieViewModel newRatedMovie = (MovieViewModel)(e.NewItems[0]);
                 UserMovie? movieRatingInLoggedUserRatings = LoggedUser.Ratings.Where(x => x.MovieId == newRatedMovie.Id).FirstOrDefault();
