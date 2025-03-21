@@ -45,13 +45,14 @@
                     <ComboBox ItemsSource="{Binding Source={StaticResource GenreEnum}}" Text="{Binding EditedGenre}" Width="300" 
                                 VerticalContentAlignment="Center" x:Name="cbxGenre"/>
                 </StackPanel>
-                <Button x:Name="btnGenre" Content="Potvrď změny" Width="100"/>
+                <Button x:Name="btnGenre" Content="Potvrď změny" Width="100" Command="{Binding GenreEdit}"/>
             </StackPanel>
             <StackPanel Visibility="{Binding EditedDescription, Converter={StaticResource nullToVisibleConverter}}">
                 <Label Content="Obsah"/>
                 <TextBox Text="{Binding EditedDescription, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
                             TextWrapping="Wrap" AcceptsReturn="True" MinHeight="180" x:Name="tbxDescription" Margin="0,0,0,23"/>
-                <Button x:Name="btnDescription" Content="Potvrď změny" Width="100"/>
+                <Button x:Name="btnOriginalDescription" Content="Původní obsah" Width="100" Command="{Binding OriginalDescription}"/>
+                <Button x:Name="btnDescription" Content="Potvrď změny" Width="100" Command="{Binding DescriptionEdit}" Margin="20"/>
             </StackPanel>
             <StackPanel Visibility="{Binding EditedPicturePath, Converter={StaticResource nullToVisibleConverter}}">
                 <TextBox Text="{Binding EditedPicturePath}" x:Name="tbxPicturePath" TextWrapping="Wrap" MinHeight="40" IsReadOnly="True"/>

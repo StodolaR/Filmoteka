@@ -2,6 +2,7 @@
 using Filmoteka.Model;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -110,7 +111,10 @@ namespace Filmoteka.ViewModel
                 OnPropertyChanged(nameof(Delete));
             }
         }
-        public ICommand NameEdit => new RelayCommand(EditName, CanEditName);
+        public ICommand NameEdit => new RelayCommand(EditName);
+        public ICommand GenreEdit => new RelayCommand(EditGenre);
+        public ICommand OriginalDescription => new RelayCommand(ShowOriginalDescription);
+        public ICommand DescriptionEdit => new RelayCommand(EditDescription);
         public EditMovieViewModel(UserCollectionViewModel userCollectionViewModel, MovieCollectionViewModel movieCollectionViewModel) 
             : base(userCollectionViewModel, movieCollectionViewModel)
         {
@@ -122,10 +126,6 @@ namespace Filmoteka.ViewModel
             {
                 EditMode = userCollectionViewModel.EditMode;
             }
-        }
-        private bool CanEditName(object? arg)
-        {
-            return true;
         }
         private void EditName(object? obj)
         {
@@ -144,10 +144,43 @@ namespace Filmoteka.ViewModel
                     mc.Movies.Where(x => x.Id == editedMovie.Id).First().Name = EditedName;
                     mc.Movies.Where(x => x.Id == editedMovie.Id).First().Year = Convert.ToInt32(EditedYear);
                     mc.SaveChanges();
-                }
-                ;
+                };
                 userCollectionViewModel.Users.Clear();
                 userCollectionViewModel.GetUsersFromDatabase();
+            }
+        }
+        private void EditGenre(object? obj)
+        {
+            MovieViewModel editedMovie = movieCollectionViewModel.SelectedMovie;
+            movieCollectionViewModel.Movies.Remove(movieCollectionViewModel.SelectedMovie);
+            editedMovie.Genre = (GenreType)EditedGenre;
+            movieCollectionViewModel.SelectedMovie = editedMovie;
+            movieCollectionViewModel.Movies.Add(movieCollectionViewModel.SelectedMovie);
+            using (MovieContext mc = new MovieContext())
+            {
+                mc.Movies.Where(x => x.Id == editedMovie.Id).First().Genre = (GenreType)EditedGenre;
+                mc.SaveChanges();
+            }
+        }
+        private void ShowOriginalDescription(object? obj)
+        {
+            EditedDescription = movieCollectionViewModel.SelectedMovie.Description;
+        }
+        private void EditDescription(object? obj)
+        {
+            CheckErrors(nameof(EditedDescription));
+            if (!HasErrors)
+            {
+                MovieViewModel editedMovie = movieCollectionViewModel.SelectedMovie;
+                movieCollectionViewModel.Movies.Remove(movieCollectionViewModel.SelectedMovie);
+                editedMovie.Description = EditedDescription;
+                movieCollectionViewModel.SelectedMovie = editedMovie;
+                movieCollectionViewModel.Movies.Add(movieCollectionViewModel.SelectedMovie);
+                using (MovieContext mc = new MovieContext())
+                {
+                    mc.Movies.Where(x => x.Id == editedMovie.Id).First().Description = EditedDescription;
+                    mc.SaveChanges();
+                };
             }
         }
         private void CheckErrors(string propertyName)
