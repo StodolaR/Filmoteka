@@ -37,7 +37,7 @@
                                 <Setter.Value>
                                     <ControlTemplate>
                                         <StackPanel>
-                                            <TextBlock Text="{Binding Name}" FontSize="25" FontWeight="Bold" FontStyle="Italic"/>
+                                            <TextBlock Text="{Binding Name}" FontSize="25" FontWeight="Bold" FontStyle="Italic" Foreground="DarkGoldenrod"/>
                                             <Border BorderBrush="Gray" BorderThickness="1">
                                                 <ScrollViewer  VerticalScrollBarVisibility="Auto" MaxHeight="190">
                                                     <ItemsPresenter/>
@@ -64,9 +64,9 @@
                                 <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, StringFormat={}{0}.,
                                             Path=(ItemsControl.AlternationIndex), Converter={StaticResource orderNumberConverter}}" 
                                             FontSize="15" />
-                                <TextBlock Text="{Binding Name}" FontSize="15" FontWeight="DemiBold" Margin="5,0,0,0"/>
+                                <TextBlock Text="{Binding Name}" FontSize="15" FontWeight="DemiBold" Margin="5,0,0,0" Foreground="Maroon"/>
                             </StackPanel>
-                            <TextBlock Text="{Binding AvgRating, StringFormat={}{0}%}" FontSize="30" DockPanel.Dock="Right"/>
+                            <TextBlock Text="{Binding AvgRating, StringFormat={}{0}%}" FontSize="30" DockPanel.Dock="Right" Foreground="Maroon"/>
                             <TextBlock Text="{Binding Ratings.Count, StringFormat=Počet hodnocení: {0}}"  DockPanel.Dock="Bottom" FontSize="12"/>
                             <TextBlock Text="{Binding Year, StringFormat={} (0)}" DockPanel.Dock="Left"/>
                         </DockPanel>

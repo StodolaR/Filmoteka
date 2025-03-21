@@ -41,13 +41,13 @@
                                     <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, StringFormat={}{0}.,
                                                       Path=(ItemsControl.AlternationIndex), Converter={StaticResource orderNumberConverter}}" 
                                                       FontSize="15"/>
-                                    <TextBlock Text="{Binding Name}" FontSize="15" Margin="5,0,0,0" FontWeight="DemiBold"/>
+                                    <TextBlock Text="{Binding Name}" FontSize="15" Margin="5,0,0,0" FontWeight="DemiBold" Foreground="Maroon"/>
                                 </StackPanel>
                                 <TextBlock Text="{Binding Genre}" Margin="5,0,0,0" FontStyle="Italic"/>
                                 <TextBlock Text="{Binding Year, StringFormat={} (0)}"/>
                             </StackPanel>
                             <StackPanel Width="100">
-                                <TextBlock Text="{Binding AvgRating, StringFormat={}{0}%}" FontSize="30" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding AvgRating, StringFormat={}{0}%}" FontSize="30" HorizontalAlignment="Center" Foreground="Maroon"/>
                                 <TextBlock Text="{Binding Ratings.Count, StringFormat=Počet hodnocení: {0}}" HorizontalAlignment="Center" FontSize="12"/>
                             </StackPanel>
                         </StackPanel>

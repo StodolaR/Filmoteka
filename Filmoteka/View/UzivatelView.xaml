@@ -30,7 +30,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel >
-                            <TextBlock Text="{Binding Name}" FontSize="14" Margin="2" FontWeight="DemiBold"/>
+                            <TextBlock Text="{Binding Name}" FontSize="14" Margin="2" FontWeight="DemiBold" Foreground="Maroon"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

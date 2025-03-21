@@ -19,12 +19,12 @@
                 <Image  Source="{Binding SelectedMovie.PicturePath, Converter={StaticResource fullPathConverter}}" 
                 DockPanel.Dock="Left" Height="200" Margin="0,0,10,5"/>
                 <StackPanel DockPanel.Dock="Left">
-                    <TextBlock Text="{Binding SelectedMovie.Name}" FontSize="30" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedMovie.Name}" FontSize="30" FontWeight="Bold" Foreground="DarkGoldenrod"/>
                     <TextBlock Text="{Binding SelectedMovie.Genre}" FontSize="15" FontStyle="Italic"/>
                     <TextBlock Text="{Binding SelectedMovie.Year}" FontSize="15"/>
                 </StackPanel>
                 <StackPanel DockPanel.Dock="Right" Width="200" >
-                    <TextBlock Text="{Binding SelectedMovie.AvgRating, StringFormat={}{0}%}" FontSize="60" 
+                    <TextBlock Text="{Binding SelectedMovie.AvgRating, StringFormat={}{0}%}" FontSize="60" Foreground="Maroon"
                        HorizontalAlignment="Center"/>
                     <TextBlock Text="{Binding SelectedMovie.Ratings.Count, StringFormat=Počet hodnocení: {0}}" 
                        HorizontalAlignment="Center"/>
