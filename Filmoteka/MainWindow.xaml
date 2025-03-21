@@ -19,16 +19,28 @@
             <TabItem Header="Úvod" Visibility="Collapsed">
                 <view:UvodView/>
             </TabItem>
-            <TabItem Header="Žebříček" Style="{StaticResource TabItemTemplate1}" FontSize="14">
+            <TabItem Style="{StaticResource TabItemTemplate1}" FontSize="14">
+                <TabItem.Header >
+                    <TextBlock Text="Žebříček" FontSize="16" FontWeight="DemiBold"/>
+                </TabItem.Header>
                 <view:ZebricekView/>
             </TabItem>
-            <TabItem Header="Dle žánru" Style="{StaticResource TabItemTemplate1}" FontSize="14" >
+            <TabItem Style="{StaticResource TabItemTemplate1}" FontSize="14" >
+                <TabItem.Header>
+                    <TextBlock Text="Dle žánru" FontSize="16" FontWeight="DemiBold"/>
+                </TabItem.Header>
                 <view:ZanryView/>
             </TabItem>
-            <TabItem Header="Uživatelé" DataContext="{StaticResource userCollectionViewModel}" Style="{StaticResource TabItemTemplate1}" FontSize="14">
+            <TabItem DataContext="{StaticResource userCollectionViewModel}" Style="{StaticResource TabItemTemplate1}" FontSize="14">
+                <TabItem.Header>
+                    <TextBlock Text="Uživatelé" FontSize="16" FontWeight="DemiBold"/>
+                </TabItem.Header>
                 <view:UzivatelView/>
             </TabItem>
-            <TabItem Header="Přihlášení" DataContext="{StaticResource userCollectionViewModel}" Style="{StaticResource TabItemTemplate1}" FontSize="14">
+            <TabItem DataContext="{StaticResource userCollectionViewModel}" Style="{StaticResource TabItemTemplate1}" FontSize="14">
+                <TabItem.Header>
+                    <TextBlock Text="Přihlášení" FontSize="16" FontWeight="DemiBold"/>
+                </TabItem.Header>
                 <view:PrihlaseniView/>
             </TabItem>
             <TabItem Visibility="Collapsed" Header="Detail filmu" FontSize="14">
