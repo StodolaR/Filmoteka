@@ -11,7 +11,7 @@ namespace Filmoteka.ViewModel
     abstract class MovieOperationViewModel : UserMovieViewmodel
     {
         private string? newMovieName = string.Empty;
-        private GenreType? newMovieGenre;
+        private GenreType? newMovieGenre = GenreType.Akční;
         private string? newMovieDescription = string.Empty;
         private string newMovieYear = string.Empty;
         private string? newMoviePicturePath = "Cesta k obrázku";

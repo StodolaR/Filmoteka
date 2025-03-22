@@ -38,7 +38,7 @@ namespace Filmoteka.ViewModel
         }
         
         public ICommand AddNewMovie => new RelayCommand(AddMovie, CanAddMovie);
-        public ICommand ErrorsReset => new RelayCommand(ResetErrors);
+        public ICommand FormReset => new RelayCommand(ResetForm);
         public AddMovieViewModel(UserCollectionViewModel userCollectionViewModel, MovieCollectionViewModel movieCollectionViewModel) 
             : base(userCollectionViewModel, movieCollectionViewModel)
         {
@@ -116,19 +116,20 @@ namespace Filmoteka.ViewModel
         private void ResetProperties()
         {
             NewMovieName = string.Empty;
-            NewMovieGenre = 0;
+            NewMovieGenre = GenreType.Akční;
             NewMovieDescription = string.Empty;
             NewMovieYear = string.Empty;
             NewMoviePicturePath = "Cesta k obrázku";
             NewMovieReview = string.Empty;
             NewMovieRating = 0;
         }       
-        private void ResetErrors(object? obj)
+        private void ResetForm(object? obj)
         {
             _errors.Clear();
             OnErrorsChanged(nameof(NewMovieName));
             OnErrorsChanged(nameof(NewMovieDescription));
             OnErrorsChanged(nameof(NewMovieYear));
+            ResetProperties();
         }
     }
 }

@@ -49,15 +49,8 @@ namespace Filmoteka.View.UserControls
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
-            tbxName.Text = string.Empty;
-            tbxDescription.Text = string.Empty;
-            tbxYear.Text = string.Empty;
-            rbRating.RatingValue = 0;
-            tbxReview.Text = string.Empty;
-            tbxPicturePath.Text = "Cesta k obrázku";
-            cbxGenre.SelectedIndex = 0;
             var viewModel = (AddMovieViewModel)DataContext;
-            viewModel.ErrorsReset.Execute(null);
+            viewModel.FormReset.Execute(null);
         }
     }
 }
