@@ -62,10 +62,9 @@ namespace Filmoteka.View.UserControls
                 }
                 lbSearch.SelectedItem = null;
                 CollectionViewSource.GetDefaultView(lbSearch.ItemsSource).Refresh();
-                lbSearch.Visibility = Visibility.Visible;
+                PopupSearchListbox.IsOpen = true;
                 if (!lbSearch.HasItems)
                 {
-                    lbSearch.Visibility = Visibility.Collapsed;
                     tbSearch.Text = "";
                     PopupSearch.IsOpen = true;
                 }
@@ -74,7 +73,7 @@ namespace Filmoteka.View.UserControls
         private void lbSearch_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             tbSearch.Text = "";
-            lbSearch.Visibility = Visibility.Collapsed;
+            PopupSearchListbox.IsOpen = false;
         }
     }
 }
