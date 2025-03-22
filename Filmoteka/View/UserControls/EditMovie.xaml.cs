@@ -46,7 +46,6 @@ namespace Filmoteka.View.UserControls
                 tbxPicturePath.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             }
         }
-
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             var viewModel = (EditMovieViewModel)DataContext;

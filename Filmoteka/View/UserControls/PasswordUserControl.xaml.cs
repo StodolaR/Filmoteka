@@ -38,12 +38,10 @@ namespace Filmoteka.View.UserControls
                 }
             }
         }
-
         public PasswordUserControl()
         {
             InitializeComponent();
         }
-
         private void passwordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             PasswordDP = passwordBox.Password;

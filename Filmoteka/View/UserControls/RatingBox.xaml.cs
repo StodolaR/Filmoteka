@@ -32,12 +32,12 @@ namespace Filmoteka.View.UserControls
         {
             if ((int)e.NewValue == 0)
             {
-                RatingBox control = d as RatingBox;
+                RatingBox control = (RatingBox)d;
                 if (control != null)
                 {
                     for (int i = 1; i <= 5; i++)
                     {
-                        ((control.starButtons[i] as Button).Content as Path).Fill = Brushes.Black;
+                        ((Path)((Button)control.starButtons[i]).Content).Fill = Brushes.Black;
                     }
                 }
             }         
@@ -49,18 +49,18 @@ namespace Filmoteka.View.UserControls
         }
         private void StarButton_Click(object sender, RoutedEventArgs e)
         {           
-            Button starButton = sender as Button;
+            Button starButton = (Button)sender;
             int rating = Convert.ToInt32(starButton.Tag);
             RatingValue = rating;
             if (starButton != null)
             {
                 for (int i = 1; i <= rating; i++)
                 {
-                    ((starButtons[i] as Button).Content as Path).Fill = Brushes.Goldenrod;
+                    ((Path)((Button)starButtons[i]).Content).Fill = Brushes.Goldenrod;
                 }
                 for (int i = rating + 1; i <= 5; i++)
                 {
-                    ((starButtons[i] as Button).Content as Path).Fill = Brushes.Black;
+                    ((Path)((Button)starButtons[i]).Content).Fill = Brushes.Black;
                 }
             }
         }

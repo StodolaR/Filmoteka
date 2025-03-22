@@ -29,7 +29,7 @@ namespace Filmoteka.View.UserControls
         }
         private void CollectionViewSource_Filter(object sender, FilterEventArgs e)
         {
-            MovieViewModel movie = e.Item as MovieViewModel;
+            MovieViewModel movie = (MovieViewModel)e.Item;
             if (movie != null && searchStrings != null)
             {
                 bool isAccepted = false;
@@ -51,7 +51,7 @@ namespace Filmoteka.View.UserControls
         {
             if (tbSearch.Text != "")
             {
-                var movies = (ObservableCollection<MovieViewModel>)(searchControl.FindResource("movies") as CollectionViewSource).Source;
+                var movies = (ObservableCollection<MovieViewModel>)((CollectionViewSource)searchControl.FindResource("movies")).Source;
                 if (movies.Any(x => x.Name.Contains(tbSearch.Text, StringComparison.InvariantCultureIgnoreCase)))
                 {
                     searchStrings = new string[] { tbSearch.Text };

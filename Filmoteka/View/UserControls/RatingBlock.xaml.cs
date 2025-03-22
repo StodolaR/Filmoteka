@@ -30,17 +30,17 @@ namespace Filmoteka.View.UserControls
             DependencyProperty.Register("RatingValue", typeof(int), typeof(RatingBlock), new PropertyMetadata(OnSourcePropertyChanged));
         public static void OnSourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {      
-            RatingBlock control = d as RatingBlock;
+            RatingBlock control = (RatingBlock)d;
             control.RatingValue = (int)e.NewValue;
-            control. starLabels = control.StarPanel.Children;
             for (int i = 0; i < control.RatingValue; i++)
             {
-                ((control.starLabels[i] as Label).Content as Path).Fill = Brushes.Goldenrod;
+                ((Path)((Label)control.starLabels[i]).Content).Fill = Brushes.Goldenrod;
             }
         }
         public RatingBlock()
         {
-            InitializeComponent();           
+            InitializeComponent();
+            starLabels = StarPanel.Children;
         }
     }
 }
