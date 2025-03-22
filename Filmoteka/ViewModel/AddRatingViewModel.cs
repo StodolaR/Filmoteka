@@ -31,21 +31,10 @@ namespace Filmoteka.ViewModel
                 OnPropertyChanged(nameof(NewDetailMovieReview));
             }
         }
-        public ICommand AddNewRating => new RelayCommand(AddRating, CanAddRating);
+        public ICommand AddNewRating => new RelayCommand(AddRating);
         public AddRatingViewModel(UserCollectionViewModel userCollectionViewModel, MovieCollectionViewModel movieCollectionViewModel) 
             : base(userCollectionViewModel, movieCollectionViewModel)
         {
-        }
-        private void UserCollectionViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (userCollectionViewModel.LoggedUser != LoggedUser)
-            {
-                LoggedUser = userCollectionViewModel.LoggedUser;
-            }
-        }
-        private bool CanAddRating(object? arg)
-        {
-            return true;
         }
         private void AddRating(object? obj)
         {
@@ -72,13 +61,8 @@ namespace Filmoteka.ViewModel
                             return;
                         }
                     }
-                    UserMovie newRating = new UserMovie
-                    {
-                        MovieId = movieWithNewRating.Id,
-                        UserId = LoggedUser.Id,
-                        Rating = NewDetailMovieRating,
-                        Review = NewDetailMovieReview
-                    };
+                    UserMovie newRating = new UserMovie{MovieId = movieWithNewRating.Id, UserId = LoggedUser.Id,
+                        Rating = NewDetailMovieRating, Review = NewDetailMovieReview};
                     mc.UserMovies.Add(newRating);
                     mc.SaveChanges();
                     newRating.User = new User { Id = LoggedUser.Id, Name = LoggedUser.Name };
