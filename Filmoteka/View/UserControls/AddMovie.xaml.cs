@@ -54,7 +54,7 @@ namespace Filmoteka.View.UserControls
             tbxYear.Text = string.Empty;
             rbRating.RatingValue = 0;
             tbxReview.Text = string.Empty;
-            tbxPicturePath.Text = string.Empty;
+            tbxPicturePath.Text = "Cesta k obrázku";
             cbxGenre.SelectedIndex = 0;
             var viewModel = (AddMovieViewModel)DataContext;
             viewModel.ErrorsReset.Execute(null);

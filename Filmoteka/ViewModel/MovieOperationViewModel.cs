@@ -67,7 +67,7 @@ namespace Filmoteka.ViewModel
                 }
             }
         }
-        public string? NewMoviePicturePath
+        public string NewMoviePicturePath
         {
             get => newMoviePicturePath;
             set
@@ -120,7 +120,7 @@ namespace Filmoteka.ViewModel
                 throw new Exception("Nelze vytvořit složku obrázků");
             }
         }
-        protected string CheckFileNameUniqueness(string pictureFileName)
+        protected string CheckFileNameUniqueness()
         {
             try
             {

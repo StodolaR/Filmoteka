@@ -25,7 +25,12 @@ namespace Filmoteka.ViewModel
                 OnPropertyChanged(nameof(EditMode));
                 if (editMode != null)
                 {
-                    switch(editMode)
+                    NewMovieName = null;
+                    NewMovieGenre = null;
+                    NewMovieDescription = null;
+                    NewMoviePicturePath = null;
+                    Delete = null;
+                    switch (editMode)
                     {
                         case "Name": NewMovieName = "";break;
                         case "Genre": NewMovieGenre = GenreType.Akční;break;
@@ -33,14 +38,6 @@ namespace Filmoteka.ViewModel
                         case "Picture": NewMoviePicturePath = "Cesta k obrázku"; break;
                         case "Delete": Delete = true; break;
                     }
-                }
-                else
-                {
-                    NewMovieName = null;
-                    NewMovieGenre = null;
-                    NewMovieDescription = null;
-                    NewMoviePicturePath = null;
-                    Delete = null;
                 }
             }
         }
@@ -133,20 +130,23 @@ namespace Filmoteka.ViewModel
             string targetPath = string.Empty;
             try
             {
-                CreateDirectoryIfNotExist();
-                string pictureFileName = Path.GetFileName(NewMoviePicturePath);
-                pictureFileName = CheckFileNameUniqueness(pictureFileName);
-                targetPath = CopyPictureToPostersFolder(pictureFileName);
-                MovieViewModel editedMovie = movieCollectionViewModel.SelectedMovie;
-                movieCollectionViewModel.Movies.Remove(movieCollectionViewModel.SelectedMovie);
-                editedMovie.PicturePath = targetPath;
-                movieCollectionViewModel.SelectedMovie = editedMovie;
-                movieCollectionViewModel.Movies.Add(movieCollectionViewModel.SelectedMovie);
-                using (MovieContext mc = new MovieContext())
+                if (NewMoviePicturePath != "Cesta k obrázku")
                 {
-                    mc.Movies.Where(x => x.Id == editedMovie.Id).First().PicturePath = targetPath;
-                    mc.SaveChanges();
-                };
+                    CreateDirectoryIfNotExist();
+                    string pictureFileName = CheckFileNameUniqueness();
+                    targetPath = CopyPictureToPostersFolder(pictureFileName);
+                    MovieViewModel editedMovie = movieCollectionViewModel.SelectedMovie;
+                    movieCollectionViewModel.Movies.Remove(movieCollectionViewModel.SelectedMovie);
+                    editedMovie.PicturePath = targetPath;
+                    movieCollectionViewModel.SelectedMovie = editedMovie;
+                    movieCollectionViewModel.Movies.Add(movieCollectionViewModel.SelectedMovie);
+                    using (MovieContext mc = new MovieContext())
+                    {
+                        mc.Movies.Where(x => x.Id == editedMovie.Id).First().PicturePath = targetPath;
+                        mc.SaveChanges();
+                    }
+                    ;
+                }
             }
             catch (Exception ex)
             {

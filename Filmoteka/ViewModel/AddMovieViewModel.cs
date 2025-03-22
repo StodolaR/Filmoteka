@@ -57,10 +57,12 @@ namespace Filmoteka.ViewModel
                 string targetPath = string.Empty;
                 try
                 {
-                    CreateDirectoryIfNotExist();
-                    string pictureFileName = Path.GetFileName(NewMoviePicturePath);
-                    pictureFileName = CheckFileNameUniqueness(pictureFileName);
-                    targetPath = CopyPictureToPostersFolder(pictureFileName);
+                    if(NewMoviePicturePath != "Cesta k obrázku")
+                    {
+                        CreateDirectoryIfNotExist();
+                        string pictureFileName = CheckFileNameUniqueness();
+                        targetPath = CopyPictureToPostersFolder(pictureFileName);
+                    }               
                 }
                 catch (Exception ex)
                 {
