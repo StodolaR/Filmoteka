@@ -12,7 +12,7 @@ namespace Filmoteka.ViewModel
     class AddRatingViewModel : UserMovieViewmodel
     {       
         private int newDetailMovieRating;
-        private string? newDetailMovieReview;
+        private string newDetailMovieReview = string.Empty;
         public int NewDetailMovieRating
         {
             get => newDetailMovieRating;
@@ -49,39 +49,46 @@ namespace Filmoteka.ViewModel
         }
         private void AddRating(object? obj)
         {
-            using (MovieContext mc = new MovieContext())
+            if (movieCollectionViewModel.SelectedMovie != null && LoggedUser != null)
             {
-                MovieViewModel movieWithNewRating = movieCollectionViewModel.SelectedMovie;
-                movieCollectionViewModel.Movies.Remove(movieCollectionViewModel.SelectedMovie);
-                foreach (UserMovie rating in movieWithNewRating.Ratings)
+                using (MovieContext mc = new MovieContext())
                 {
-                    if (rating.UserId == LoggedUser.Id)
+                    MovieViewModel movieWithNewRating = movieCollectionViewModel.SelectedMovie;
+                    movieCollectionViewModel.Movies.Remove(movieCollectionViewModel.SelectedMovie);
+                    foreach (UserMovie rating in movieWithNewRating.Ratings)
                     {
-                        mc.UserMovies.Where(x => x.UserId == LoggedUser.Id && x.MovieId == movieWithNewRating.Id).First().Rating = NewDetailMovieRating;
-                        mc.UserMovies.Where(x => x.UserId == LoggedUser.Id && x.MovieId == movieWithNewRating.Id).First().Review = NewDetailMovieReview;
-                        mc.SaveChanges();
-                        rating.Rating = NewDetailMovieRating;
-                        rating.Review = NewDetailMovieReview;
-                        rating.User = new User { Id = LoggedUser.Id, Name = LoggedUser.Name };
-                        movieWithNewRating.AvgRating = (int)(movieWithNewRating.Ratings.Average(x => x.Rating) * 20);
-                        movieCollectionViewModel.SelectedMovie = movieWithNewRating;
-                        movieCollectionViewModel.Movies.Add(movieCollectionViewModel.SelectedMovie);                        
-                        ResetProperties();
-                        return;
+                        if (rating.UserId == LoggedUser.Id)
+                        {
+                            mc.UserMovies.Where(x => x.UserId == LoggedUser.Id && x.MovieId == movieWithNewRating.Id).First().Rating = NewDetailMovieRating;
+                            mc.UserMovies.Where(x => x.UserId == LoggedUser.Id && x.MovieId == movieWithNewRating.Id).First().Review = NewDetailMovieReview;
+                            mc.SaveChanges();
+                            rating.Rating = NewDetailMovieRating;
+                            rating.Review = NewDetailMovieReview;
+                            rating.User = new User { Id = LoggedUser.Id, Name = LoggedUser.Name };
+                            movieWithNewRating.AvgRating = (int)(movieWithNewRating.Ratings.Average(x => x.Rating) * 20);
+                            movieCollectionViewModel.SelectedMovie = movieWithNewRating;
+                            movieCollectionViewModel.Movies.Add(movieCollectionViewModel.SelectedMovie);
+                            ResetProperties();
+                            return;
+                        }
                     }
+                    UserMovie newRating = new UserMovie
+                    {
+                        MovieId = movieWithNewRating.Id,
+                        UserId = LoggedUser.Id,
+                        Rating = NewDetailMovieRating,
+                        Review = NewDetailMovieReview
+                    };
+                    mc.UserMovies.Add(newRating);
+                    mc.SaveChanges();
+                    newRating.User = new User { Id = LoggedUser.Id, Name = LoggedUser.Name };
+                    newRating.Movie = new Movie { Id = movieWithNewRating.Id, Name = movieWithNewRating.Name };
+                    movieWithNewRating.Ratings.Add(newRating);
+                    movieWithNewRating.AvgRating = (int)(movieWithNewRating.Ratings.Average(x => x.Rating) * 20);
+                    movieCollectionViewModel.SelectedMovie = movieWithNewRating;
+                    movieCollectionViewModel.Movies.Add(movieCollectionViewModel.SelectedMovie);
+                    ResetProperties();
                 }
-                UserMovie newRating = new UserMovie{MovieId = movieWithNewRating.Id, UserId = LoggedUser.Id, Rating = NewDetailMovieRating,
-                    Review = NewDetailMovieReview
-                };
-                mc.UserMovies.Add(newRating);
-                mc.SaveChanges();
-                newRating.User = new User { Id = LoggedUser.Id, Name = LoggedUser.Name };
-                newRating.Movie = new Movie { Id = movieWithNewRating.Id, Name = movieWithNewRating.Name };
-                movieWithNewRating.Ratings.Add(newRating);
-                movieWithNewRating.AvgRating = (int)(movieWithNewRating.Ratings.Average(x => x.Rating) * 20);
-                movieCollectionViewModel.SelectedMovie = movieWithNewRating;
-                movieCollectionViewModel.Movies.Add(movieCollectionViewModel.SelectedMovie);
-                ResetProperties();
             }
         }
         private void ResetProperties()

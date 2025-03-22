@@ -11,7 +11,7 @@ namespace Filmoteka.Model
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
-        public List<UserMovie>? UserMovies { get; set; }
+        public List<UserMovie> UserMovies { get; set; } = new List<UserMovie>();
 
     }
 }

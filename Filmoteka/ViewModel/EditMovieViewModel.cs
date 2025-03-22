@@ -73,7 +73,7 @@ namespace Filmoteka.ViewModel
         {
             CheckErrors(nameof(NewMovieName));
             CheckErrors(nameof(NewMovieYear));
-            if (!HasErrors)
+            if (!HasErrors && movieCollectionViewModel.SelectedMovie != null && NewMovieName != null)
             {
                 MovieViewModel editedMovie = movieCollectionViewModel.SelectedMovie;
                 movieCollectionViewModel.Movies.Remove(movieCollectionViewModel.SelectedMovie);
@@ -93,25 +93,29 @@ namespace Filmoteka.ViewModel
         }
         private void EditGenre(object? obj)
         {
-            MovieViewModel editedMovie = movieCollectionViewModel.SelectedMovie;
-            movieCollectionViewModel.Movies.Remove(movieCollectionViewModel.SelectedMovie);
-            editedMovie.Genre = (GenreType)NewMovieGenre;
-            movieCollectionViewModel.SelectedMovie = editedMovie;
-            movieCollectionViewModel.Movies.Add(movieCollectionViewModel.SelectedMovie);
-            using (MovieContext mc = new MovieContext())
+            if (movieCollectionViewModel.SelectedMovie != null && NewMovieGenre !=null)
             {
-                mc.Movies.Where(x => x.Id == editedMovie.Id).First().Genre = (GenreType)NewMovieGenre;
-                mc.SaveChanges();
+                MovieViewModel editedMovie = movieCollectionViewModel.SelectedMovie;
+                movieCollectionViewModel.Movies.Remove(movieCollectionViewModel.SelectedMovie);
+                editedMovie.Genre = (GenreType)NewMovieGenre;
+                movieCollectionViewModel.SelectedMovie = editedMovie;
+                movieCollectionViewModel.Movies.Add(movieCollectionViewModel.SelectedMovie);
+                using (MovieContext mc = new MovieContext())
+                {
+                    mc.Movies.Where(x => x.Id == editedMovie.Id).First().Genre = (GenreType)NewMovieGenre;
+                    mc.SaveChanges();
+                }
             }
         }
         private void ShowOriginalDescription(object? obj)
         {
-            NewMovieDescription = movieCollectionViewModel.SelectedMovie.Description;
+            if (movieCollectionViewModel.SelectedMovie != null)
+                NewMovieDescription = movieCollectionViewModel.SelectedMovie.Description;
         }
         private void EditDescription(object? obj)
         {
             CheckErrors(nameof(NewMovieDescription));
-            if (!HasErrors)
+            if (!HasErrors && movieCollectionViewModel.SelectedMovie != null && NewMovieDescription != null)
             {
                 MovieViewModel editedMovie = movieCollectionViewModel.SelectedMovie;
                 movieCollectionViewModel.Movies.Remove(movieCollectionViewModel.SelectedMovie);
@@ -130,7 +134,7 @@ namespace Filmoteka.ViewModel
             string targetPath = string.Empty;
             try
             {
-                if (NewMoviePicturePath != "Cesta k obrázku")
+                if (NewMoviePicturePath != "Cesta k obrázku" && movieCollectionViewModel.SelectedMovie != null)
                 {
                     CreateDirectoryIfNotExist();
                     string pictureFileName = CheckFileNameUniqueness();
@@ -158,22 +162,25 @@ namespace Filmoteka.ViewModel
             return movieCollectionViewModel.SelectedMovie != null;
         }
         private void DeleteMovie(object? obj)
-        {           
-            using (MovieContext mc = new MovieContext())
-            {               
-                foreach (UserMovie userMovie in movieCollectionViewModel.SelectedMovie.Ratings)
+        {
+            if (movieCollectionViewModel.SelectedMovie != null)
+            {
+                using (MovieContext mc = new MovieContext())
                 {
-                    mc.UserMovies.Remove(userMovie);
+                    foreach (UserMovie userMovie in movieCollectionViewModel.SelectedMovie.Ratings)
+                    {
+                        mc.UserMovies.Remove(userMovie);
+                    }
+                    Movie deleteDatabaseMovie = mc.Movies.Where(x => x.Id == movieCollectionViewModel.SelectedMovie.Id).First();
+                    mc.Movies.Remove(deleteDatabaseMovie);
+                    mc.SaveChanges();
                 }
-                Movie deleteDatabaseMovie = mc.Movies.Where(x => x.Id == movieCollectionViewModel.SelectedMovie.Id).First();
-                mc.Movies.Remove(deleteDatabaseMovie);
-                mc.SaveChanges();
+                userCollectionViewModel.Users.Clear();
+                userCollectionViewModel.GetUsersFromDatabase();
+                MovieViewModel deleteMovie = movieCollectionViewModel.SelectedMovie;
+                movieCollectionViewModel.Movies.Remove(deleteMovie);
             }
-            userCollectionViewModel.Users.Clear();
-            userCollectionViewModel.GetUsersFromDatabase();
-            MovieViewModel deleteMovie = movieCollectionViewModel.SelectedMovie;
-            movieCollectionViewModel.Movies.Remove(deleteMovie);
-        }       
+        }    
         private void CloseEdit(object? obj)
         {
             _errors.Clear();

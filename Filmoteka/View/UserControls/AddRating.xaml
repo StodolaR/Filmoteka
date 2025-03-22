@@ -20,7 +20,7 @@
             <Label Content="Recenze:"/>
             <TextBox Text="{Binding NewDetailMovieReview, UpdateSourceTrigger=PropertyChanged}" 
              TextWrapping="Wrap" AcceptsReturn="True" MinHeight="180" x:Name="tbxReview"/>
-            <Button Content="Přidej hodnocení" Width="100" Margin="20" Command="{Binding AddNewRating}"/>
+            <Button Content="Přidej hodnocení" Width="150" Margin="20" Command="{Binding AddNewRating}"/>
         </StackPanel>
     </Grid>
 </UserControl>

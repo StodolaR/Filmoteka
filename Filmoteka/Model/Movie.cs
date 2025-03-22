@@ -15,6 +15,6 @@ namespace Filmoteka.Model
         public string Description { get; set; } = string.Empty;
         public int Year { get; set; }
         public string PicturePath { get; set; } = "/Resources/bezobrazku.png";
-        public List<UserMovie>? UserMovies { get; set; } = new List<UserMovie>();
+        public List<UserMovie> UserMovies { get; set; } = new List<UserMovie>();
     }
 }

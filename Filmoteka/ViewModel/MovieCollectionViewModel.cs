@@ -11,7 +11,7 @@ namespace Filmoteka.ViewModel
     class MovieCollectionViewModel : ViewModelBase
     {
         private MovieViewModel? selectedMovie;
-        private MovieViewModel selectedSearchedMovie;
+        private MovieViewModel? selectedSearchedMovie;
         public ObservableCollection<MovieViewModel> Movies { get; set; }
         public MovieViewModel? SelectedMovie
         {
@@ -22,7 +22,7 @@ namespace Filmoteka.ViewModel
                 OnPropertyChanged(nameof(SelectedMovie));
             }
         }
-        public MovieViewModel SelectedSearchedMovie 
+        public MovieViewModel? SelectedSearchedMovie 
         {
             get => selectedSearchedMovie;
             set 

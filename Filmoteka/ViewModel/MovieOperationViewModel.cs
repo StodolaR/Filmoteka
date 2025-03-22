@@ -67,7 +67,7 @@ namespace Filmoteka.ViewModel
                 }
             }
         }
-        public string NewMoviePicturePath
+        public string? NewMoviePicturePath
         {
             get => newMoviePicturePath;
             set
@@ -124,18 +124,22 @@ namespace Filmoteka.ViewModel
         {
             try
             {
-                string targetFileName = Path.GetFileName(NewMoviePicturePath);
-                string[] pictureFilePaths = Directory.GetFiles("Posters");
-                List<string> pictureFileNames = new List<string>();
-                foreach (var filePath in pictureFilePaths)
+                string targetFileName = string.Empty;
+                if (NewMoviePicturePath != null)
                 {
-                    pictureFileNames.Add(Path.GetFileName(filePath));
-                }
-                while (pictureFileNames.Contains(targetFileName))
-                {
-                    string extension = Path.GetExtension(targetFileName);
-                    string newFileName = Path.GetFileNameWithoutExtension(targetFileName) + "x";
-                    targetFileName = newFileName + extension;
+                    targetFileName = Path.GetFileName(NewMoviePicturePath);
+                    string[] pictureFilePaths = Directory.GetFiles("Posters");
+                    List<string> pictureFileNames = new List<string>();
+                    foreach (var filePath in pictureFilePaths)
+                    {
+                        pictureFileNames.Add(Path.GetFileName(filePath));
+                    }
+                    while (pictureFileNames.Contains(targetFileName))
+                    {
+                        string extension = Path.GetExtension(targetFileName);
+                        string newFileName = Path.GetFileNameWithoutExtension(targetFileName) + "x";
+                        targetFileName = newFileName + extension;
+                    }
                 }
                 return targetFileName;
             }
@@ -150,7 +154,8 @@ namespace Filmoteka.ViewModel
             try
             {
                 string targetPath = Path.Combine("Posters", pictureFileName);
-                File.Copy(NewMoviePicturePath, targetPath);
+                if (NewMoviePicturePath != null) 
+                    File.Copy(NewMoviePicturePath, targetPath);
                 return targetPath;
             }
             catch (Exception)

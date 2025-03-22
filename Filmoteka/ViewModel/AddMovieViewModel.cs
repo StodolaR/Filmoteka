@@ -77,23 +77,27 @@ namespace Filmoteka.ViewModel
                     AddMovieToCollection(newMovieFromDatabase);
                 }
             }
-        }       
+        }
         private Movie CreateNewMovieWithRating(string targetPath)
         {
-            if (targetPath != string.Empty)
+            if (NewMovieName != null && LoggedUser != null && NewMovieGenre != null && NewMovieDescription !=null )
             {
-                Movie newMovieWithPicture = new Movie{Name = NewMovieName, Genre = (GenreType)NewMovieGenre, Description = NewMovieDescription,
-                    Year = Convert.ToInt32(NewMovieYear), PicturePath = targetPath};
-                UserMovie newRatingPictureMovie = new UserMovie{Movie = newMovieWithPicture, UserId = LoggedUser.Id, 
-                    Rating = NewMovieRating,Review = NewMovieReview};
-                newMovieWithPicture.UserMovies.Add(newRatingPictureMovie);
-                return newMovieWithPicture;
+                if (targetPath != string.Empty)
+                {
+                    Movie newMovieWithPicture = new Movie{Name = NewMovieName, Genre = (GenreType)NewMovieGenre,
+                        Description = NewMovieDescription, Year = Convert.ToInt32(NewMovieYear), PicturePath = targetPath};
+                    UserMovie newRatingPictureMovie = new UserMovie{Movie = newMovieWithPicture, UserId = LoggedUser.Id,
+                        Rating = NewMovieRating, Review = NewMovieReview};
+                    newMovieWithPicture.UserMovies.Add(newRatingPictureMovie);
+                    return newMovieWithPicture;
+                }
+                Movie newMovie = new Movie{Name = NewMovieName, Genre = (GenreType)NewMovieGenre, Description = NewMovieDescription,
+                    Year = Convert.ToInt32(NewMovieYear)};
+                UserMovie newRating = new UserMovie { Movie = newMovie, UserId = LoggedUser.Id, Rating = NewMovieRating, Review = NewMovieReview };
+                newMovie.UserMovies.Add(newRating);
+                return newMovie;
             }
-            Movie newMovie = new Movie{Name = NewMovieName, Genre = (GenreType)NewMovieGenre, Description = NewMovieDescription, 
-                Year = Convert.ToInt32(NewMovieYear)};
-            UserMovie newRating = new UserMovie{Movie = newMovie, UserId = LoggedUser.Id, Rating = NewMovieRating, Review = NewMovieReview};
-            newMovie.UserMovies.Add(newRating);
-            return newMovie;
+            return new Movie();
         }
         private void AddMovieToCollection(Movie newMovie)
         {
