@@ -10,51 +10,56 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="400" Unloaded="UserControl_Unloaded">
-    <Grid>
-        <Grid.Resources>
-            <ObjectDataProvider x:Key="GenreEnum" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
-                <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="model:GenreType"/>
-                </ObjectDataProvider.MethodParameters>
-            </ObjectDataProvider>
-            <framework:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
-            <Style TargetType="TextBox">
-                <Style.Setters>
-                    <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource validation}"/>
-                </Style.Setters>
-            </Style>
-        </Grid.Resources>
-        <StackPanel Width="400">
-            <Label Content="Přidat nový film" FontSize="15" FontWeight="Bold"/>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Jméno: "/>
-                <TextBox Text="{Binding NewMovieName, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Width="300" 
-                         VerticalContentAlignment="Center" x:Name="tbxName" Margin="0,0,0,23"/>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.Resources>
+                <ObjectDataProvider x:Key="GenreEnum" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+                    <ObjectDataProvider.MethodParameters>
+                        <x:Type TypeName="model:GenreType"/>
+                    </ObjectDataProvider.MethodParameters>
+                </ObjectDataProvider>
+                <framework:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
+                <Style TargetType="TextBox">
+                    <Style.Setters>
+                        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource validation}"/>
+                    </Style.Setters>
+                </Style>
+            </Grid.Resources>
+            <StackPanel Width="400">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Přidat nový film" FontSize="15" FontWeight="Bold"/>
+                    <Label Content="(Pole označená * jsou povinná)" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="* Jméno: "/>
+                    <TextBox Text="{Binding NewMovieName, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Width="300" 
+                     VerticalContentAlignment="Center" x:Name="tbxName" Margin="0,0,0,23"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="* Žánr:    "/>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource GenreEnum}}" Text="{Binding NewMovieGenre}" Width="300" 
+                      VerticalContentAlignment="Center" x:Name="cbxGenre"/>
+                </StackPanel>
+                <Label Content="* Obsah"/>
+                <TextBox Text="{Binding NewMovieDescription, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                 TextWrapping="Wrap" AcceptsReturn="True" MinHeight="180" x:Name="tbxDescription" Margin="0,0,0,23"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="* Rok výroby:     "/>
+                    <TextBox x:Name="tbxYear" Text="{Binding NewMovieYear, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                     PreviewTextInput="tbxYear_PreviewTextInput" MaxLength="4" VerticalContentAlignment="Center" Width="145" Margin="0,0,0,23"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="* Hodnocení (5 černých hvězd = 0%): "/>
+                    <local:RatingBox RatingValue="{Binding NewMovieRating, Mode=TwoWay}" x:Name="rbRating"/>
+                </StackPanel>
+                <Label Content="Recenze:"/>
+                <TextBox Text="{Binding NewMovieReview, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" 
+                 MinHeight="120" x:Name="tbxReview" Margin="0,0,0,5"/>
+                <TextBox Text="{Binding NewMoviePicturePath}" x:Name="tbxPicturePath" TextWrapping="Wrap" MinHeight="40" IsReadOnly="True"/>
+                <Button Content="Zvolit obrázek" Width="100" x:Name="btnPicturePath" Click="btnPicturePath_Click"/>
+                <Button Content="Uložit film" Width="100" Margin="0,20,0,0" Command="{Binding AddNewMovie}"/>
+                <TextBlock Text="{Binding Message}" HorizontalAlignment="Center"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Žánr:    "/>
-                <ComboBox ItemsSource="{Binding Source={StaticResource GenreEnum}}" Text="{Binding NewMovieGenre}" Width="300" 
-                          VerticalContentAlignment="Center" x:Name="cbxGenre"/>
-            </StackPanel>
-            <Label Content="Obsah"/>
-            <TextBox Text="{Binding NewMovieDescription, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
-                     TextWrapping="Wrap" AcceptsReturn="True" MinHeight="180" x:Name="tbxDescription" Margin="0,0,0,23"/>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Rok:     "/>
-                <TextBox x:Name="tbxYear" Text="{Binding NewMovieYear, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                         PreviewTextInput="tbxYear_PreviewTextInput" MaxLength="4" VerticalContentAlignment="Center" Width="145" Margin="0,0,0,23"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Hodnocení: "/>
-                <local:RatingBox RatingValue="{Binding NewMovieRating, Mode=TwoWay}" x:Name="rbRating"/>
-            </StackPanel>
-            <Label Content="Recenze:"/>
-            <TextBox Text="{Binding NewMovieReview, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" 
-                     MinHeight="120" x:Name="tbxReview" Margin="0,0,0,5"/>
-            <TextBox Text="{Binding NewMoviePicturePath}" x:Name="tbxPicturePath" TextWrapping="Wrap" MinHeight="40" IsReadOnly="True"/>
-            <Button Content="Zvolit obrázek" Width="100" x:Name="btnPicturePath" Click="btnPicturePath_Click"/>
-            <Button Content="Uložit film" Width="100" Margin="20" Command="{Binding AddNewMovie}"/>
-            <TextBlock Text="{Binding Message}" HorizontalAlignment="Center"/>
-        </StackPanel>
-    </Grid>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

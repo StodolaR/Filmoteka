@@ -179,6 +179,7 @@ namespace Filmoteka.ViewModel
                 LoginPassword = string.Empty;
                 return;
             }
+            _errors.Clear();
             CheckErrors(nameof(LoginName));
             if (!HasErrors)
             {
@@ -228,6 +229,7 @@ namespace Filmoteka.ViewModel
         }
         private void Register(object? obj)
         {
+            _errors.Clear();
             CheckErrors(nameof(RegistrationName));
             CheckErrors(nameof(RegistrationPassword));
             CheckErrors(nameof(RegistrationPasswordVerification));
@@ -240,9 +242,7 @@ namespace Filmoteka.ViewModel
                     var newUser = mc.Users.OrderBy(x => x.Id).Last();
                     if (newUser.Name != RegistrationName)
                     {
-                        RegistrationName = string.Empty;
-                        RegistrationPassword = string.Empty;
-                        RegistrationPasswordVerification = string.Empty;
+                        ResetForm(null);
                         RegistrationMessage = "Nelze se připojit k databázi";
                     }
                     else
@@ -251,10 +251,8 @@ namespace Filmoteka.ViewModel
                             Password = newUser.Password, Ratings = new ObservableCollection<UserMovie>()};
                         LoggedUser = newUserViewModel;
                         Users.Add(newUserViewModel);
-                        Message = "Přihlášen: " + RegistrationName;
-                        RegistrationName = string.Empty;
-                        RegistrationPassword = string.Empty;
-                        RegistrationPasswordVerification = string.Empty;
+                        Message = "Přihlášen: " + RegistrationName;                     
+                        ResetForm(null);
                         RegistrationMessage = "Registrace úspěšná, jste přihlášen";
                     }
                 }
@@ -274,6 +272,8 @@ namespace Filmoteka.ViewModel
                 case nameof(RegistrationName):
                     if (Users.Any(x => x.Name == RegistrationName))
                         AddError(propertyName, "Toto jméno již používá jiný uživatel");
+                    if (RegistrationName == "Movie")
+                        AddError(propertyName, "Jméno obsazeno systémem");
                     if (string.IsNullOrEmpty(RegistrationName) || RegistrationName.Length < 3)
                         AddError(propertyName, "Uživatelské jméno musí mít alespoň 3 znaky"); break;
                 case nameof(RegistrationPassword):
@@ -296,6 +296,7 @@ namespace Filmoteka.ViewModel
             RegistrationName = string.Empty;
             RegistrationPassword = string.Empty;
             RegistrationPasswordVerification = string.Empty;
+            RegistrationMessage = string.Empty;
             if (Message == "Nesprávné heslo")
             {
                 Message = string.Empty;

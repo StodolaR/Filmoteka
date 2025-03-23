@@ -41,7 +41,7 @@
             <uc:PasswordUserControl x:Name="pucLoginPassword" PasswordDP="{Binding LoginPassword,
                         UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             <Button  Content="Přihlásit se" Margin="0,20,0,0" Width="80"
-                    Command="{Binding UserLogin}" IsDefault="True"/>
+                    Command="{Binding UserLogin}"/>
             <TextBlock Text="{Binding Message}" HorizontalAlignment="Center" Margin="10"/>
             <Button  Content="Odhlásit se" Margin="0,20,0,0" Width="80"
                     Command="{Binding UserLogout}"/>
@@ -64,7 +64,7 @@
             <uc:PasswordUserControl PasswordDP="{Binding RegistrationPasswordVerification, ValidatesOnNotifyDataErrors=True,
                                 UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" x:Name="pucRegistrationPasswordVer"/>
             <Button Command="{Binding UserRegistration}" Content="Registrovat" Margin="0,20,0,0" 
-                    Width="80" IsDefault="True"/>
+                    Width="80"/>
             <TextBlock Text="{Binding RegistrationMessage}"/>
         </StackPanel>
         </Grid>

@@ -11,10 +11,10 @@
         <Grid.Resources>
             <framework:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
         </Grid.Resources>
-        <StackPanel Width="300" Visibility="{Binding LoggedUser, Converter={StaticResource nullToVisibleConverter}}">
+        <StackPanel Width="360" Visibility="{Binding LoggedUser, Converter={StaticResource nullToVisibleConverter}}">
             <TextBlock Text="Přidat hodnocení" FontSize="15" FontWeight="DemiBold" Margin="10"/>
             <StackPanel Orientation="Horizontal">
-                <Label Content="Hodnocení: "/>
+                <Label Content="Hodnocení (5 černých hvězd = 0%): "/>
                 <local:RatingBox RatingValue="{Binding NewDetailMovieRating, Mode=TwoWay}" x:Name="rbRating"/>
             </StackPanel>
             <Label Content="Recenze:"/>
