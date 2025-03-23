@@ -28,9 +28,24 @@ namespace Filmoteka.ViewModel
         {
             this.userCollectionViewModel = userCollectionViewModel;
             this.movieCollectionViewModel = movieCollectionViewModel;
-            movieCollectionViewModel.Movies.CollectionChanged += Movies_CollectionChanged;
+            movieCollectionViewModel.PropertyChanged += MovieCollectionViewModel_PropertyChanged;
             userCollectionViewModel.PropertyChanged += UserCollectionViewModel_PropertyChanged;
         }
+
+        private void MovieCollectionViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (movieCollectionViewModel.AddedMovie != null && LoggedUser != null)
+            {
+                UserMovie? movieRatingInLoggedUserRatings = LoggedUser.Ratings.Where(x => x.MovieId == movieCollectionViewModel.AddedMovie.Id).FirstOrDefault();
+                if (movieRatingInLoggedUserRatings != null)
+                {
+                    LoggedUser.Ratings.Remove(movieRatingInLoggedUserRatings);
+                }
+                LoggedUser.Ratings.Add(movieCollectionViewModel.AddedMovie.UserMovies.Where(x => x.UserId == LoggedUser.Id).First());
+                movieCollectionViewModel.AddedMovie = null;
+            }
+        }
+
         private void UserCollectionViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (userCollectionViewModel.LoggedUser != LoggedUser)
@@ -38,18 +53,6 @@ namespace Filmoteka.ViewModel
                 LoggedUser = userCollectionViewModel.LoggedUser;
             }
         }
-        protected void Movies_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (LoggedUser != null && e.Action == NotifyCollectionChangedAction.Add)
-            {
-                MovieViewModel newRatedMovie = (MovieViewModel)(e.NewItems[0]);
-                UserMovie? movieRatingInLoggedUserRatings = LoggedUser.Ratings.Where(x => x.MovieId == newRatedMovie.Id).FirstOrDefault();
-                if (movieRatingInLoggedUserRatings != null)
-                {
-                    LoggedUser.Ratings.Remove(movieRatingInLoggedUserRatings);
-                }
-                LoggedUser.Ratings.Add(newRatedMovie.Ratings.Where(x => x.UserId == LoggedUser.Id).First());
-            } 
-        }      
+           
     }
 }

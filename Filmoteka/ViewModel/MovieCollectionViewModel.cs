@@ -12,6 +12,8 @@ namespace Filmoteka.ViewModel
     {
         private MovieViewModel? selectedMovie;
         private MovieViewModel? selectedSearchedMovie;
+        private Movie? addedMovie;
+
         public ObservableCollection<MovieViewModel> Movies { get; set; }
         public MovieViewModel? SelectedMovie
         {
@@ -34,9 +36,22 @@ namespace Filmoteka.ViewModel
                 }
             } 
         }
+        public Movie? AddedMovie 
+        {
+            get => addedMovie;
+            set 
+            {
+                addedMovie = value;
+                OnPropertyChanged(nameof(AddedMovie));
+            } 
+        }
         public MovieCollectionViewModel()
         {
             Movies = new ObservableCollection<MovieViewModel>();
+            GetMoviesFromDatabase();
+        }
+        public void GetMoviesFromDatabase()
+        {
             using (MovieContext mc = new MovieContext())
             {
                 foreach (Movie movie in mc.Movies.Include(x => x.UserMovies).ThenInclude(y => y.User))
@@ -46,14 +61,21 @@ namespace Filmoteka.ViewModel
                     {
                         ratings.Add(rating);
                     }
-                    int avgRating = (int)(ratings.Average(x => x.Rating)*20);
-                    MovieViewModel movieForViewModel = new MovieViewModel {Id = movie.Id, AvgRating = avgRating, Description = movie.Description,
-                     Genre = movie.Genre, Name = movie.Name, PicturePath = movie.PicturePath, Ratings = ratings, Year = movie.Year};
+                    int avgRating = (int)(ratings.Average(x => x.Rating) * 20);
+                    MovieViewModel movieForViewModel = new MovieViewModel
+                    {
+                        Id = movie.Id,
+                        AvgRating = avgRating,
+                        Description = movie.Description,
+                        Genre = movie.Genre,
+                        Name = movie.Name,
+                        PicturePath = movie.PicturePath,
+                        Ratings = ratings,
+                        Year = movie.Year
+                    };
                     Movies.Add(movieForViewModel);
                 }
             }
         }
-        
-        
     }
 }

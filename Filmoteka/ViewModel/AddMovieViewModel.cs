@@ -73,8 +73,9 @@ namespace Filmoteka.ViewModel
                 {
                     mc.Movies.Add(newMovie);
                     mc.SaveChanges();
-                    Movie newMovieFromDatabase = (mc.Movies.Include(y => y.UserMovies).ThenInclude(z => z.User)).OrderBy(x => x.Id).Last();
-                    AddMovieToCollection(newMovieFromDatabase);
+                    movieCollectionViewModel.AddedMovie = (mc.Movies.Include(y => y.UserMovies).ThenInclude(z => z.User)).OrderBy(x => x.Id).Last();
+                    movieCollectionViewModel.Movies.Clear();
+                    movieCollectionViewModel.GetMoviesFromDatabase();
                 }
             }
         }
@@ -99,24 +100,24 @@ namespace Filmoteka.ViewModel
             }
             return new Movie();
         }
-        private void AddMovieToCollection(Movie newMovie)
-        {
-            if (newMovie.Name != NewMovieName)
-            {
-                ResetProperties();
-                Message = "Nelze se připojit k databázi, film nepřidán";
-            }
-            else
-            {
-                ObservableCollection<UserMovie> newRatings = new ObservableCollection<UserMovie>();
-                newRatings.Add(newMovie.UserMovies.First());
-                movieCollectionViewModel.Movies.Add(new MovieViewModel{Id = newMovie.Id, AvgRating = newMovie.UserMovies.First().Rating * 20,
-                    Description = newMovie.Description, Genre = newMovie.Genre, Name = newMovie.Name, PicturePath = newMovie.PicturePath,
-                    Ratings = newRatings, Year = newMovie.Year});
-                ResetProperties();
-                Message = "Film úspěšně přidán";
-            }
-        }
+        //private void AddMovieToCollection(Movie newMovie)
+        //{
+        //    if (newMovie.Name != NewMovieName)
+        //    {
+        //        ResetProperties();
+        //        Message = "Nelze se připojit k databázi, film nepřidán";
+        //    }
+        //    else
+        //    {
+        //        ObservableCollection<UserMovie> newRatings = new ObservableCollection<UserMovie>();
+        //        newRatings.Add(newMovie.UserMovies.First());
+        //        movieCollectionViewModel.Movies.Add(new MovieViewModel{Id = newMovie.Id, AvgRating = newMovie.UserMovies.First().Rating * 20,
+        //            Description = newMovie.Description, Genre = newMovie.Genre, Name = newMovie.Name, PicturePath = newMovie.PicturePath,
+        //            Ratings = newRatings, Year = newMovie.Year});
+        //        ResetProperties();
+        //        Message = "Film úspěšně přidán";
+        //    }
+        //}
         private void ResetProperties()
         {
             NewMovieName = string.Empty;

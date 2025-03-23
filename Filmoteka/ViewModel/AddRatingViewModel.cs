@@ -1,5 +1,6 @@
 ﻿using Filmoteka.Framework;
 using Filmoteka.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,7 @@ namespace Filmoteka.ViewModel
                         {
                             mc.UserMovies.Where(x => x.UserId == LoggedUser.Id && x.MovieId == movieWithNewRating.Id).First().Rating = NewDetailMovieRating;
                             mc.UserMovies.Where(x => x.UserId == LoggedUser.Id && x.MovieId == movieWithNewRating.Id).First().Review = NewDetailMovieReview;
+                            movieCollectionViewModel.AddedMovie = (mc.Movies.Include(y => y.UserMovies).ThenInclude(z => z.User)).Where(x => x.Id == movieWithNewRating.Id).First();
                             mc.SaveChanges();
                             rating.Rating = NewDetailMovieRating;
                             rating.Review = NewDetailMovieReview;
@@ -57,6 +59,9 @@ namespace Filmoteka.ViewModel
                             movieWithNewRating.AvgRating = (int)(movieWithNewRating.Ratings.Average(x => x.Rating) * 20);
                             movieCollectionViewModel.SelectedMovie = movieWithNewRating;
                             movieCollectionViewModel.Movies.Add(movieCollectionViewModel.SelectedMovie);
+                            movieCollectionViewModel.Movies.Clear();
+                            movieCollectionViewModel.GetMoviesFromDatabase();
+                            movieCollectionViewModel.SelectedMovie = movieWithNewRating;
                             ResetProperties();
                             return;
                         }
@@ -64,6 +69,7 @@ namespace Filmoteka.ViewModel
                     UserMovie newRating = new UserMovie{MovieId = movieWithNewRating.Id, UserId = LoggedUser.Id,
                         Rating = NewDetailMovieRating, Review = NewDetailMovieReview};
                     mc.UserMovies.Add(newRating);
+                    movieCollectionViewModel.AddedMovie = (mc.Movies.Include(y => y.UserMovies).ThenInclude(z => z.User)).OrderBy(x => x.Id).Last();
                     mc.SaveChanges();
                     newRating.User = new User { Id = LoggedUser.Id, Name = LoggedUser.Name };
                     newRating.Movie = new Movie { Id = movieWithNewRating.Id, Name = movieWithNewRating.Name };
@@ -71,6 +77,9 @@ namespace Filmoteka.ViewModel
                     movieWithNewRating.AvgRating = (int)(movieWithNewRating.Ratings.Average(x => x.Rating) * 20);
                     movieCollectionViewModel.SelectedMovie = movieWithNewRating;
                     movieCollectionViewModel.Movies.Add(movieCollectionViewModel.SelectedMovie);
+                    movieCollectionViewModel.Movies.Clear();
+                    movieCollectionViewModel.GetMoviesFromDatabase();
+                    movieCollectionViewModel.SelectedMovie = movieWithNewRating;
                     ResetProperties();
                 }
             }

@@ -34,7 +34,7 @@ namespace Filmoteka.ViewModel
             {
                 editMode = value;
                 OnPropertyChanged(nameof(EditMode));
-                if (editMode == null)
+                if (editMode == null && LoggedUser == null)
                 {
                     Message = "";
                 }
