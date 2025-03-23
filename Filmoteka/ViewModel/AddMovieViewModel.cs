@@ -108,7 +108,7 @@ namespace Filmoteka.ViewModel
             NewMovieDescription = string.Empty;
             NewMovieYear = string.Empty;
             NewMoviePicturePath = "Cesta k obrázku";
-            NewMovieReview = string.Empty;
+            NewMovieReview = null;
             NewMovieRating = 0;
         }       
         private void ResetForm(object? obj)

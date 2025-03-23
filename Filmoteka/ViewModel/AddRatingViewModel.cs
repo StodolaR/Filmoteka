@@ -13,7 +13,7 @@ namespace Filmoteka.ViewModel
     class AddRatingViewModel : UserMovieViewmodel
     {       
         private int newDetailMovieRating;
-        private string newDetailMovieReview = string.Empty;
+        private string? newDetailMovieReview;
         public int NewDetailMovieRating
         {
             get => newDetailMovieRating;
@@ -23,7 +23,7 @@ namespace Filmoteka.ViewModel
                 OnPropertyChanged(nameof(NewDetailMovieRating));
             }
         }
-        public string NewDetailMovieReview
+        public string? NewDetailMovieReview
         {
             get => newDetailMovieReview;
             set
@@ -86,7 +86,7 @@ namespace Filmoteka.ViewModel
         }
         private void ResetProperties()
         {
-            NewDetailMovieReview = string.Empty;
+            NewDetailMovieReview = null;
             NewDetailMovieRating = 0;
         }
     }

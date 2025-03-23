@@ -32,7 +32,7 @@ namespace Filmoteka.View.UserControls
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             rbRating.RatingValue = 0;
-            tbxReview.Text = string.Empty;
+            tbxReview.Text = null;
         }
     }
 }
