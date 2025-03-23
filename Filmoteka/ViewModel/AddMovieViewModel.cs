@@ -77,6 +77,7 @@ namespace Filmoteka.ViewModel
                     movieCollectionViewModel.Movies.Clear();
                     movieCollectionViewModel.GetMoviesFromDatabase();
                 }
+                ResetProperties();
             }
         }
         private Movie CreateNewMovieWithRating(string targetPath)
