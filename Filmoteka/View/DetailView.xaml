@@ -14,8 +14,11 @@
         <framework:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
     </UserControl.Resources>
     <Grid Background="{StaticResource background}">
-        <StackPanel>
-            <DockPanel LastChildFill="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <DockPanel LastChildFill="False">
                 <Image  Source="{Binding SelectedMovie.PicturePath, Converter={StaticResource fullPathConverter}}" 
                 DockPanel.Dock="Left" Height="200" Margin="0,0,10,5"/>
                 <StackPanel DockPanel.Dock="Left">
@@ -29,30 +32,38 @@
                     <TextBlock Text="{Binding SelectedMovie.Ratings.Count, StringFormat=Počet hodnocení: {0}}" 
                        HorizontalAlignment="Center"/>
                 </StackPanel>
-            </DockPanel>
-            <DockPanel LastChildFill="False">
-                <StackPanel Width="500" DockPanel.Dock="Left">
-                    <TextBlock Text="{Binding SelectedMovie.Description}"  TextWrapping="Wrap" />
-                    <TextBlock Text="Recenze" Margin="0,20,0,10" FontSize="15" FontWeight="DemiBold"/>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding SelectedMovie.Ratings}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Margin="0,5">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding User.Name}" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                                            <uc:RatingBlock RatingValue="{Binding Rating}"/>
-                                        </StackPanel>
-                                        <TextBlock Text="{Binding Review}" TextWrapping="Wrap" Width="450"/>
+        </DockPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding SelectedMovie.Description}"  TextWrapping="Wrap" />
+                <TextBlock Text="Recenze" Margin="0,20,0,10" FontSize="15" FontWeight="DemiBold" Grid.Row="1"/>
+                <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding SelectedMovie.Ratings}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,5">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding User.Name}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                        <uc:RatingBlock RatingValue="{Binding Rating}"/>
                                     </StackPanel>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
-                </StackPanel>
-                <uc:AddRating DockPanel.Dock="Right"/>
-                <uc:EditMovie DockPanel.Dock="Right"/>
-            </DockPanel>
-        </StackPanel>
+                                    <TextBlock Text="{Binding Review}" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+            <uc:AddRating Grid.Column="1" HorizontalAlignment="Right"/>
+            <uc:EditMovie Grid.Column="1" HorizontalAlignment="Right"/>
+        </Grid>
     </Grid>
 </UserControl>
