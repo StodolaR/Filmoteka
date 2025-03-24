@@ -41,51 +41,63 @@ namespace Filmoteka.ViewModel
         {
             if (movieCollectionViewModel.SelectedMovie != null && LoggedUser != null)
             {
+                MovieViewModel movieWithNewRating = movieCollectionViewModel.SelectedMovie;
+                foreach (UserMovie rating in movieWithNewRating.Ratings)
+                {
+                    if (rating.UserId == LoggedUser.Id)
+                    {
+                        EditRating(movieWithNewRating, rating);
+                        return;
+                    }
+                }
+                NewRating(movieWithNewRating);
+            }
+        }
+        private void EditRating(MovieViewModel movieWithNewRating, UserMovie rating)
+        {
+            if (LoggedUser != null)
+            {
                 using (MovieContext mc = new MovieContext())
                 {
-                    MovieViewModel movieWithNewRating = movieCollectionViewModel.SelectedMovie;
-                    movieCollectionViewModel.Movies.Remove(movieCollectionViewModel.SelectedMovie);
-                    foreach (UserMovie rating in movieWithNewRating.Ratings)
-                    {
-                        if (rating.UserId == LoggedUser.Id)
-                        {
-                            mc.UserMovies.Where(x => x.UserId == LoggedUser.Id && x.MovieId == movieWithNewRating.Id).First().Rating = NewDetailMovieRating;
-                            mc.UserMovies.Where(x => x.UserId == LoggedUser.Id && x.MovieId == movieWithNewRating.Id).First().Review = NewDetailMovieReview;
-                            movieCollectionViewModel.AddedMovie = mc.Movies.Where(x => x.Id == movieWithNewRating.Id).First();
-                            mc.SaveChanges();
-                            rating.Rating = NewDetailMovieRating;
-                            rating.Review = NewDetailMovieReview;
-                            rating.User = new User { Id = LoggedUser.Id, Name = LoggedUser.Name };
-                            movieWithNewRating.AvgRating = (int)(movieWithNewRating.Ratings.Average(x => x.Rating) * 20);
-                            movieCollectionViewModel.SelectedMovie = movieWithNewRating;
-                            movieCollectionViewModel.Movies.Add(movieCollectionViewModel.SelectedMovie);
-                            movieCollectionViewModel.Movies.Clear();
-                            movieCollectionViewModel.GetMoviesFromDatabase();
-                            movieCollectionViewModel.SelectedMovie = movieWithNewRating;
-                            ResetProperties();
-                            return;
-                        }
-                    }
+                    mc.UserMovies.Where(x => x.UserId == LoggedUser.Id && x.MovieId == movieWithNewRating.Id).First().Rating = NewDetailMovieRating;
+                    mc.UserMovies.Where(x => x.UserId == LoggedUser.Id && x.MovieId == movieWithNewRating.Id).First().Review = NewDetailMovieReview;
+                    movieCollectionViewModel.AddedMovie = mc.Movies.Where(x => x.Id == movieWithNewRating.Id).First();
+                    mc.SaveChanges();
+                }
+                rating.Rating = NewDetailMovieRating;
+                rating.Review = NewDetailMovieReview;
+                rating.User = new User { Id = LoggedUser.Id, Name = LoggedUser.Name };
+                ActualizeViews(movieWithNewRating);
+            }
+        }
+        private void NewRating(MovieViewModel movieWithNewRating)
+        {
+            if (LoggedUser != null)
+            {
+                using (MovieContext mc = new MovieContext())
+                {
                     UserMovie newRating = new UserMovie{MovieId = movieWithNewRating.Id, UserId = LoggedUser.Id,
-                        Rating = NewDetailMovieRating, Review = NewDetailMovieReview};
+                        Rating = NewDetailMovieRating,Review = NewDetailMovieReview};
                     mc.UserMovies.Add(newRating);
                     movieCollectionViewModel.AddedMovie = mc.Movies.Where(x => x.Id == movieWithNewRating.Id).First();
                     mc.SaveChanges();
                     newRating.User = new User { Id = LoggedUser.Id, Name = LoggedUser.Name };
-                    newRating.Movie = new Movie { Id = movieWithNewRating.Id, Name = movieWithNewRating.Name };
                     movieWithNewRating.Ratings.Add(newRating);
-                    movieWithNewRating.AvgRating = (int)(movieWithNewRating.Ratings.Average(x => x.Rating) * 20);
-                    movieCollectionViewModel.SelectedMovie = movieWithNewRating;
-                    movieCollectionViewModel.Movies.Add(movieCollectionViewModel.SelectedMovie);
-                    movieCollectionViewModel.Movies.Clear();
-                    movieCollectionViewModel.GetMoviesFromDatabase();
-                    movieCollectionViewModel.SelectedMovie = movieWithNewRating;
-                    ResetProperties();
+                    ActualizeViews(movieWithNewRating);
                 }
             }
         }
-        private void ResetProperties()
+        private void ActualizeViews(MovieViewModel movieWithNewRating)
         {
+            movieWithNewRating.AvgRating = (int)(movieWithNewRating.Ratings.Average(x => x.Rating) * 20);
+            movieCollectionViewModel.Movies.Clear();
+            movieCollectionViewModel.GetMoviesFromDatabase();
+            if (movieCollectionViewModel.SelectedMovie != null)
+            {
+                movieCollectionViewModel.Movies.Remove(movieCollectionViewModel.SelectedMovie);
+            }
+            movieCollectionViewModel.SelectedMovie = movieWithNewRating;
+            movieCollectionViewModel.Movies.Add(movieCollectionViewModel.SelectedMovie);
             NewDetailMovieReview = null;
             NewDetailMovieRating = 0;
         }

@@ -17,7 +17,7 @@
                 <Label Content="Hodnocení (5 černých hvězd = 0%): "/>
                 <local:RatingBox RatingValue="{Binding NewDetailMovieRating, Mode=TwoWay}" x:Name="rbRating"/>
             </StackPanel>
-            <Label Content="Recenze:"/>
+            <Label Content="Recenze (nepovinná):"/>
             <TextBox Text="{Binding NewDetailMovieReview, UpdateSourceTrigger=PropertyChanged}" 
              TextWrapping="Wrap" AcceptsReturn="True" MinHeight="180" x:Name="tbxReview"/>
             <Button Content="Přidej hodnocení" Width="150" Margin="20" Command="{Binding AddNewRating}"/>
