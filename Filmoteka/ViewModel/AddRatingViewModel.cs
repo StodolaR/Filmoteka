@@ -92,12 +92,8 @@ namespace Filmoteka.ViewModel
             movieWithNewRating.AvgRating = (int)(movieWithNewRating.Ratings.Average(x => x.Rating) * 20);
             movieCollectionViewModel.Movies.Clear();
             movieCollectionViewModel.GetMoviesFromDatabase();
-            if (movieCollectionViewModel.SelectedMovie != null)
-            {
-                movieCollectionViewModel.Movies.Remove(movieCollectionViewModel.SelectedMovie);
-            }
+            movieCollectionViewModel.SelectedMovie = null;
             movieCollectionViewModel.SelectedMovie = movieWithNewRating;
-            movieCollectionViewModel.Movies.Add(movieCollectionViewModel.SelectedMovie);
             NewDetailMovieReview = null;
             NewDetailMovieRating = 0;
         }
