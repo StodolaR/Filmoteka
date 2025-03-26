@@ -12,7 +12,14 @@ namespace Filmoteka.Framework
             {
                 if ((value as string)[0] != ('/'))
                 {
-                    return Path.GetFullPath(value as string);
+                    if (File.Exists(value as string))
+                    {
+                        return Path.GetFullPath(value as string);
+                    }
+                    else
+                    {
+                        return "/Resources/bezobrazku.png";
+                    }
                 }
             }
             catch
