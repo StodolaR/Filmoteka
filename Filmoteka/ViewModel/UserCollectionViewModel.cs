@@ -274,10 +274,10 @@ namespace Filmoteka.ViewModel
                         AddError(propertyName, "Toto jméno již používá jiný uživatel");
                     if (RegistrationName == "Movie")
                         AddError(propertyName, "Jméno obsazeno systémem");
-                    if (string.IsNullOrEmpty(RegistrationName) || RegistrationName.Length < 3)
+                    if (string.IsNullOrWhiteSpace(RegistrationName) || RegistrationName.Trim().Length < 3)
                         AddError(propertyName, "Uživatelské jméno musí mít alespoň 3 znaky"); break;
                 case nameof(RegistrationPassword):
-                    if (RegistrationPassword.Length < 3)
+                    if (RegistrationPassword.Trim().Length < 3)
                         AddError(propertyName, "Heslo musí mít alespoň 3 znaky"); break;
                 case nameof(RegistrationPasswordVerification):
                     if (RegistrationPasswordVerification != RegistrationPassword)
