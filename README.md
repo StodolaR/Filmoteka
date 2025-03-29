@@ -1,5 +1,12 @@
 # Filmoteka
 WPF aplikace, .Net8.0, pokus o MVVM, databáze SQLite pomocí EF Core. Ke spuštění je potřeba .Net8.0
+## Screenshots
+![Úvod](https://github.com/StodolaR/Filmoteka/blob/master/Screenshots/Filmoteka.jpg)
+![Přihlášení](https://github.com/StodolaR/Filmoteka/blob/master/Screenshots/Prihlaseni.jpg)
+![Uživatelé](https://github.com/StodolaR/Filmoteka/blob/master/Screenshots/Uzivatele.jpg)
+![Žebříček](https://github.com/StodolaR/Filmoteka/blob/master/Screenshots/Zebricek.jpg)
+![Žánry](https://github.com/StodolaR/Filmoteka/blob/master/Screenshots/Zanry.jpg)
+![Detail](https://github.com/StodolaR/Filmoteka/blob/master/Screenshots/Detail.jpg)
 ## Popis funkcí Filmotéky
 
 Mezi okny aplikace se přepíná pomocí záložek v horní části.
