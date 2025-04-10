@@ -9,7 +9,7 @@
         xmlns:view="clr-namespace:Filmoteka.View"
         xmlns:viewModel="clr-namespace:Filmoteka.ViewModel"
         mc:Ignorable="d"
-        Title="Filmotéka" Height="760" Width="1010" WindowStartupLocation="CenterScreen"
+        Title="Filmotéka" Height="760" Width="1010" WindowStartupLocation="CenterScreen" MinWidth="940" MinHeight="500"
         DataContext="{StaticResource movieCollectionViewModel}">
     <Grid>
         <Grid.Resources>
